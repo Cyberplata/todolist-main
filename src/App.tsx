@@ -56,7 +56,7 @@ function App() {
 	//	{id, title, filter, filter:'completed'} === {...el}
 	// [[]] убираем лишний массив, так как map и так создаёт новый массив
 	const changeFilter = (todolistId: string, filterValue: FilterValuesType) => {
-		setTodolists([...todolists, todolists.map(el=> el.id===todolistId ? {...el, el.filter:filterValue} : el)])
+		setTodolists(todolists.map(el=> el.id===todolistId ? {...el, filter:filterValue} : el))
 
 		// const currentTodolist = todolists.find(el => el.id === todolistId)
 		// console.log(currentTodolist)
