@@ -9,9 +9,20 @@ export type TaskType = {
 	isDone: boolean
 }
 
+export type TodolistType = {
+	id: string,
+	title: string
+	filter: FilterValuesType
+}
+
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
 function App() {
+
+	let [todolists, setTodolists] = useState<TodolistType[]>([
+		{ id: v1(), title: 'What to learn', filter: 'all' },
+		{ id: v1(), title: 'What to buy', filter: 'all' },
+	])
 
 	const [tasks, setTasks] = useState<TaskType[]>([
 		{id: v1(), title: 'HTML&CSS', isDone: true},
@@ -56,19 +67,27 @@ function App() {
 		tasksForTodolist = tasks.filter(task => task.isDone)
 	}
 
-	const arr = [0, 1, 2, 3, 4, 5];
+	// const arr = [
+	// 	{title: "What to learn-0"},//0
+	// 	{title: "What to learn-1"},//1
+	// 	{title: "What to learn-2"},//2
+	// 	{title: "What to learn-3"},//3
+	// ];
+
+
 
 	return (
 		<div className="App">
-			{arr.map(() => {
+			{todolists.map((el) => {
 				return <Todolist
-					title="What to learn"
+					key={el.id}
+					title={el.title}
 					tasks={tasksForTodolist}
 					removeTask={removeTask}
 					changeFilter={changeFilter}
 					addTask={addTask}
 					changeTaskStatus={changeTaskStatus}
-					filter={filter}
+					filter={el.filter}
 				/>
 			})}
 
