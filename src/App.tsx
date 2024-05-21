@@ -56,17 +56,22 @@ function App() {
 		tasksForTodolist = tasks.filter(task => task.isDone)
 	}
 
+	const arr = [0, 1, 2, 3, 4, 5];
+
 	return (
 		<div className="App">
-			<Todolist
-				title="What to learn"
-				tasks={tasksForTodolist}
-				removeTask={removeTask}
-				changeFilter={changeFilter}
-				addTask={addTask}
-				changeTaskStatus={changeTaskStatus}
-				filter={filter}
-			/>
+			{arr.map(() => {
+				return <Todolist
+					title="What to learn"
+					tasks={tasksForTodolist}
+					removeTask={removeTask}
+					changeFilter={changeFilter}
+					addTask={addTask}
+					changeTaskStatus={changeTaskStatus}
+					filter={filter}
+				/>
+			})}
+
 		</div>
 	);
 }
