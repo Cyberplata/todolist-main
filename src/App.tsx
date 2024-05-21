@@ -49,38 +49,28 @@ function App() {
 		setTasks(newTasks)
 	}
 
-	const changeFilter = (filter: FilterValuesType) => {
-		// setFilter(filter)
-	}
-
 	const changeTaskStatus = (taskId: string, taskStatus: boolean) => {
 		const newState = tasks.map(t => t.id == taskId ? {...t, isDone: taskStatus} : t)
 		setTasks(newState)
 	}
 
-
-
-	// const arr = [
-	// 	{title: "What to learn-0"},//0
-	// 	{title: "What to learn-1"},//1
-	// 	{title: "What to learn-2"},//2
-	// 	{title: "What to learn-3"},//3
-	// ];
-
-
+	const changeFilter = (todolistId: string, filter: FilterValuesType) => {
+		const currentTodolist = todolists.find(el => el.id === todolistId)
+	}
 
 	return (
 		<div className="App">
 			{todolists.map((el) => {
 				let tasksForTodolist = tasks
-				if (todolists[0].filter === 'active') {
+				if (el.filter === 'active') {
 					tasksForTodolist = tasks.filter(task => !task.isDone)
 				}
-				if (todolists[0].filter === 'completed') {
+				if (el.filter === 'completed') {
 					tasksForTodolist = tasks.filter(task => task.isDone)
 				}
 				return <Todolist
 					key={el.id}
+					todolistId={el.id}
 					title={el.title}
 					tasks={tasksForTodolist}
 					removeTask={removeTask}

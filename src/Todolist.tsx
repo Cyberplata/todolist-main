@@ -3,17 +3,27 @@ import {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Button} from "./Button";
 
 type PropsType = {
+	todolistId: string
 	title: string
 	tasks: TaskType[]
 	removeTask: (taskId: string) => void
-	changeFilter: (filter: FilterValuesType) => void
+	changeFilter: (todolistId: string, filter: FilterValuesType) => void
 	addTask: (title: string) => void
 	changeTaskStatus: (taskId: string, taskStatus: boolean) => void
 	filter: FilterValuesType
 }
 
 export const Todolist = (props: PropsType) => {
-	const {title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus} = props
+	// todo: перенести
+	// let tasksForTodolist = tasks
+	// if (el.filter === 'active') {
+	// 	tasksForTodolist = tasks.filter(task => !task.isDone)
+	// }
+	// if (el.filter === 'completed') {
+	// 	tasksForTodolist = tasks.filter(task => task.isDone)
+	// }
+
+	const {todolistId, title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus} = props
 
 	const [taskTitle, setTaskTitle] = useState('')
 	const [error, setError] = useState<string | null>(null)
@@ -39,7 +49,7 @@ export const Todolist = (props: PropsType) => {
 	}
 
 	const changeFilterTasksHandler = (filter: FilterValuesType) => {
-		changeFilter(filter)
+		changeFilter(todolistId,filter)
 	}
 
 	return (
