@@ -53,9 +53,17 @@ function App() {
 		const newState = tasks.map(t => t.id == taskId ? {...t, isDone: taskStatus} : t)
 		setTasks(newState)
 	}
+	//	{id, title, filter, filter:'completed'} === {...el}
+	const changeFilter = (todolistId: string, filterValue: FilterValuesType) => {
+		setTodolists([...todolists, todolists.map(el=> el.id===todolistId ? {...el, el.filter:filterValue} : el)])
 
-	const changeFilter = (todolistId: string, filter: FilterValuesType) => {
-		const currentTodolist = todolists.find(el => el.id === todolistId)
+		// const currentTodolist = todolists.find(el => el.id === todolistId)
+		// console.log(currentTodolist)
+		// if (currentTodolist) {
+		// 	currentTodolist.filter = filterValue
+		// 	setTodolists([...todolists]) // Передаём новый массив-матрёшек, чтобы реакт проснулся
+		// 	// console.log(todolists)
+		// }
 	}
 
 	return (
