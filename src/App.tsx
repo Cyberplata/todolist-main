@@ -38,6 +38,7 @@ function App() {
             { id: v1(), title: 'GraphQL', isDone: false },
         ],
     })
+    console.log(tasks[todolistID1])
 
     // const [tasks, setTasks] = useState<TaskType[]>([
     //     {id: v1(), title: 'HTML&CSS', isDone: true},
@@ -47,7 +48,9 @@ function App() {
     // const [filter, setFilter] = useState<FilterValuesType>('all')
     // filter(todolistId !== taskId)
     const removeTask = (todolistId: string, taskId: string) => {
-        setTasks({...tasks, [todolistId]:tasks[todolistId].filter(el => el.id !== taskId)})
+        setTasks({...tasks,
+            [todolistId]: tasks[todolistId].filter(el => el.id !== taskId)
+        })
 
         // const filteredTasks = tasks.filter((task) => {
         //     return task.id !== taskId
