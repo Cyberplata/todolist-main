@@ -38,7 +38,6 @@ function App() {
             { id: v1(), title: 'GraphQL', isDone: false },
         ],
     })
-    console.log(tasks[todolistID1])
 
     // const [tasks, setTasks] = useState<TaskType[]>([
     //     {id: v1(), title: 'HTML&CSS', isDone: true},
@@ -47,9 +46,9 @@ function App() {
     // ])
     // const [filter, setFilter] = useState<FilterValuesType>('all')
     // filter(todolistId !== taskId)
-    const removeTask = (todolistId: string, taskId: string) => {
+    const removeTask = (todolistID: string, taskId: string) => {
         setTasks({...tasks,
-            [todolistId]: tasks[todolistId].filter(el => el.id !== taskId)
+            [todolistID]: tasks[todolistID].filter(el => el.id !== taskId)
         })
 
         // const filteredTasks = tasks.filter((task) => {
@@ -57,12 +56,17 @@ function App() {
         // })
         // setTasks(filteredTasks)
     }
-    const addTask = (title: string) => {
-        // const newTask = {
-        //     id: v1(),
-        //     title: title,
-        //     isDone: false
-        // }
+    const addTask = (todolistID: string, title: string) => {
+        const newTask = {
+            id: v1(),
+            title: title,
+            isDone: false
+        }
+        console.log('1')
+        setTasks({...tasks,
+            [todolistID]: [newTask, ...tasks[todolistID]]
+        })
+
         // const newTasks = [newTask, ...tasks]
         // setTasks(newTasks)
     }
