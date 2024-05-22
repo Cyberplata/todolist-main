@@ -18,46 +18,64 @@ export type TodolistType = {
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
 function App() {
+    let todolistID1 = v1()
+    let todolistID2 = v1()
 
     let [todolists, setTodolists] = useState<TodolistType[]>([
-        {id: v1(), title: 'What to learn', filter: 'all'},
-        {id: v1(), title: 'What to buy', filter: 'all'},
+        { id: todolistID1, title: 'What to learn', filter: 'all' },
+        { id: todolistID2, title: 'What to buy', filter: 'all' },
     ])
 
-    const [tasks, setTasks] = useState<TaskType[]>([
-        {id: v1(), title: 'HTML&CSS', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'ReactJS', isDone: false},
-    ])
+    let [tasks, setTasks] = useState({
+        [todolistID1]: [
+            { id: v1(), title: 'HTML&CSS', isDone: true },
+            { id: v1(), title: 'JS', isDone: true },
+            { id: v1(), title: 'ReactJS', isDone: false },
+        ],
+        [todolistID2]: [
+            { id: v1(), title: 'Rest API', isDone: true },
+            { id: v1(), title: 'GraphQL', isDone: false },
+        ],
+    })
+
+    // const [tasks, setTasks] = useState<TaskType[]>([
+    //     {id: v1(), title: 'HTML&CSS', isDone: true},
+    //     {id: v1(), title: 'JS', isDone: true},
+    //     {id: v1(), title: 'ReactJS', isDone: false},
+    // ])
 
     // const [filter, setFilter] = useState<FilterValuesType>('all')
 
     const removeTask = (taskId: string) => {
-        const filteredTasks = tasks.filter((task) => {
-            return task.id !== taskId
-        })
-        setTasks(filteredTasks)
+        // const filteredTasks = tasks.filter((task) => {
+        //     return task.id !== taskId
+        // })
+        // setTasks(filteredTasks)
     }
 
     const addTask = (title: string) => {
-        const newTask = {
-            id: v1(),
-            title: title,
-            isDone: false
-        }
-        const newTasks = [newTask, ...tasks]
-        setTasks(newTasks)
+        // const newTask = {
+        //     id: v1(),
+        //     title: title,
+        //     isDone: false
+        // }
+        // const newTasks = [newTask, ...tasks]
+        // setTasks(newTasks)
     }
 
     const changeTaskStatus = (taskId: string, taskStatus: boolean) => {
-        const newState = tasks.map(t => t.id == taskId ? {...t, isDone: taskStatus} : t)
-        setTasks(newState)
+        // const newState = tasks.map(t =>
+        //     t.id == taskId
+        //         ? {...t, isDone: taskStatus}
+        //         : t
+        // )
+        // setTasks(newState)
     }
     //	{id, title, filter, filter:'completed'} === {...el}
     // [[]] убираем лишний массив, так как map и так создаёт новый массив
     const changeFilter = (todolistId: string, filterValue: FilterValuesType) => {
-        setTodolists(todolists.map(
-            el => el.id === todolistId
+        setTodolists(todolists.map(el =>
+            el.id === todolistId
                 ? {...el, filter: filterValue}
                 : el
         ))
