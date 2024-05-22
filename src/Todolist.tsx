@@ -11,7 +11,7 @@ type PropsType = {
 	addTask: (todolistID: string, title: string) => void
 	changeTaskStatus: (todolistID: string , taskId: string, taskStatus: boolean) => void
 	filter: FilterValuesType
-	deleteTodo: (todolistId: string) => void
+	removeTodolist: (todolistId: string) => void
 }
 
 export const Todolist = (props: PropsType) => {
@@ -24,7 +24,7 @@ export const Todolist = (props: PropsType) => {
 	// 	tasksForTodolist = tasks.filter(task => task.isDone)
 	// }
 
-	const {deleteTodo, todolistId, title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus} = props
+	const {removeTodolist, todolistId, title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus} = props
 
 	const [taskTitle, setTaskTitle] = useState('')
 	const [error, setError] = useState<string | null>(null)
@@ -54,13 +54,15 @@ export const Todolist = (props: PropsType) => {
 	}
 
 	const deleteAllTodoHandler = () => {
-		deleteTodo(todolistId)
+		removeTodolist(todolistId)
 	}
 
 	return (
 		<div>
-			<h3>{title}</h3>
-			<Button title={"deleteAllTodo"} onClick={deleteAllTodoHandler}/>
+			<h3>
+				{title}
+				<Button title={"deleteTodo"} onClick={deleteAllTodoHandler} />
+			</h3>
 			<div>
 				<input
 					className={error ? 'error': ''}
