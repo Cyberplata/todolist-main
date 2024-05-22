@@ -44,10 +44,11 @@ function App() {
     //     {id: v1(), title: 'JS', isDone: true},
     //     {id: v1(), title: 'ReactJS', isDone: false},
     // ])
-
     // const [filter, setFilter] = useState<FilterValuesType>('all')
+    // filter(todolistId !== taskId)
+    const removeTask = (todolistId: string, taskId: string) => {
+        setTasks({...tasks, [todolistId]:tasks[todolistId].filter(el => el.id !== taskId)})
 
-    const removeTask = (taskId: string) => {
         // const filteredTasks = tasks.filter((task) => {
         //     return task.id !== taskId
         // })
@@ -91,7 +92,6 @@ function App() {
         <div className="App">
             {todolists.map((el) => {
                 let tasksForTodolist = tasks[el.id]
-                console.log(tasksForTodolist)
                 if (el.filter === 'active') {
                     tasksForTodolist = tasks[el.id].filter(task => !task.isDone)
                 }

@@ -6,7 +6,7 @@ type PropsType = {
 	todolistId: string
 	title: string
 	tasks: TaskType[]
-	removeTask: (taskId: string) => void
+	removeTask: (todolistId: string,taskId: string) => void
 	changeFilter: (todolistId: string, filterValue: FilterValuesType) => void
 	addTask: (title: string) => void
 	changeTaskStatus: (taskId: string, taskStatus: boolean) => void
@@ -72,7 +72,7 @@ export const Todolist = (props: PropsType) => {
 						{tasks.map((task) => {
 
 							const removeTaskHandler = () => {
-								removeTask(task.id)
+								removeTask(todolistId,task.id)
 							}
 
 							const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
