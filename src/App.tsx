@@ -62,7 +62,6 @@ function App() {
             title: title,
             isDone: false
         }
-        console.log('1')
         setTasks({...tasks,
             [todolistID]: [newTask, ...tasks[todolistID]]
         })
@@ -70,7 +69,15 @@ function App() {
         // const newTasks = [newTask, ...tasks]
         // setTasks(newTasks)
     }
-    const changeTaskStatus = (taskId: string, taskStatus: boolean) => {
+    const changeTaskStatus = (todolistID: string, taskId: string, taskStatus: boolean) => {
+        setTasks({...tasks,
+            [todolistID]: tasks[todolistID].map(el =>
+                el.id === taskId
+                    ? {...el, isDone: taskStatus}
+                    : el
+            )
+        })
+
         // const newState = tasks.map(t =>
         //     t.id == taskId
         //         ? {...t, isDone: taskStatus}
