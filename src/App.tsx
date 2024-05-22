@@ -46,6 +46,10 @@ function App() {
     // ])
     // const [filter, setFilter] = useState<FilterValuesType>('all')
     // filter(todolistId !== taskId)
+    const deleteTodo = (todolistId: string) => {
+        setTodolists(todolists.filter(el => el.id !== todolistId))
+    }
+
     const removeTask = (todolistID: string, taskId: string) => {
         setTasks({...tasks,
             [todolistID]: tasks[todolistID].filter(el => el.id !== taskId)
@@ -122,6 +126,7 @@ function App() {
                     addTask={addTask}
                     changeTaskStatus={changeTaskStatus}
                     filter={el.filter}
+                    deleteTodo={deleteTodo}
                 />
             })}
 
