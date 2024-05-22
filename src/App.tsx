@@ -53,7 +53,6 @@ function App() {
         // })
         // setTasks(filteredTasks)
     }
-
     const addTask = (title: string) => {
         // const newTask = {
         //     id: v1(),
@@ -63,7 +62,6 @@ function App() {
         // const newTasks = [newTask, ...tasks]
         // setTasks(newTasks)
     }
-
     const changeTaskStatus = (taskId: string, taskStatus: boolean) => {
         // const newState = tasks.map(t =>
         //     t.id == taskId
@@ -80,7 +78,6 @@ function App() {
                 ? {...el, filter: filterValue}
                 : el
         ))
-
         // const currentTodolist = todolists.find(el => el.id === todolistId)
         // console.log(currentTodolist)
         // if (currentTodolist) {
@@ -93,12 +90,13 @@ function App() {
     return (
         <div className="App">
             {todolists.map((el) => {
-                let tasksForTodolist = tasks
+                let tasksForTodolist = tasks[el.id]
+                console.log(tasksForTodolist)
                 if (el.filter === 'active') {
-                    tasksForTodolist = tasks.filter(task => !task.isDone)
+                    tasksForTodolist = tasks[el.id].filter(task => !task.isDone)
                 }
                 if (el.filter === 'completed') {
-                    tasksForTodolist = tasks.filter(task => task.isDone)
+                    tasksForTodolist = tasks[el.id].filter(task => task.isDone)
                 }
                 return <Todolist
                     key={el.id}
