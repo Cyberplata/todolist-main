@@ -2,6 +2,8 @@ import './App.css';
 import {Todolist} from "./Todolist";
 import {useState} from "react";
 import {v1} from "uuid";
+import {Button} from "./Button";
+import {AddItemForm} from "./AddItemForm";
 
 export type TaskType = {
     id: string
@@ -22,20 +24,20 @@ function App() {
     let todolistID2 = v1()
 
     let [todolists, setTodolists] = useState<TodolistType[]>([
-        { id: todolistID1, title: 'What to learn', filter: 'all' },
-        { id: todolistID2, title: 'What to buy', filter: 'all' },
+        {id: todolistID1, title: 'What to learn', filter: 'all'},
+        {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
 
     let [tasks, setTasks] = useState({
         // [], а не "" потому что нужно чтобы он сразу сгенерировал айдишку v1() и результат завернул в "" -> "xasdsasdasdnhzx12", а не стрингу "todolistID1"
         [todolistID1]: [
-            { id: v1(), title: 'HTML&CSS', isDone: true },
-            { id: v1(), title: 'JS', isDone: true },
-            { id: v1(), title: 'ReactJS', isDone: false },
+            {id: v1(), title: 'HTML&CSS', isDone: true},
+            {id: v1(), title: 'JS', isDone: true},
+            {id: v1(), title: 'ReactJS', isDone: false},
         ],
         [todolistID2]: [
-            { id: v1(), title: 'Rest API', isDone: true },
-            { id: v1(), title: 'GraphQL', isDone: false },
+            {id: v1(), title: 'Rest API', isDone: true},
+            {id: v1(), title: 'GraphQL', isDone: false},
         ],
     })
 
@@ -54,7 +56,8 @@ function App() {
     }
 
     const removeTask = (todolistID: string, taskId: string) => {
-        setTasks({...tasks,
+        setTasks({
+            ...tasks,
             [todolistID]: tasks[todolistID].filter(el => el.id !== taskId)
         })
 
@@ -63,21 +66,10 @@ function App() {
         // })
         // setTasks(filteredTasks)
     }
-    const addTask = (todolistID: string, title: string) => {
-        const newTask = {
-            id: v1(),
-            title: title,
-            isDone: false
-        }
-        setTasks({...tasks,
-            [todolistID]: [newTask, ...tasks[todolistID]]
-        })
 
-        // const newTasks = [newTask, ...tasks]
-        // setTasks(newTasks)
-    }
     const changeTaskStatus = (todolistID: string, taskId: string, taskStatus: boolean) => {
-        setTasks({...tasks,
+        setTasks({
+            ...tasks,
             [todolistID]: tasks[todolistID].map(el =>
                 el.id === taskId
                     ? {...el, isDone: taskStatus}
@@ -108,9 +100,30 @@ function App() {
         // 	// console.log(todolists)
         // }
     }
+    const addTask = (todolistID: string, title: string) => {
+        const newTask = {
+            id: v1(),
+            title: title,
+            isDone: false
+        }
+        setTasks({
+            ...tasks,
+            [todolistID]: [newTask, ...tasks[todolistID]]
+        })
+    }
 
+    const addTodolist = (title: string, todolistID: string) => {
+        const newTodolist: TodolistType = {id: todolistID, title, filter: 'all'}
+        setTodolists([...todolists, newTodolist])
+        setTasks({
+            ...tasks,
+            [todolistID]: [...tasks[todolistID]]
+        })
+        console.log('!!!!')
+    }
     return (
         <div className="App">
+            <AddItemForm addItem={addTodolist}/>
             {todolists.map((el) => {
                 let tasksForTodolist = tasks[el.id]
                 if (el.filter === 'active') {

@@ -2,6 +2,7 @@ import {FilterValuesType, TaskType} from "./App";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Button} from "./Button";
 import {AddItemForm} from "./AddItemForm";
+import {v1} from "uuid";
 
 type PropsType = {
     todolistId: string
@@ -65,6 +66,10 @@ export const Todolist = (props: PropsType) => {
         removeTodolist(todolistId)
     }
 
+    const addTaskHandler = (title: string) => {
+        addTask(props.todolistId,title)
+    }
+
     return (
         <div>
             <h3>
@@ -72,7 +77,7 @@ export const Todolist = (props: PropsType) => {
                 <Button title={"deleteTodo"} onClick={deleteAllTodoHandler}/>
             </h3>
             <div>
-                <AddItemForm addItem={addTask} todolistID={props.todolistId}/>
+                <AddItemForm addItem={addTaskHandler} />
             </div>
             {
                 tasks.length === 0
