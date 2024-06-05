@@ -1,6 +1,7 @@
 import {FilterValuesType, TaskType} from "./App";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Button} from "./Button";
+import {AddItemForm} from "./AddItemForm";
 
 type PropsType = {
 	todolistId: string
@@ -26,28 +27,25 @@ export const Todolist = (props: PropsType) => {
 
 	const {removeTodolist, todolistId, title, tasks, filter, removeTask, changeFilter, addTask, changeTaskStatus} = props
 
-	const [taskTitle, setTaskTitle] = useState('')
-	const [error, setError] = useState<string | null>(null)
+	// const addTaskHandler = () => {
+	// 	if (taskTitle.trim() !== '') {
+	// 		addTask(todolistId ,taskTitle.trim())
+	// 		setTaskTitle('')
+	// 	} else {
+	// 		setError('Title is required')
+	// 	}
+	// }
 
-	const addTaskHandler = () => {
-		if (taskTitle.trim() !== '') {
-			addTask(todolistId ,taskTitle.trim())
-			setTaskTitle('')
-		} else {
-			setError('Title is required')
-		}
-	}
+	// const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
+	// 	setTaskTitle(event.currentTarget.value)
+	// }
 
-	const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-		setTaskTitle(event.currentTarget.value)
-	}
-
-	const addTaskOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-		setError(null)
-		if (event.key === 'Enter') {
-			addTaskHandler()
-		}
-	}
+	// const addTaskOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+	// 	setError(null)
+	// 	if (event.key === 'Enter') {
+	// 		addTaskHandler()
+	// 	}
+	// }
 
 	const changeFilterTasksHandler = (filter: FilterValuesType) => {
 		changeFilter(todolistId,filter)
@@ -64,14 +62,7 @@ export const Todolist = (props: PropsType) => {
 				<Button title={"deleteTodo"} onClick={deleteAllTodoHandler} />
 			</h3>
 			<div>
-				<input
-					className={error ? 'error': ''}
-					value={taskTitle}
-					onChange={changeTaskTitleHandler}
-					onKeyUp={addTaskOnKeyUpHandler}
-				/>
-				<Button title={'+'} onClick={addTaskHandler}/>
-				{error && <div className={'error-message'}>{error}</div> }
+				<AddItemForm/>
 			</div>
 			{
 				tasks.length === 0
