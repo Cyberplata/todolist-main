@@ -2,29 +2,30 @@ import {Button} from "./Button";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type Props = {
-    
+    addItem: (todolistID: string, title: string) => void
+    todolistID: string
 };
-export const AddItemForm = (props: Props) => {
-    const [taskTitle, setTaskTitle] = useState('')
+export const AddItemForm = ({addItem, todolistID}: Props) => {
+    const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
-    const addTaskHandler = () => {
-        if (taskTitle.trim() !== '') {
-            addTask(todolistId ,taskTitle.trim())
-            setTaskTitle('')
+    const addItemHandler = () => {
+        if (title.trim() !== '') {
+            addItem(todolistID ,title.trim())
+            setTitle('')
         } else {
             setError('Title is required')
         }
     }
 
-    const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setTaskTitle(event.currentTarget.value)
+    const changeItemTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setTitle(event.currentTarget.value)
     }
 
-    const addTaskOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         setError(null)
         if (event.key === 'Enter') {
-            addTaskHandler()
+            addItemHandler()
         }
     }
 
@@ -32,11 +33,11 @@ export const AddItemForm = (props: Props) => {
         <div>
             <input
                 className={error ? 'error': ''}
-                value={taskTitle}
-                onChange={changeTaskTitleHandler}
-                onKeyUp={addTaskOnKeyUpHandler}
+                value={title}
+                onChange={changeItemTitleHandler}
+                onKeyUp={addItemOnKeyUpHandler}
             />
-            <Button title={'+'} onClick={addTaskHandler}/>
+            <Button title={'+'} onClick={addItemHandler}/>
             {error && <div className={'error-message'}>{error}</div> }
         </div>
     );
