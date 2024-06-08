@@ -117,6 +117,10 @@ function App() {
             )
         })
     }
+
+    const updateTodolist = (todolistID: string, title: string) => {
+        setTodolists(todolists.map(el => el.id === todolistID ? {...el, title} : el))
+    }
     return (
         <div className="App">
             <AddItemForm addItem={addTodolist}/>
@@ -140,6 +144,7 @@ function App() {
                     filter={el.filter}
                     removeTodolist={removeTodolist}
                     updateTask={updateTask}
+                    updateTodolist={updateTodolist}
                 />
             })}
         </div>
