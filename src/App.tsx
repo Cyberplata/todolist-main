@@ -41,18 +41,10 @@ function App() {
         ],
     })
 
-    // const [tasks, setTasks] = useState<TaskType[]>([
-    //     {id: v1(), title: 'HTML&CSS', isDone: true},
-    //     {id: v1(), title: 'JS', isDone: true},
-    //     {id: v1(), title: 'ReactJS', isDone: false},
-    // ])
-    // const [filter, setFilter] = useState<FilterValuesType>('all')
-    // filter(todolistId !== taskId)
     const removeTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(el => el.id !== todolistId))
         delete tasks[todolistId]
         setTasks({...tasks})
-        // console.log(tasks)
     }
 
     const removeTask = (todolistID: string, taskId: string) => {
@@ -76,13 +68,6 @@ function App() {
                     : el
             )
         })
-
-        // const newState = tasks.map(t =>
-        //     t.id == taskId
-        //         ? {...t, isDone: taskStatus}
-        //         : t
-        // )
-        // setTasks(newState)
     }
     //	{id, title, filter, filter:'completed'} === {...el}
     // [[]] убираем лишний массив, так как map и так создаёт новый массив
@@ -112,14 +97,14 @@ function App() {
         })
     }
 
-    const addTodolist = (title: string, todolistID: string) => {
-        const newTodolist: TodolistType = {id: todolistID, title, filter: 'all'}
+    const addTodolist = (title: string) => {
+        const newTodolistId = v1()
+        const newTodolist: TodolistType = {id: newTodolistId, title, filter: 'all'}
         setTodolists([...todolists, newTodolist])
         setTasks({
             ...tasks,
-            [todolistID]: [...tasks[todolistID]]
+            [newTodolistId]: []
         })
-        console.log('!!!!')
     }
     return (
         <div className="App">

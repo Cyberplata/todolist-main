@@ -3,6 +3,7 @@ import {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Button} from "./Button";
 import {AddItemForm} from "./AddItemForm";
 import {v1} from "uuid";
+import {EditableSpan} from "./EditableSpan";
 
 type PropsType = {
     todolistId: string
@@ -96,7 +97,8 @@ export const Todolist = (props: PropsType) => {
 
                             return <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                                 <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                                <span>{task.title}</span>
+                                {/*<span>{task.title}</span>*/}
+                                <EditableSpan title={task.title}/>
                                 <Button onClick={removeTaskHandler} title={'x'}/>
                             </li>
                         })}
