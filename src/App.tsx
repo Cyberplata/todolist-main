@@ -137,8 +137,14 @@ function App() {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, title} : el))
     }
 
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+    const changeModeHandler = () => {
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    }
+
     const theme = createTheme({
         palette: {
+            mode: themeMode === 'light' ? 'light' : 'dark',
             primary: {
                 main: '#1e8f22',
                 contrastText: 'white',
@@ -151,12 +157,6 @@ function App() {
             },
         },
     })
-
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
-    const changeModeHandler = () => {
-        setThemeMode(themeMode == 'light' ? 'dark' : 'light')
-    }
-
 
     return (
         <div className="App">
