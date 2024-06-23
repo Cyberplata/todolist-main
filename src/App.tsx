@@ -161,6 +161,7 @@ function App() {
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
+                <CssBaseline/>
                 <Box sx={{flexGrow: 1, mb: 10}}>
                     <AppBar position="fixed">
                         <Toolbar>
