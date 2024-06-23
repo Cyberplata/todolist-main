@@ -3,18 +3,11 @@ import {Todolist} from "./Todolist";
 import {useState} from "react";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import {MenuButton} from "./MenuButton";
-import {createTheme, ThemeProvider} from "@mui/material";
-import Switch from '@mui/material/Switch';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {AppBarHeader} from "./AppBarHeader";
 
@@ -147,7 +140,7 @@ function App() {
         palette: {
             mode: themeMode === 'light' ? 'light' : 'dark',
             primary: {
-                main: '#1e8f22',
+                main: '#7017ee',
                 contrastText: 'white',
             },
             secondary: {
