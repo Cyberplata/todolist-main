@@ -9,7 +9,7 @@ import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
-import {filterButtonContainerSx} from "./Todolist.styles";
+import {filterButtonContainerSx, getListItemSx} from "./Todolist.styles";
 
 type PropsType = {
     todolistId: string
@@ -102,12 +102,7 @@ export const Todolist = (props: PropsType) => {
 
                             return <ListItem
                                 key={task.id}
-                                // className={task.isDone ? 'is-done' : ''}
-                                sx={{
-                                    p: 0,
-                                    justifyContent: 'space-between',
-                                    opacity: task.isDone ? 0.5 : 1
-                                }}
+                                sx={getListItemSx(task.isDone)}
                             >
                                 <div>
                                     <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
