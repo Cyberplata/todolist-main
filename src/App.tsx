@@ -7,7 +7,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
@@ -15,6 +14,8 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {MenuButton} from "./MenuButton";
 import {createTheme, ThemeProvider} from "@mui/material";
+import Switch from '@mui/material/Switch';
+import CssBaseline from '@mui/material/CssBaseline';
 
 
 export type TaskType = {
@@ -30,6 +31,8 @@ export type TodolistType = {
 }
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
+
+type ThemeMode = 'dark' | 'light'
 
 function App() {
     let todolistID1 = v1()
@@ -149,6 +152,12 @@ function App() {
         },
     })
 
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+    const changeModeHandler = () => {
+        setThemeMode(themeMode == 'light' ? 'dark' : 'light')
+    }
+
+
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
@@ -170,6 +179,7 @@ function App() {
                             <MenuButton color="inherit">Login</MenuButton>
                             <MenuButton color="inherit">Logout</MenuButton>
                             <MenuButton color="inherit">Faq</MenuButton>
+                            <Switch color={'default'} onChange={changeModeHandler}/>
                         </Toolbar>
                     </AppBar>
                 </Box>
