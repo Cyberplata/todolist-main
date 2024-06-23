@@ -72,7 +72,6 @@ export const Todolist = (props: PropsType) => {
     return (
         <div>
             <h3><EditableSpan odlTitle={title} updateItem={updateTodolistHandler}/>
-                {/*<Button title={"X"} onClick={deleteAllTodoHandler}/>*/}
                 <IconButton aria-label="delete" onClick={deleteAllTodoHandler}>
                     <DeleteIcon/>
                 </IconButton>
@@ -95,10 +94,6 @@ export const Todolist = (props: PropsType) => {
                                 const newStatusValue = e.currentTarget.checked
                                 changeTaskStatus(todolistId, task.id, newStatusValue)
                             }
-
-                            // const updateTaskHandler = (newTitle: string) => {
-                            //     updateTask(props.todolistId, task.id,newTitle)
-                            // }
 
                             return <ListItem
                                 key={task.id}
