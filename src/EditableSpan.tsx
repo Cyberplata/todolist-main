@@ -1,11 +1,11 @@
 import {ChangeEvent, useState} from "react";
+import TextField from "@mui/material/TextField";
 import {Simulate} from "react-dom/test-utils";
-import change = Simulate.change;
-import {log} from "node:util";
 
 type Props = {
     odlTitle: string
     updateItem: (newTitle: string) => void
+    // newTaskId: string
 };
 
 export const EditableSpan = ({odlTitle, updateItem}: Props) => {
@@ -26,7 +26,17 @@ export const EditableSpan = ({odlTitle, updateItem}: Props) => {
 
     return (
         editMode
-            ? <input value={newTitle} onChange={changeTitleHandler} onBlur={activateEditModeHandler} autoFocus/>
+            // ? <input value={newTitle} onChange={changeTitleHandler} onBlur={activateEditModeHandler} autoFocus/>
+            ? <TextField
+                id="outlined-basic"
+                label="Enter a title"
+                variant="outlined"
+                value={newTitle}
+                onChange={changeTitleHandler}
+                onBlur={activateEditModeHandler}
+                size='small'
+                autoFocus
+            />
             : <span onDoubleClick={activateEditModeHandler}>{odlTitle}</span>
     );
 };
