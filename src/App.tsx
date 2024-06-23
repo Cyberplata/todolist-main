@@ -16,6 +16,7 @@ import {MenuButton} from "./MenuButton";
 import {createTheme, ThemeProvider} from "@mui/material";
 import Switch from '@mui/material/Switch';
 import CssBaseline from '@mui/material/CssBaseline';
+import {AppBarHeader} from "./AppBarHeader";
 
 
 export type TaskType = {
@@ -163,26 +164,7 @@ function App() {
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <Box sx={{flexGrow: 1, mb: 10}}>
-                    <AppBar position="fixed">
-                        <Toolbar>
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                                sx={{mr: 2}}
-                            >
-                                <MenuIcon/>
-                            </IconButton>
-                            <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                                News
-                            </Typography>
-                            <MenuButton color="inherit">Login</MenuButton>
-                            <MenuButton color="inherit">Logout</MenuButton>
-                            <MenuButton color="inherit">Faq</MenuButton>
-                            <Switch color={'default'} onChange={changeModeHandler}/>
-                        </Toolbar>
-                    </AppBar>
+                    <AppBarHeader changeModeHandler={changeModeHandler}/>
                 </Box>
                 <Container fixed>
 
