@@ -134,10 +134,22 @@ function App() {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, title} : el))
     }
 
-    const theme = createTheme({})
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: '#1e8f22',
+                contrastText: 'white',
+            },
+            secondary: {
+                light: '#757ce8',
+                main: '#3f50b5',
+                dark: '#002884',
+                contrastText: '#fff',
+            },
+        },
+    })
 
     return (
-
         <div className="App">
             <ThemeProvider theme={theme}>
                 <Box sx={{flexGrow: 1, mb: 10}}>
@@ -155,7 +167,7 @@ function App() {
                             <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                                 News
                             </Typography>
-                            <MenuButton color="inherit" background={'yellow'}>Login</MenuButton>
+                            <MenuButton color="inherit">Login</MenuButton>
                             <MenuButton color="inherit">Logout</MenuButton>
                             <MenuButton color="inherit">Faq</MenuButton>
                         </Toolbar>
