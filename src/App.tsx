@@ -38,7 +38,6 @@ function App() {
     ])
 
     let [tasks, setTasks] = useState({
-        // [], а не "" потому что нужно чтобы он сразу сгенерировал айдишку v1() и результат завернул в "" -> "xasdsasdasdnhzx12", а не стрингу "todolistID1"
         [todolistID1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -55,19 +54,12 @@ function App() {
         delete tasks[todolistId]
         setTasks({...tasks})
     }
-
     const removeTask = (todolistID: string, taskId: string) => {
         setTasks({
             ...tasks,
             [todolistID]: tasks[todolistID].filter(el => el.id !== taskId)
         })
-
-        // const filteredTasks = tasks.filter((task) => {
-        //     return task.id !== taskId
-        // })
-        // setTasks(filteredTasks)
     }
-
     const changeTaskStatus = (todolistID: string, taskId: string, taskStatus: boolean) => {
         setTasks({
             ...tasks,
@@ -78,21 +70,12 @@ function App() {
             )
         })
     }
-    //	{id, title, filter, filter:'completed'} === {...el}
-    // [[]] убираем лишний массив, так как map и так создаёт новый массив
     const changeFilter = (todolistId: string, filterValue: FilterValuesType) => {
         setTodolists(todolists.map(el =>
             el.id === todolistId
                 ? {...el, filter: filterValue}
                 : el
         ))
-        // const currentTodolist = todolists.find(el => el.id === todolistId)
-        // console.log(currentTodolist)
-        // if (currentTodolist) {
-        // 	currentTodolist.filter = filterValue
-        // 	setTodolists([...todolists]) // Передаём новый массив-матрёшек, чтобы реакт проснулся
-        // 	// console.log(todolists)
-        // }
     }
     const addTask = (todolistID: string, title: string) => {
         const newTask = {
@@ -115,7 +98,6 @@ function App() {
             [newTodolistId]: []
         })
     }
-
     const updateTask = (todolistID: string, taskId: string, title: string) => {
         setTasks({
             ...tasks,
@@ -126,10 +108,10 @@ function App() {
             )
         })
     }
-
     const updateTodolist = (todolistID: string, title: string) => {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, title} : el))
     }
+
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
     const changeModeHandler = () => {
