@@ -18,6 +18,10 @@ export type TaskType = {
     isDone: boolean
 }
 
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
+
 export type TodolistType = {
     id: string,
     title: string
@@ -29,6 +33,8 @@ export type FilterValuesType = 'all' | 'active' | 'completed'
 type ThemeMode = 'dark' | 'light'
 
 function App() {
+    // BLL:
+    // Global States:
     let todolistID1 = v1()
     let todolistID2 = v1()
 
@@ -37,7 +43,7 @@ function App() {
         {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
 
-    let [tasks, setTasks] = useState({
+    let [tasks, setTasks] = useState<TasksStateType>({
         [todolistID1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -49,15 +55,16 @@ function App() {
         ],
     })
 
-    const removeTodolist = (todolistID: string) => {
-        setTodolists(todolists.filter(el => el.id !== todolistID))
-        delete tasks[todolistID]
-        setTasks({...tasks})
-    }
-    const removeTask = (todolistID: string, taskId: string) => {
+    // CRUD tasks:
+    const addTask = (todolistID: string, title: string) => {
+        const newTask = {
+            id: v1(),
+            title: title,
+            isDone: false
+        }
         setTasks({
             ...tasks,
-            [todolistID]: tasks[todolistID].filter(el => el.id !== taskId)
+            [todolistID]: [newTask, ...tasks[todolistID]]
         })
     }
     const changeTaskStatus = (todolistID: string, taskId: string, taskStatus: boolean) => {
@@ -70,35 +77,7 @@ function App() {
             )
         })
     }
-    const changeFilter = (todolistId: string, filterValue: FilterValuesType) => {
-        setTodolists(todolists.map(el =>
-            el.id === todolistId
-                ? {...el, filter: filterValue}
-                : el
-        ))
-    }
-    const addTask = (todolistID: string, title: string) => {
-        const newTask = {
-            id: v1(),
-            title: title,
-            isDone: false
-        }
-        setTasks({
-            ...tasks,
-            [todolistID]: [newTask, ...tasks[todolistID]]
-        })
-    }
-
-    const addTodolist = (title: string) => {
-        const newTodolistId = v1()
-        const newTodolist: TodolistType = {id: newTodolistId, title, filter: 'all'}
-        setTodolists([...todolists, newTodolist])
-        setTasks({
-            ...tasks,
-            [newTodolistId]: []
-        })
-    }
-    const updateTask = (todolistID: string, taskId: string, title: string) => {
+    const changeTaskTitle = (todolistID: string, taskId: string, title: string) => {
         setTasks({
             ...tasks,
             [todolistID]: tasks[todolistID].map(
@@ -108,11 +87,40 @@ function App() {
             )
         })
     }
+    const removeTask = (todolistID: string, taskId: string) => {
+        setTasks({
+            ...tasks,
+            [todolistID]: tasks[todolistID].filter(el => el.id !== taskId)
+        })
+    }
+
+    // CRUD todolist:
+    const addTodolist = (title: string) => {
+        const newTodolistId = v1()
+        const newTodolist: TodolistType = {id: newTodolistId, title, filter: 'all'}
+        setTodolists([...todolists, newTodolist])
+        setTasks({
+            ...tasks,
+            [newTodolistId]: []
+        })
+    }
+    const changeFilter = (todolistId: string, filterValue: FilterValuesType) => {
+        setTodolists(todolists.map(el =>
+            el.id === todolistId
+                ? {...el, filter: filterValue}
+                : el
+        ))
+    }
     const updateTodolist = (todolistID: string, title: string) => {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, title} : el))
     }
+    const removeTodolist = (todolistID: string) => {
+        setTodolists(todolists.filter(el => el.id !== todolistID))
+        delete tasks[todolistID]
+        setTasks({...tasks})
+    }
 
-
+    // UI:
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
     const changeModeHandler = () => {
         setThemeMode(themeMode === 'light' ? 'dark' : 'light')
@@ -170,7 +178,7 @@ function App() {
                                             changeTaskStatus={changeTaskStatus}
                                             filter={el.filter}
                                             removeTodolist={removeTodolist}
-                                            updateTask={updateTask}
+                                            updateTask={changeTaskTitle}
                                             updateTodolist={updateTodolist}
                                         />
                                     </Paper>

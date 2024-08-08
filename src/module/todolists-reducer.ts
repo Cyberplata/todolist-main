@@ -8,12 +8,22 @@ export type RemoveTodolistActionType = {
     }
 }
 
+// Igor
 export type AddTodolistActionType = {
     type: 'ADD-TODOLIST'
     payload: {
         title: string
     }
 }
+
+//Victor
+// export type AddTodolistActionType = {
+//     type: 'ADD-TODOLIST'
+//     payload: {
+//         title: string
+//         id: string
+//     }
+// }
 
 export type ChangeTodolistTitleActionType = {
     type: 'CHANGE-TODOLIST-TITLE'
@@ -54,9 +64,14 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
             return state.filter(tl => tl.id !== action.payload.id)
         }
         case 'ADD-TODOLIST': {
+            // Igor
             const newTodolistId = v1()
             const newTodolist: TodolistType = {id: newTodolistId, title: action.payload.title, filter: 'all'}
             return [...state, newTodolist] // логика по добавлению тудулиста
+
+            // Victor
+            // const {id, title} = action.payload
+            // return [{id, title, filter: 'all'}, ...state]
         }
         case 'CHANGE-TODOLIST-TITLE': {
             return state.map(tl => tl.id === action.payload.id
@@ -71,7 +86,8 @@ export const todolistsReducer = (state: TodolistType[] = initialState, action: A
             )
         }
         default:
-            throw new Error("I don't understand this type")
+            return state;
+            // throw new Error("I don't understand this type")
     }
 }
 
@@ -92,6 +108,15 @@ export const addTodolistAC = (title: string) => {
         },
     } as const
 }
+
+// Victor addTodolistAC
+// export const addTodolistAC = (id: string, title: string): AddTodolistActionType => ({
+//     type: 'ADD-TODOLIST',
+//     payload: {
+//         id,
+//         title,
+//     },
+// })
 
 export const updateTodolistAC = (todolistID: string, title: string) => {
     return {
