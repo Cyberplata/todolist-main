@@ -111,7 +111,7 @@ function App() {
                 : el
         ))
     }
-    const updateTodolist = (todolistID: string, title: string) => {
+    const changeTodolistTitle = (todolistID: string, title: string) => {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, title} : el))
     }
     const removeTodolist = (todolistID: string) => {
@@ -179,7 +179,7 @@ function App() {
                                             filter={el.filter}
                                             removeTodolist={removeTodolist}
                                             updateTask={changeTaskTitle}
-                                            updateTodolist={updateTodolist}
+                                            updateTodolist={changeTodolistTitle}
                                         />
                                     </Paper>
                                 </Grid>

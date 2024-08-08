@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {FilterValuesType, TasksStateType} from "../App";
+import {TasksStateType} from "../App";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -9,7 +9,6 @@ export type RemoveTaskActionType = {
     }
 }
 
-// Igor
 export type AddTaskActionType = {
     type: 'ADD-TASK'
     payload: {
@@ -36,11 +35,20 @@ export type ChangeTaskTitleActionType = {
     }
 }
 
+export type AddTodolistActionType = {
+    type: 'ADD-TODOLIST',
+    payload: {
+        title: string
+        todolistId: string
+    }
+}
+
 type ActionsType =
     | RemoveTaskActionType
     | AddTaskActionType
     | ChangeTaskStatusActionType
     | ChangeTaskTitleActionType
+    | AddTodolistActionType
 
 
 let todolistID1 = v1()
@@ -97,6 +105,13 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 )
             }
         }
+        case "ADD-TODOLIST": {
+            // const newTodolistId = v1()
+            return {
+                ...state,
+                [action.payload.todolistId]: []
+            }
+        }
         default:
             return state
 
@@ -141,6 +156,16 @@ export const changeTaskTitleAC = (todolistID: string, taskId: string, title: str
             todolistID,
             taskId,
             title,
+        },
+    } as const
+}
+
+export const AddTodolistAC = (title: string) => {
+    return {
+        type: 'ADD-TODOLIST',
+        payload: {
+            title,
+            todolistId: v1(),
         },
     } as const
 }
