@@ -77,7 +77,16 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
                 [action.payload.todolistID]: [newTask, ...state[action.payload.todolistID]]
             }
         }
-        case "CHANGE-TASK-STATUS":
+        case "CHANGE-TASK-STATUS": {
+            return {
+                ...state,
+                [action.payload.todolistID]: state[action.payload.todolistID].map(el =>
+                    el.id === action.payload.taskId
+                        ? {...el, isDone: action.payload.taskStatus}
+                        : el
+                )
+            }
+        }
         case "CHANGE-TASK-TITLE":
         default:
             return state
@@ -105,22 +114,14 @@ export const addTaskAC = (todolistID: string, title: string) => {
     } as const
 }
 
-// Victor addTodolistAC
-// export const addTodolistAC = (id: string, title: string): AddTodolistActionType => ({
-//     type: 'ADD-TODOLIST',
-//     payload: {
-//         id,
-//         title,
-//     },
-// })
-
-export const updateTodolistAC = (todolistID: string, title: string) => {
+export const changeTaskStatusAC = (todolistID: string, taskId: string, taskStatus: boolean) => {
     return {
-        type: 'CHANGE-TODOLIST-TITLE',
+        type: 'CHANGE-TASK-STATUS',
         payload: {
-            id: todolistID,
-            title,
-        },
+            todolistID,
+            taskId,
+            taskStatus
+        }
     } as const
 }
 
