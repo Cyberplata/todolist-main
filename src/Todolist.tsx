@@ -10,6 +10,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import {filterButtonContainerSx, getListItemSx} from "./Todolist.styles";
+import {Task} from "./Task";
 
 type PropsType = {
     todolistId: string
@@ -96,18 +97,20 @@ export const Todolist = (props: PropsType) => {
             changeTaskTitle(todolistId, task.id, newTitle)
         }
 
-        return <ListItem
+        // return <Task
+        //     key={task.id}
+        //     task={task}
+        //     removeTaskHandler={removeTaskHandler}
+        //     changeTaskStatusHandler={changeTaskStatusHandler}
+        //     updateTaskHandler={updateTaskHandler}
+        // />
+        return <Task
             key={task.id}
-            sx={getListItemSx(task.isDone)}
-        >
-            <div>
-                <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                <EditableSpan odlTitle={task.title} updateItem={updateTaskHandler}/>
-            </div>
-            <IconButton aria-label="delete" onClick={removeTaskHandler}>
-                <DeleteIcon/>
-            </IconButton>
-        </ListItem>
+            todolistId={todolistId}
+            removeTask={removeTaskHandler}
+            changeTaskStatus={changeTaskStatusHandler}
+            changeTaskTitle={updateTaskHandler}
+        />
     })
 
     return (
