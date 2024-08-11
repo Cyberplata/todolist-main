@@ -76,23 +76,24 @@ export const Todolist = (props: PropsType) => {
         changeTodolistTitle(todolistId, newTitle)
     }
 
-    const updateTaskHandler = (taskId: string, newTitle: string) => {
-        changeTaskTitle(todolistId, taskId, newTitle)
-    }
+    // const updateTaskHandler = (taskId: string, newTitle: string) => {
+    //     changeTaskTitle(todolistId, taskId, newTitle)
+    // }
 
-    const removeTaskHandler = (taskId: string) => {
-        removeTask(todolistId, taskId)
-    }
+    // const removeTaskHandler = (taskId: string) => {
+    //     removeTask(todolistId, taskId)
+    // }
 
     const mappedTask = filteredTasks().map((task) => {
-        // Todo: перенесли наверх из map
-        // const removeTaskHandler = () => {
-        //     removeTask(todolistId, task.id)
-        // }
-
+        const removeTaskHandler = () => {
+            removeTask(todolistId, task.id)
+        }
         const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
             const newStatusValue = e.currentTarget.checked
             changeTaskStatus(todolistId, task.id, newStatusValue)
+        }
+        const updateTaskHandler = (newTitle: string) => {
+            changeTaskTitle(todolistId, task.id, newTitle)
         }
 
         return <ListItem
@@ -101,11 +102,9 @@ export const Todolist = (props: PropsType) => {
         >
             <div>
                 <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                <EditableSpan odlTitle={task.title} updateItem={(newTitle) => {
-                    updateTaskHandler(task.id, newTitle)
-                }}/>
+                <EditableSpan odlTitle={task.title} updateItem={updateTaskHandler}/>
             </div>
-            <IconButton aria-label="delete" onClick={() => removeTaskHandler(task.id)}>
+            <IconButton aria-label="delete" onClick={removeTaskHandler}>
                 <DeleteIcon/>
             </IconButton>
         </ListItem>
