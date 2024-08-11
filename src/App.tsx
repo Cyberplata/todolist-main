@@ -178,8 +178,8 @@ function App() {
                                             changeTaskStatus={changeTaskStatus}
                                             filter={el.filter}
                                             removeTodolist={removeTodolist}
-                                            updateTask={changeTaskTitle}
-                                            updateTodolist={changeTodolistTitle}
+                                            changeTaskTitle={changeTaskTitle}
+                                            changeTodolistTitle={changeTodolistTitle}
                                         />
                                     </Paper>
                                 </Grid>

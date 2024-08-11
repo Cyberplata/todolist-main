@@ -21,8 +21,8 @@ type PropsType = {
     changeTaskStatus: (todolistID: string, taskId: string, taskStatus: boolean) => void
     filter: FilterValuesType
     removeTodolist: (todolistId: string) => void
-    updateTask: (todolistID: string, taskId: string, title: string) => void
-    updateTodolist: (todolistID: string, title: string) => void
+    changeTaskTitle: (todolistID: string, taskId: string, title: string) => void
+    changeTodolistTitle: (todolistID: string, title: string) => void
 }
 
 export const Todolist = (props: PropsType) => {
@@ -56,8 +56,8 @@ export const Todolist = (props: PropsType) => {
         changeFilter,
         addTask,
         changeTaskStatus,
-        updateTask,
-        updateTodolist,
+        changeTaskTitle,
+        changeTodolistTitle,
     } = props
 
     const changeFilterTasksHandler = (filter: FilterValuesType) => {
@@ -73,11 +73,15 @@ export const Todolist = (props: PropsType) => {
     }
 
     const updateTodolistHandler = (newTitle: string) => {
-        updateTodolist(todolistId, newTitle)
+        changeTodolistTitle(todolistId, newTitle)
     }
 
     const updateTaskHandler = (taskId: string, newTitle: string) => {
-        updateTask(todolistId, taskId, newTitle)
+        changeTaskTitle(todolistId, taskId, newTitle)
+    }
+
+    const removeTaskHandler = (taskId: string) => {
+        removeTask(todolistId, taskId)
     }
 
     return (
@@ -96,10 +100,10 @@ export const Todolist = (props: PropsType) => {
                     ? <p>Тасок нет</p>
                     : <List>
                         {filteredTasks().map((task) => {
-
-                            const removeTaskHandler = () => {
-                                removeTask(todolistId, task.id)
-                            }
+                            // Todo: перенесли наверх из map
+                            // const removeTaskHandler = () => {
+                            //     removeTask(todolistId, task.id)
+                            // }
 
                             const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                                 const newStatusValue = e.currentTarget.checked
@@ -116,7 +120,7 @@ export const Todolist = (props: PropsType) => {
                                         updateTaskHandler(task.id, newTitle)
                                     }}/>
                                 </div>
-                                <IconButton aria-label="delete" onClick={removeTaskHandler}>
+                                <IconButton aria-label="delete" onClick={() => removeTaskHandler(task.id)}>
                                     <DeleteIcon/>
                                 </IconButton>
                             </ListItem>
