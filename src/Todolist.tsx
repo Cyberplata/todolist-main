@@ -1,4 +1,4 @@
-import {FilterValuesType, TaskType} from "./App";
+import {FilterValuesType, TaskType, TodolistType} from "./App";
 import {ChangeEvent} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -35,6 +35,17 @@ export const Todolist = (props: PropsType) => {
     // 	tasksForTodolist = tasks.filter(task => task.isDone)
     // }
 
+    const filteredTasks = () => {
+        let tasksForTodolist = tasks;
+        if (filter === 'active') {
+            tasksForTodolist = tasks.filter(task => !task.isDone)
+        }
+        if (filter === 'completed') {
+            tasksForTodolist = tasks.filter(task => task.isDone)
+        }
+        return tasksForTodolist;
+    }
+
     const {
         removeTodolist,
         todolistId,
@@ -46,7 +57,7 @@ export const Todolist = (props: PropsType) => {
         addTask,
         changeTaskStatus,
         updateTask,
-        updateTodolist
+        updateTodolist,
     } = props
 
     const changeFilterTasksHandler = (filter: FilterValuesType) => {
@@ -84,7 +95,7 @@ export const Todolist = (props: PropsType) => {
                 tasks.length === 0
                     ? <p>Тасок нет</p>
                     : <List>
-                        {tasks.map((task) => {
+                        {filteredTasks().map((task) => {
 
                             const removeTaskHandler = () => {
                                 removeTask(todolistId, task.id)
