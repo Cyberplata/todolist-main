@@ -1,13 +1,17 @@
 import {v1} from "uuid";
 import {TasksStateType} from "../App";
 
-export type RemoveTaskActionType = {
-    type: 'REMOVE-TASK'
-    payload: {
-        todolistID: string
-        taskId: string
-    }
-}
+// Стандартная запись через объект action
+// export type RemoveTaskActionType = {
+//     type: 'REMOVE-TASK'
+//     payload: {
+//         todolistID: string
+//         taskId: string
+//     }
+// }
+
+// Запись через ReturnType
+export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 
 export type AddTaskActionType = {
     type: 'ADD-TASK'
