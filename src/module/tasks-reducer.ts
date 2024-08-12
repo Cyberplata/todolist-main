@@ -62,7 +62,6 @@ type ActionsType =
     | AddTodolistActionType
     | RemoveTodolistActionType
 
-
 let todolistID1 = v1()
 let todolistID2 = v1()
 
@@ -83,7 +82,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case "REMOVE-TASK": {
             return {
                 ...state,
-                [action.payload.todolistID]: state[action.payload.todolistID].filter(el => el.id !== action.payload.taskId)
+                [action.todolistID]: state[action.todolistID].filter(el => el.id !== action.taskId)
             }
         }
         case "ADD-TASK": {
@@ -134,13 +133,23 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
     }
 }
 
+// с полем payload
+// export const removeTaskAC = (todolistID: string, taskId: string) => {
+//     return {
+//         type: 'REMOVE-TASK',
+//         payload: {
+//             todolistID,
+//             taskId,
+//         },
+//     } as const
+// }
+
+//без payload
 export const removeTaskAC = (todolistID: string, taskId: string) => {
     return {
         type: 'REMOVE-TASK',
-        payload: {
-            todolistID,
-            taskId,
-        },
+        todolistID,
+        taskId,
     } as const
 }
 
