@@ -108,25 +108,12 @@ import { getListItemSx } from './Todolist.styles';
 
 type TaskProps = {
     task: TaskType;
-    todolistId: string;
-    removeTask: (todolistID: string, taskId: string) => void;
-    changeTaskStatus: (todolistID: string, taskId: string, taskStatus: boolean) => void;
-    changeTaskTitle: (todolistID: string, taskId: string, title: string) => void;
+    removeTaskHandler: () => void;
+    changeTaskStatusHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+    updateTaskHandler: (newTitle: string) => void;
 };
 
-export const Task: React.FC<TaskProps> = ({ task, todolistId, removeTask, changeTaskStatus, changeTaskTitle }) => {
-    const removeTaskHandler = () => {
-        removeTask(todolistId, task.id);
-    };
-
-    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const newStatusValue = e.currentTarget.checked;
-        changeTaskStatus(todolistId, task.id, newStatusValue);
-    };
-
-    const updateTaskHandler = (newTitle: string) => {
-        changeTaskTitle(todolistId, task.id, newTitle);
-    };
+export const Task: React.FC<TaskProps> = ({ task, removeTaskHandler, changeTaskStatusHandler, updateTaskHandler }) => {
 
     return (
         <ListItem key={task.id} sx={getListItemSx(task.isDone)}>

@@ -36,17 +36,6 @@ export const Todolist = (props: PropsType) => {
     // 	tasksForTodolist = tasks.filter(task => task.isDone)
     // }
 
-    const filteredTasks = () => {
-        let tasksForTodolist = tasks;
-        if (filter === 'active') {
-            tasksForTodolist = tasks.filter(task => !task.isDone)
-        }
-        if (filter === 'completed') {
-            tasksForTodolist = tasks.filter(task => task.isDone)
-        }
-        return tasksForTodolist;
-    }
-
     const {
         removeTodolist,
         todolistId,
@@ -85,7 +74,21 @@ export const Todolist = (props: PropsType) => {
     //     removeTask(todolistId, taskId)
     // }
 
+    // Отфильтрованные таски, вынес из map-а компоненты App
+    const filteredTasks = () => {
+        let tasksForTodolist = tasks;
+        if (filter === 'active') {
+            tasksForTodolist = tasks.filter(task => !task.isDone)
+        }
+        if (filter === 'completed') {
+            tasksForTodolist = tasks.filter(task => task.isDone)
+        }
+        return tasksForTodolist;
+    }
+
+    // Отмэпленные таски
     const mappedTask = filteredTasks().map((task) => {
+
         const removeTaskHandler = () => {
             removeTask(todolistId, task.id)
         }
@@ -96,20 +99,12 @@ export const Todolist = (props: PropsType) => {
         const updateTaskHandler = (newTitle: string) => {
             changeTaskTitle(todolistId, task.id, newTitle)
         }
-
-        // return <Task
-        //     key={task.id}
-        //     task={task}
-        //     removeTaskHandler={removeTaskHandler}
-        //     changeTaskStatusHandler={changeTaskStatusHandler}
-        //     updateTaskHandler={updateTaskHandler}
-        // />
         return <Task
             key={task.id}
-            todolistId={todolistId}
-            removeTask={removeTaskHandler}
-            changeTaskStatus={changeTaskStatusHandler}
-            changeTaskTitle={updateTaskHandler}
+            task={task}
+            removeTaskHandler={removeTaskHandler}
+            changeTaskStatusHandler={changeTaskStatusHandler}
+            updateTaskHandler={updateTaskHandler}
         />
     })
 
