@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {TasksStateType, TaskType} from "../App";
-import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
+import {addTodolistAC, AddTodolistActionType, removeTodolistAC, RemoveTodolistActionType} from "./todolists-reducer";
 
 // Стандартная запись через объект action
 // export type RemoveTaskActionType = {
@@ -53,9 +53,9 @@ export type AddTaskActionType = ReturnType<typeof addTaskAC>
 export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
 export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
 
-// Используем Action Type из todolists-reducer.ts
-export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
-export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
+// Используем Action Type из todolists-reducer.ts просто импортим, не нужно их создавать
+// export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
+// export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 
 type ActionsType =
     | RemoveTaskActionType
@@ -127,8 +127,17 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             }
         }
         case "REMOVE-TODOLIST": {
-            delete state[action.todolistID]
-            return {...state}
+            // first variant
+            // let copyState = {...state}
+            // delete copyState[action.todolistID]
+            // return copyState
+
+            // second variant
+            const {
+                [action.todolistID]: [],
+                ...rest
+            } = state
+            return rest
         }
         default:
             return state
