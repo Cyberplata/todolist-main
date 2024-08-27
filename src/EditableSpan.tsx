@@ -11,7 +11,7 @@ type Props = {
 export const EditableSpan = ({odlTitle, updateItem}: Props) => {
     const [editMode, setEditMode] = useState(false)
     const [newTitle, setNewTitle] = useState(odlTitle)
-    console.log(newTitle)
+    // console.log(newTitle)
 
     const activateEditModeHandler = () => {
         setEditMode(!editMode)
