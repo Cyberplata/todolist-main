@@ -54,6 +54,15 @@ function AppWithReducers() {
     let todolistID1 = v1()
     let todolistID2 = v1()
 
+    // // Пример с необязательной функцией в useReducer, но нужно правильно протипизировать ещё
+    // const initialStateTodolists = (): TodolistType[] => {
+    //     return [
+    //         {id: todolistID1, title: 'What to learn', filter: 'all'},
+    //         {id: todolistID2, title: 'What to buy', filter: 'all'},
+    //     ]
+    // }
+    // let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, null, initialStateTodolists)
+
     let [todolists, dispatchToTodolists] = useReducer<Reducer<TodolistType[], TodolistsReducerActionsType>>(todolistsReducer, [
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'all'},
