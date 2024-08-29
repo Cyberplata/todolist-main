@@ -11,14 +11,21 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {AppBarHeader} from "./AppBarHeader";
 import {
-    ActionsType,
     addTodolistAC,
     changeFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
-    todolistsReducer
+    todolistsReducer,
+    TodolistsReducerActionsType
 } from "./module/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./module/tasks-reducer";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    tasksReducer,
+    TasksReducerActionsType
+} from "./module/tasks-reducer";
 
 
 export type TaskType = {
@@ -47,12 +54,12 @@ function AppWithReducers() {
     let todolistID1 = v1()
     let todolistID2 = v1()
 
-    let [todolists, dispatchToTodolists] = useReducer<Reducer<TodolistType[], ActionsType>>(todolistsReducer, [
+    let [todolists, dispatchToTodolists] = useReducer<Reducer<TodolistType[], TodolistsReducerActionsType>>(todolistsReducer, [
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
 
-    let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
+    let [tasks, dispatchToTasks] = useReducer<Reducer<TasksStateType, TasksReducerActionsType>>(tasksReducer, {
         [todolistID1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
