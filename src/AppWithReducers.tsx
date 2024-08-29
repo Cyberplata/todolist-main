@@ -1,6 +1,6 @@
 import './App.css';
 import {Todolist} from "./Todolist";
-import {useReducer, useState} from "react";
+import {Reducer, useReducer, useState} from "react";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import Box from '@mui/material/Box';
@@ -11,6 +11,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {AppBarHeader} from "./AppBarHeader";
 import {
+    ActionsType,
     addTodolistAC,
     changeFilterAC,
     changeTodolistTitleAC,
@@ -46,7 +47,7 @@ function AppWithReducers() {
     let todolistID1 = v1()
     let todolistID2 = v1()
 
-    let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
+    let [todolists, dispatchToTodolists] = useReducer<Reducer<TodolistType[], ActionsType>>(todolistsReducer, [
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
