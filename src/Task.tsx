@@ -98,7 +98,7 @@
 // };
 
 import React, { ChangeEvent } from 'react';
-import { TaskType } from './App';
+import { TaskType } from './app/App';
 import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';

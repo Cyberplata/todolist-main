@@ -1,19 +1,18 @@
 import './App.css';
-import {Todolist} from "./Todolist";
 import {useState} from "react";
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "../AddItemForm";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import {AppBarHeader} from "./AppBarHeader";
-import {addTodolistAC, changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./module/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./module/tasks-reducer";
+import {AppBarHeader} from "../AppBarHeader";
+import {addTodolistAC, changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../module/todolists-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../module/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "./app/store";
-import {TodolistWithRedux} from "./TodolistWithRedux";
+import {RootState} from "./store";
+import {TodolistWithRedux} from "../TodolistWithRedux";
 
 
 export type TaskType = {
@@ -36,7 +35,7 @@ export type FilterValuesType = 'all' | 'active' | 'completed'
 
 type ThemeMode = 'dark' | 'light'
 
-function AppWithRedux() {
+function App() {
     // BLL:
     // Global States:
 
@@ -167,4 +166,4 @@ function AppWithRedux() {
     );
 }
 
-export default AppWithRedux;
+export default App;

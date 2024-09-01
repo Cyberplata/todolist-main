@@ -1,4 +1,4 @@
-import {FilterValuesType, TaskType, TodolistType} from "./App";
+import {FilterValuesType, TaskType, TodolistType} from "./app/App";
 import {ChangeEvent} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -17,7 +17,7 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./
 // Отдаём todolist вместо всех пропсов, потому что, думаем, что мне нужно для отрисовки моих компонент? Нам нужны тудулисты и таски.
 // Могу ли я вытащить тудулисты зная id? - да, с использованием useSelector().
 // Могу ли я вытащить таски зная id? - да, по id.
-// Но когда мы оцениваем AppWithRedux мы уже достали наш объект todolist с помощью useSelector()
+// Но когда мы оцениваем App мы уже достали наш объект todolist с помощью useSelector()
 // И чтобы лишний раз не пинать наш store и не делать лишних перерисовок, передаём через пропсы только todolist
 type PropsType = {
     todolist: TodolistType
