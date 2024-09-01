@@ -1,7 +1,6 @@
 import './App.css';
 import {Todolist} from "./Todolist";
-import {useReducer, useState} from "react";
-import {v1} from "uuid";
+import {useState} from "react";
 import {AddItemForm} from "./AddItemForm";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -10,22 +9,11 @@ import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {AppBarHeader} from "./AppBarHeader";
-import {
-    addTodolistAC,
-    changeFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
-    todolistsReducer
-} from "./module/todolists-reducer";
-import {
-    addTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
-    removeTaskAC,
-    tasksReducer
-} from "./module/tasks-reducer";
+import {addTodolistAC, changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./module/todolists-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./module/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./app/store";
+import {TodolistWithRedux} from "./TodolistWithRedux";
 
 
 export type TaskType = {
@@ -54,7 +42,12 @@ function AppWithRedux() {
 
     // Переписали на Redux
     const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists)
-    const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
+
+    // Селектор всё равно работает, даже если данные не используются.
+    // Фактический мы привязали нашу компоненту и ререндер, что делать не стоит,
+    // так как это лишний ререндер
+    // const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
+
     const dispatch = useDispatch()
 
     // let todolistID1 = v1()
@@ -157,21 +150,10 @@ function AppWithRedux() {
                             //     tasksForTodolist = tasks[el.id].filter(task => task.isDone)
                             // }
                             return (
-                                <Grid item>
+                                <Grid key={el.id} item>
                                     <Paper elevation={6} sx={{p: '20px'}}>
-                                        <Todolist
-                                            key={el.id}
-                                            todolistId={el.id}
-                                            title={el.title}
-                                            tasks={tasks[el.id]}
-                                            removeTask={removeTask}
-                                            changeFilter={changeFilter}
-                                            addTask={addTask}
-                                            changeTaskStatus={changeTaskStatus}
-                                            filter={el.filter}
-                                            removeTodolist={removeTodolist}
-                                            changeTaskTitle={changeTaskTitle}
-                                            changeTodolistTitle={changeTodolistTitle}
+                                        <TodolistWithRedux
+                                            todolist={el}
                                         />
                                     </Paper>
                                 </Grid>

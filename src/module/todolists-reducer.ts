@@ -6,21 +6,12 @@ export type RemoveTodolistActionType = {
     todolistID: string
 }
 
-// Igor
+// Без payload
 export type AddTodolistActionType = {
     type: 'ADD-TODOLIST'
     title: string
     newTodolistId: string
 }
-
-//Victor
-// export type AddTodolistActionType = {
-//     type: 'ADD-TODOLIST'
-//     payload: {
-//         title: string
-//         id: string
-//     }
-// }
 
 export type ChangeTodolistTitleActionType = {
     type: 'CHANGE-TODOLIST-TITLE'
@@ -41,13 +32,14 @@ export type TodolistsReducerActionsType =
     | ChangeTodolistFilterActionType
 
 
-let todolistID1 = v1()
-let todolistID2 = v1()
+// let todolistID1 = v1()
+// let todolistID2 = v1()
 
 // const initialState: TodolistType[] = [
 //     {id: todolistID1, title: 'What to learn', filter: 'all'},
 //     {id: todolistID2, title: 'What to buy', filter: 'all'},
 // ]
+
 const initialState: TodolistType[] = []
 
 export const todolistsReducer = (state: TodolistType[] = initialState, action: TodolistsReducerActionsType): TodolistType[] => {

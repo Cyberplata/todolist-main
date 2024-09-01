@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {TasksStateType, TaskType} from "../App";
-import {addTodolistAC, AddTodolistActionType, removeTodolistAC, RemoveTodolistActionType} from "./todolists-reducer";
+import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
 
 // Стандартная запись через объект action
 // export type RemoveTaskActionType = {
@@ -65,19 +65,19 @@ export type TasksReducerActionsType =
     | AddTodolistActionType
     | RemoveTodolistActionType
 
-let todolistID1 = v1()
-let todolistID2 = v1()
+// let todolistID1 = v1()
+// let todolistID2 = v1()
 
 const initialState: TasksStateType = {
-    [todolistID1]: [
-        {id: v1(), title: 'HTML&CSS', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'ReactJS', isDone: false},
-    ],
-    [todolistID2]: [
-        {id: v1(), title: 'Rest API', isDone: true},
-        {id: v1(), title: 'GraphQL', isDone: false},
-    ],
+    // [todolistID1]: [
+    //     {id: v1(), title: 'HTML&CSS', isDone: true},
+    //     {id: v1(), title: 'JS', isDone: true},
+    //     {id: v1(), title: 'ReactJS', isDone: false},
+    // ],
+    // [todolistID2]: [
+    //     {id: v1(), title: 'Rest API', isDone: true},
+    //     {id: v1(), title: 'GraphQL', isDone: false},
+    // ],
 }
 
 export const tasksReducer = (state: TasksStateType = initialState, action: TasksReducerActionsType): TasksStateType => {
@@ -192,6 +192,7 @@ export const changeTaskTitleAC = (todolistID: string, taskId: string, title: str
     } as const
 }
 
+// // C полем payload
 // export const RemoveTodolistAC = (todolistId: string) => {
 //     return {
 //         type: 'REMOVE-TODOLIST',
