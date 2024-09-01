@@ -21,7 +21,7 @@ beforeEach(() => {
 
 test('correct task should be deleted from correct array', () => {
 
-    const action = removeTaskAC('todolistId2', '2')
+    const action = removeTaskAC({todolistID: 'todolistId2', taskId: '2'})
 
     const endState = tasksReducer(startState, action)
 
@@ -52,7 +52,7 @@ test('correct task should be added to correct array', () => {
     //     ]
     // }
 
-    const action = addTaskAC('todolistId2', 'juce')
+    const action = addTaskAC({todolistID: 'todolistId2', title: 'juce'})
 
     const endState = tasksReducer(startState, action)
 
@@ -77,7 +77,7 @@ test('status of specified task should be changed', () => {
     //     ]
     // }
 
-    const action = changeTaskStatusAC('todolistId2', '2', false)
+    const action = changeTaskStatusAC({todolistID: 'todolistId2', taskId: '2', taskStatus: false})
 
     const endState = tasksReducer(startState, action)
 
@@ -101,7 +101,7 @@ test('title of specified task should be changed', () => {
 
     const newTaskTitle = 'New Task'
 
-    const action = changeTaskTitleAC('todolistId2', '2', newTaskTitle)
+    const action = changeTaskTitleAC({todolistID: 'todolistId2', taskId: '2', title: newTaskTitle})
 
     const endState = tasksReducer(startState, action)
 

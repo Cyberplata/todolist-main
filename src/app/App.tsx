@@ -70,19 +70,19 @@ function App() {
 
     // CRUD tasks:
     const addTask = (todolistID: string, title: string) => {
-        const action = addTaskAC(todolistID, title)
+        const action = addTaskAC({todolistID, title})
         dispatch(action)
     }
     const changeTaskStatus = (todolistID: string, taskId: string, taskStatus: boolean) => {
-        const action = changeTaskStatusAC(todolistID, taskId, taskStatus)
+        const action = changeTaskStatusAC({todolistID, taskId, taskStatus})
         dispatch(action)
     }
     const changeTaskTitle = (todolistID: string, taskId: string, title: string) => {
-        const action = changeTaskTitleAC(todolistID, taskId, title)
+        const action = changeTaskTitleAC({todolistID, taskId, title})
         dispatch(action)
     }
     const removeTask = (todolistID: string, taskId: string) => {
-        const action = removeTaskAC(todolistID, taskId)
+        const action = removeTaskAC({todolistID, taskId})
         dispatch(action)
     }
 
@@ -91,12 +91,12 @@ function App() {
         const action = addTodolistAC(title)
         dispatch(action)
     }
-    const changeFilter = (todolistId: string, filterValue: FilterValuesType) => {
-        const action = changeFilterAC(todolistId, filterValue)
+    const changeFilter = (id: string, filter: FilterValuesType) => {
+        const action = changeFilterAC({id, filter})
         dispatch(action)
     }
-    const changeTodolistTitle = (todolistID: string, title: string) => {
-        const action = changeTodolistTitleAC(todolistID, title)
+    const changeTodolistTitle = (id: string, title: string) => {
+        const action = changeTodolistTitleAC({id, title})
         dispatch(action)
     }
     const removeTodolist = (todolistID: string) => {

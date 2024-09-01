@@ -44,7 +44,8 @@ export const TodolistWithRedux = ({todolist}: PropsType) => {
     const dispatch = useDispatch()
 
     const changeFilterTasksHandler = (filter: FilterValuesType) => {
-        dispatch(changeFilterAC(id, filter))
+        // dispatch(changeFilterAC(id, filter))
+        dispatch(changeFilterAC({id, filter}))
     }
 
     const deleteAllTodoHandler = () => {
@@ -52,11 +53,11 @@ export const TodolistWithRedux = ({todolist}: PropsType) => {
     }
 
     const addTaskHandler = (title: string) => {
-        dispatch(addTaskAC(id, title))
+        dispatch(addTaskAC({todolistID: id, title}))
     }
 
-    const updateTodolistHandler = (newTitle: string) => {
-        dispatch(changeTodolistTitleAC(id, newTitle))
+    const updateTodolistHandler = (title: string) => {
+        dispatch(changeTodolistTitleAC({id, title}))
     }
 
     // const updateTaskHandler = (taskId: string, newTitle: string) => {
@@ -82,14 +83,14 @@ export const TodolistWithRedux = ({todolist}: PropsType) => {
     // Отмэпленные таски из jsx Todolist
     const mappedTask = filteredTasks().map((task) => {
         const removeTaskHandler = () => {
-            dispatch(removeTaskAC(id, task.id))
+            dispatch(removeTaskAC({todolistID: id, taskId: task.id}))
         }
         const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
             const newStatusValue = e.currentTarget.checked
-            dispatch(changeTaskStatusAC(id, task.id, newStatusValue))
+            dispatch(changeTaskStatusAC({todolistID: id, taskId: task.id, taskStatus: newStatusValue}))
         }
         const updateTaskHandler = (newTitle: string) => {
-            dispatch(changeTaskTitleAC(id, task.id, newTitle))
+            dispatch(changeTaskTitleAC({todolistID: id, taskId: task.id, title: newTitle}))
         }
         return <Task
             key={task.id}

@@ -141,7 +141,7 @@ export const tasksReducer = (
 
             // second variant
             const {
-                [action.todolistID]: [],
+                [action.payload.id]: [],
                 ...rest
             } = state
             return rest
