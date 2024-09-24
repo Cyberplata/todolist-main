@@ -24,6 +24,8 @@ type PropsType = {
 }
 
 export const TodolistWithRedux = ({todolist}: PropsType) => {
+    console.log("TodolistWithRedux is called")
+
     // todo: перенести
     // let tasksForTodolist = tasks
     // if (el.filter === 'active') {
