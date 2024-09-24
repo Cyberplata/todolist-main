@@ -9,6 +9,7 @@ type Props = {
     addItem: (title: string) => void
 };
 export const AddItemForm = ({addItem}: Props) => {
+    console.log("AddItemForm is called")
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -26,7 +27,9 @@ export const AddItemForm = ({addItem}: Props) => {
     }
 
     const addItemOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
+        if (error !== null) {
+            setError(null)
+        }
         if (event.key === 'Enter') {
             addItemHandler()
         }
@@ -42,13 +45,6 @@ export const AddItemForm = ({addItem}: Props) => {
 
     return (
         <Box sx={filterButtonContainerSx}>
-            {/*<input*/}
-            {/*    className={error ? 'error': ''}*/}
-            {/*    value={title}*/}
-            {/*    onChange={changeItemTitleHandler}*/}
-            {/*    onKeyUp={addItemOnKeyUpHandler}*/}
-            {/*/>*/}
-
             <TextField
                 id="outlined-basic"
                 label="Enter a title"
@@ -65,14 +61,6 @@ export const AddItemForm = ({addItem}: Props) => {
                 <AddBoxIcon />
             </IconButton>
 
-            {/*<Button*/}
-            {/*    variant="contained"*/}
-            {/*    onClick={addItemHandler}*/}
-            {/*    // size='small'*/}
-            {/*    // style={buttonStyles}*/}
-            {/*>+</Button>*/}
-            {/*<Button title={'+'} onClick={addItemHandler}/>*/}
-            {/*{error && <div className={'error-message'}>{error}</div> }*/}
         </Box>
     );
 };
