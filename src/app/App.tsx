@@ -47,7 +47,7 @@ function App() {
     // Селектор всё равно работает, даже если данные не используются.
     // Фактический мы привязали нашу компоненту и ререндер, что делать не стоит,
     // так как это лишний ререндер
-    // const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
+    const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
 
     const dispatch = useDispatch()
 
@@ -71,10 +71,10 @@ function App() {
     // })
 
     // CRUD tasks:
-    const addTask = (todolistID: string, title: string) => {
+    const addTask = useCallback((todolistID: string, title: string) => {
         const action = addTaskAC({todolistID, title})
         dispatch(action)
-    }
+    },[])
     const changeTaskStatus = (todolistID: string, taskId: string, taskStatus: boolean) => {
         const action = changeTaskStatusAC({todolistID, taskId, taskStatus})
         dispatch(action)
@@ -155,7 +155,7 @@ function App() {
                                     <Paper elevation={6} sx={{p: '20px'}}>
                                         <Todolist todolistId={el.id}
                                                   title={el.title}
-                                                  tasks={todolists[el.id]}
+                                                  tasks={tasks[el.id]}
                                                   removeTask={removeTask}
                                                   changeFilter={changeFilter}
                                                   addTask={addTask}

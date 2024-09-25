@@ -1,5 +1,5 @@
 import {FilterValuesType, TaskType, TodolistType} from "./app/App";
-import {ChangeEvent} from "react";
+import {ChangeEvent, useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton';
@@ -58,9 +58,9 @@ export const Todolist = (props: PropsType) => {
         removeTodolist(todolistId)
     }
 
-    const addTaskHandler = (title: string) => {
+    const addTaskHandler = useCallback((title: string) => {
         addTask(todolistId, title)
-    }
+    },[addTask, todolistId])
 
     const updateTodolistHandler = (newTitle: string) => {
         changeTodolistTitle(todolistId, newTitle)
