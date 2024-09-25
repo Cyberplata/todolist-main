@@ -1,5 +1,5 @@
 import {FilterValuesType, TaskType, TodolistType} from "./app/App";
-import {ChangeEvent} from "react";
+import {ChangeEvent, useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton';
@@ -54,9 +54,9 @@ export const TodolistWithRedux = ({todolist}: PropsType) => {
         dispatch(removeTodolistAC(id))
     }
 
-    const addTaskHandler = (title: string) => {
+    const addTaskHandler = useCallback((title: string) => {
         dispatch(addTaskAC({todolistID: id, title}))
-    }
+    }, []);
 
     const updateTodolistHandler = (title: string) => {
         dispatch(changeTodolistTitleAC({id, title}))

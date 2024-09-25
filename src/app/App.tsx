@@ -1,5 +1,5 @@
 import './App.css';
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {AddItemForm} from "../AddItemForm";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -88,10 +88,10 @@ function App() {
     }
 
     // CRUD todolist:
-    const addTodolist = (title: string) => {
+    const addTodolist = useCallback((title: string) => {
         const action = addTodolistAC(title)
         dispatch(action)
-    }
+    }, [])
     const changeFilter = (id: string, filter: FilterValuesType) => {
         const action = changeFilterAC({id, filter})
         dispatch(action)
