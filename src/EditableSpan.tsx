@@ -2,13 +2,13 @@ import {ChangeEvent, useState} from "react";
 import TextField from "@mui/material/TextField";
 import {Simulate} from "react-dom/test-utils";
 
-type Props = {
+type EditableSpanType = {
     odlTitle: string
     updateItem: (newTitle: string) => void
     // newTaskId: string
 };
 
-export const EditableSpan = ({odlTitle, updateItem}: Props) => {
+export const EditableSpan = ({odlTitle, updateItem}: EditableSpanType) => {
     const [editMode, setEditMode] = useState(false)
     const [newTitle, setNewTitle] = useState(odlTitle)
     // console.log(newTitle)

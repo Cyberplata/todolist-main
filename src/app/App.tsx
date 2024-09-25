@@ -36,7 +36,7 @@ export type FilterValuesType = 'all' | 'active' | 'completed'
 type ThemeMode = 'dark' | 'light'
 
 function App() {
-    console.log("App is called")
+    // console.log("App is called")
     // BLL:
     // Global States:
 
