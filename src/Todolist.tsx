@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import {filterButtonContainerSx} from "./Todolist.styles";
 import {Task} from "./Task";
 import {ButtonWithMemo} from "./ButtonWithMemo";
+import {TaskValera} from "./TaskValera";
 
 type PropsType = {
     todolistId: string
@@ -57,9 +58,9 @@ export const Todolist = memo((props: PropsType) => {
         addTask(todolistId, title)
     }, [addTask, todolistId])
 
-    const updateTodolistHandler = (newTitle: string) => {
+    const updateTodolistHandler = useCallback((newTitle: string) => {
         changeTodolistTitle(todolistId, newTitle)
-    }
+    },[changeTodolistTitle, todolistId])
 
     // const updateTaskHandler = (taskId: string, newTitle: string) => {
     //     changeTaskTitle(todolistId, taskId, newTitle)
@@ -82,24 +83,33 @@ export const Todolist = memo((props: PropsType) => {
     }
 
     // Отмэпленные таски
-    const mappedTask = filteredTasks().map((task) => {
+    // const mappedTask = filteredTasks().map((t) => {
+    //     const removeTaskHandler = () => {
+    //         removeTask(todolistId, t.id)
+    //     }
+    //     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    //         const newStatusValue = e.currentTarget.checked
+    //         changeTaskStatus(todolistId, t.id, newStatusValue)
+    //     }
+    //     const updateTaskHandler = (newTitle: string) => {
+    //         changeTaskTitle(todolistId, t.id, newTitle)
+    //     }
+    //     return <Task
+    //         key={t.id}
+    //         task={t}
+    //         removeTaskHandler={removeTaskHandler}
+    //         changeTaskStatusHandler={changeTaskStatusHandler}
+    //         updateTaskHandler={updateTaskHandler}
+    //     />
+    // })
 
-        const removeTaskHandler = () => {
-            removeTask(todolistId, task.id)
-        }
-        const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            const newStatusValue = e.currentTarget.checked
-            changeTaskStatus(todolistId, task.id, newStatusValue)
-        }
-        const updateTaskHandler = (newTitle: string) => {
-            changeTaskTitle(todolistId, task.id, newTitle)
-        }
-        return <Task
-            key={task.id}
-            task={task}
-            removeTaskHandler={removeTaskHandler}
-            changeTaskStatusHandler={changeTaskStatusHandler}
-            updateTaskHandler={updateTaskHandler}
+    const mappedTask = filteredTasks().map((t) => {
+        return <TaskValera key={t.id}
+                           todolistId={todolistId}
+                           task={t}
+                           removeTask={removeTask}
+                           changeTaskStatus={changeTaskStatus}
+                           changeTaskTitle={changeTaskTitle}
         />
     })
 

@@ -1,4 +1,4 @@
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, memo, useState} from "react";
 import TextField from "@mui/material/TextField";
 
 type EditableSpanType = {
@@ -7,7 +7,9 @@ type EditableSpanType = {
     // newTaskId: string
 };
 
-export const EditableSpan = ({odlTitle, updateItem}: EditableSpanType) => {
+export const EditableSpan = memo(({odlTitle, updateItem}: EditableSpanType) => {
+    console.log("EditableSpan is called")
+
     const [editMode, setEditMode] = useState(false)
     const [newTitle, setNewTitle] = useState(odlTitle)
     // console.log(newTitle)
@@ -38,4 +40,4 @@ export const EditableSpan = ({odlTitle, updateItem}: EditableSpanType) => {
             />
             : <span onDoubleClick={activateEditModeHandler}>{odlTitle}</span>
     );
-};
+});

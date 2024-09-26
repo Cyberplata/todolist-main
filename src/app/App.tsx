@@ -78,15 +78,15 @@ function App() {
     const changeTaskStatus = useCallback((todolistID: string, taskId: string, taskStatus: boolean) => {
         const action = changeTaskStatusAC({todolistID, taskId, taskStatus})
         dispatch(action)
-    },[]);
+    },[dispatch]);
     const changeTaskTitle = useCallback((todolistID: string, taskId: string, title: string) => {
         const action = changeTaskTitleAC({todolistID, taskId, title})
         dispatch(action)
-    },[]);
+    },[dispatch]);
     const removeTask = useCallback((todolistID: string, taskId: string) => {
         const action = removeTaskAC({todolistID, taskId})
         dispatch(action)
-    },[]);
+    },[dispatch]);
 
     // CRUD todolist:
     const addTodolist = useCallback((title: string) => {
@@ -96,15 +96,15 @@ function App() {
     const changeFilter = useCallback((id: string, filter: FilterValuesType) => {
         const action = changeFilterAC({id, filter})
         dispatch(action)
-    },[]);
+    },[dispatch]);
     const changeTodolistTitle = useCallback((id: string, title: string) => {
         const action = changeTodolistTitleAC({id, title})
         dispatch(action)
-    },[]);
+    },[dispatch]);
     const removeTodolist = useCallback((todolistID: string) => {
         const action = removeTodolistAC(todolistID)
         dispatch(action)
-    },[]);
+    },[dispatch]);
 
     // UI:
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
