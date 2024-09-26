@@ -9,6 +9,7 @@ import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import {filterButtonContainerSx} from "./Todolist.styles";
 import {Task} from "./Task";
+import {HocButton} from "./HOCButton";
 
 type PropsType = {
     todolistId: string
@@ -45,9 +46,9 @@ export const Todolist = memo((props: PropsType) => {
     //     changeFilter(todolistId, filter)
     // }
 
-    const onAllClickHandler = () => changeFilter(todolistId, 'all')
-    const onActiveClickHandler = () => changeFilter(todolistId, 'active')
-    const onCompletedClickHandler = () => changeFilter(todolistId, 'completed')
+    // const onAllClickHandler = useCallback(() => changeFilter(todolistId, 'all'),[changeFilter, todolistId])
+    // const onActiveClickHandler = useCallback(() => changeFilter(todolistId, 'active'),[changeFilter, todolistId])
+    // const onCompletedClickHandler = useCallback(() => changeFilter(todolistId, 'completed'),[changeFilter, todolistId])
 
     const deleteAllTodoHandler = () => {
         removeTodolist(todolistId)
@@ -121,34 +122,38 @@ export const Todolist = memo((props: PropsType) => {
                         {mappedTask}
                     </List>
             }
-            <Box sx={filterButtonContainerSx}>
+            <HocButton filter={filter}
+                       changeFilter={changeFilter}
+                       todolistId={todolistId}
+            />
+            {/*<Box sx={filterButtonContainerSx}>*/}
 
-                {/*<Button variant={filter === 'all' ? 'outlined' : 'contained'}*/}
-                {/*        color={"success"}*/}
-                {/*        onClick={() => changeFilterTasksHandler('all')}*/}
-                {/*>All</Button>*/}
-                {/*<Button variant={filter === 'active' ? 'outlined' : 'contained'}*/}
-                {/*        color={"primary"}*/}
-                {/*        onClick={() => changeFilterTasksHandler('active')}*/}
-                {/*>Active</Button>*/}
-                {/*<Button variant={filter === 'completed' ? 'outlined' : 'contained'}*/}
-                {/*        color={"secondary"}*/}
-                {/*        onClick={() => changeFilterTasksHandler('completed')}*/}
-                {/*>Completed</Button>*/}
+            {/*    /!*<Button variant={filter === 'all' ? 'outlined' : 'contained'}*!/*/}
+            {/*    /!*        color={"success"}*!/*/}
+            {/*    /!*        onClick={() => changeFilterTasksHandler('all')}*!/*/}
+            {/*    /!*>All</Button>*!/*/}
+            {/*    /!*<Button variant={filter === 'active' ? 'outlined' : 'contained'}*!/*/}
+            {/*    /!*        color={"primary"}*!/*/}
+            {/*    /!*        onClick={() => changeFilterTasksHandler('active')}*!/*/}
+            {/*    /!*>Active</Button>*!/*/}
+            {/*    /!*<Button variant={filter === 'completed' ? 'outlined' : 'contained'}*!/*/}
+            {/*    /!*        color={"secondary"}*!/*/}
+            {/*    /!*        onClick={() => changeFilterTasksHandler('completed')}*!/*/}
+            {/*    /!*>Completed</Button>*!/*/}
 
-                <Button variant={filter === 'all' ? 'outlined' : 'contained'}
-                        color={"success"}
-                        onClick={onAllClickHandler}
-                >All</Button>
-                <Button variant={filter === 'active' ? 'outlined' : 'contained'}
-                        color={"primary"}
-                        onClick={onActiveClickHandler}
-                >Active</Button>
-                <Button variant={filter === 'completed' ? 'outlined' : 'contained'}
-                        color={"secondary"}
-                        onClick={onCompletedClickHandler}
-                >Completed</Button>
-            </Box>
+            {/*    <Button variant={filter === 'all' ? 'outlined' : 'contained'}*/}
+            {/*            color={"success"}*/}
+            {/*            onClick={onAllClickHandler}*/}
+            {/*    >All</Button>*/}
+            {/*    <Button variant={filter === 'active' ? 'outlined' : 'contained'}*/}
+            {/*            color={"primary"}*/}
+            {/*            onClick={onActiveClickHandler}*/}
+            {/*    >Active</Button>*/}
+            {/*    <Button variant={filter === 'completed' ? 'outlined' : 'contained'}*/}
+            {/*            color={"secondary"}*/}
+            {/*            onClick={onCompletedClickHandler}*/}
+            {/*    >Completed</Button>*/}
+            {/*</Box>*/}
         </div>
     )
 })
