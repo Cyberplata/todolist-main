@@ -74,37 +74,37 @@ function App() {
     const addTask = useCallback((todolistID: string, title: string) => {
         const action = addTaskAC({todolistID, title})
         dispatch(action)
-    },[])
-    const changeTaskStatus = (todolistID: string, taskId: string, taskStatus: boolean) => {
+    },[dispatch]);
+    const changeTaskStatus = useCallback((todolistID: string, taskId: string, taskStatus: boolean) => {
         const action = changeTaskStatusAC({todolistID, taskId, taskStatus})
         dispatch(action)
-    }
-    const changeTaskTitle = (todolistID: string, taskId: string, title: string) => {
+    },[]);
+    const changeTaskTitle = useCallback((todolistID: string, taskId: string, title: string) => {
         const action = changeTaskTitleAC({todolistID, taskId, title})
         dispatch(action)
-    }
-    const removeTask = (todolistID: string, taskId: string) => {
+    },[]);
+    const removeTask = useCallback((todolistID: string, taskId: string) => {
         const action = removeTaskAC({todolistID, taskId})
         dispatch(action)
-    }
+    },[]);
 
     // CRUD todolist:
     const addTodolist = useCallback((title: string) => {
         const action = addTodolistAC(title)
         dispatch(action)
-    }, [])
-    const changeFilter = (id: string, filter: FilterValuesType) => {
+    }, [dispatch]);
+    const changeFilter = useCallback((id: string, filter: FilterValuesType) => {
         const action = changeFilterAC({id, filter})
         dispatch(action)
-    }
-    const changeTodolistTitle = (id: string, title: string) => {
+    },[]);
+    const changeTodolistTitle = useCallback((id: string, title: string) => {
         const action = changeTodolistTitleAC({id, title})
         dispatch(action)
-    }
-    const removeTodolist = (todolistID: string) => {
+    },[]);
+    const removeTodolist = useCallback((todolistID: string) => {
         const action = removeTodolistAC(todolistID)
         dispatch(action)
-    }
+    },[]);
 
     // UI:
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
@@ -159,8 +159,8 @@ function App() {
                                                   removeTask={removeTask}
                                                   changeFilter={changeFilter}
                                                   addTask={addTask}
-                                                  changeTaskStatus={changeTaskStatus}
                                                   filter={el.filter}
+                                                  changeTaskStatus={changeTaskStatus}
                                                   removeTodolist={removeTodolist}
                                                   changeTaskTitle={changeTaskTitle}
                                                   changeTodolistTitle={changeTodolistTitle}

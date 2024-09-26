@@ -9,7 +9,6 @@ type AddItemFormType = {
     addItem: (title: string) => void
 };
 export const AddItemForm = memo(({addItem}: AddItemFormType) => {
-    console.log("AddItemForm is called")
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 

@@ -1,15 +1,13 @@
-import {FilterValuesType, TaskType, TodolistType} from "./app/App";
-import {ChangeEvent, useCallback} from "react";
+import {FilterValuesType, TaskType} from "./app/App";
+import {ChangeEvent, memo, useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
-import {filterButtonContainerSx, getListItemSx} from "./Todolist.styles";
+import {filterButtonContainerSx} from "./Todolist.styles";
 import {Task} from "./Task";
 
 type PropsType = {
@@ -19,22 +17,15 @@ type PropsType = {
     removeTask: (todolistID: string, taskId: string) => void
     changeFilter: (todolistId: string, filterValue: FilterValuesType) => void
     addTask: (todolistID: string, title: string) => void
-    changeTaskStatus: (todolistID: string, taskId: string, taskStatus: boolean) => void
     filter: FilterValuesType
+    changeTaskStatus: (todolistID: string, taskId: string, taskStatus: boolean) => void
     removeTodolist: (todolistId: string) => void
     changeTaskTitle: (todolistID: string, taskId: string, title: string) => void
     changeTodolistTitle: (todolistID: string, title: string) => void
 }
 
-export const Todolist = (props: PropsType) => {
-    // todo: перенести
-    // let tasksForTodolist = tasks
-    // if (el.filter === 'active') {
-    // 	tasksForTodolist = tasks.filter(task => !task.isDone)
-    // }
-    // if (el.filter === 'completed') {
-    // 	tasksForTodolist = tasks.filter(task => task.isDone)
-    // }
+export const Todolist = memo((props: PropsType) => {
+    console.log("Todolist is called")
 
     const {
         removeTodolist,
@@ -50,9 +41,13 @@ export const Todolist = (props: PropsType) => {
         changeTodolistTitle,
     } = props
 
-    const changeFilterTasksHandler = (filter: FilterValuesType) => {
-        changeFilter(todolistId, filter)
-    }
+    // const changeFilterTasksHandler = (filter: FilterValuesType) => {
+    //     changeFilter(todolistId, filter)
+    // }
+
+    const onAllClickHandler = () => changeFilter(todolistId, 'all')
+    const onActiveClickHandler = () => changeFilter(todolistId, 'active')
+    const onCompletedClickHandler = () => changeFilter(todolistId, 'completed')
 
     const deleteAllTodoHandler = () => {
         removeTodolist(todolistId)
@@ -127,19 +122,33 @@ export const Todolist = (props: PropsType) => {
                     </List>
             }
             <Box sx={filterButtonContainerSx}>
+
+                {/*<Button variant={filter === 'all' ? 'outlined' : 'contained'}*/}
+                {/*        color={"success"}*/}
+                {/*        onClick={() => changeFilterTasksHandler('all')}*/}
+                {/*>All</Button>*/}
+                {/*<Button variant={filter === 'active' ? 'outlined' : 'contained'}*/}
+                {/*        color={"primary"}*/}
+                {/*        onClick={() => changeFilterTasksHandler('active')}*/}
+                {/*>Active</Button>*/}
+                {/*<Button variant={filter === 'completed' ? 'outlined' : 'contained'}*/}
+                {/*        color={"secondary"}*/}
+                {/*        onClick={() => changeFilterTasksHandler('completed')}*/}
+                {/*>Completed</Button>*/}
+
                 <Button variant={filter === 'all' ? 'outlined' : 'contained'}
                         color={"success"}
-                        onClick={() => changeFilterTasksHandler('all')}
+                        onClick={onAllClickHandler}
                 >All</Button>
                 <Button variant={filter === 'active' ? 'outlined' : 'contained'}
                         color={"primary"}
-                        onClick={() => changeFilterTasksHandler('active')}
+                        onClick={onActiveClickHandler}
                 >Active</Button>
                 <Button variant={filter === 'completed' ? 'outlined' : 'contained'}
                         color={"secondary"}
-                        onClick={() => changeFilterTasksHandler('completed')}
+                        onClick={onCompletedClickHandler}
                 >Completed</Button>
             </Box>
         </div>
     )
-}
+})
