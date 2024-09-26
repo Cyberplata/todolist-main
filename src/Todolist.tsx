@@ -4,12 +4,11 @@ import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import {filterButtonContainerSx} from "./Todolist.styles";
 import {Task} from "./Task";
-import {HocButton} from "./HOCButton";
+import {ButtonWithMemo} from "./ButtonWithMemo";
 
 type PropsType = {
     todolistId: string
@@ -46,9 +45,9 @@ export const Todolist = memo((props: PropsType) => {
     //     changeFilter(todolistId, filter)
     // }
 
-    // const onAllClickHandler = useCallback(() => changeFilter(todolistId, 'all'),[changeFilter, todolistId])
-    // const onActiveClickHandler = useCallback(() => changeFilter(todolistId, 'active'),[changeFilter, todolistId])
-    // const onCompletedClickHandler = useCallback(() => changeFilter(todolistId, 'completed'),[changeFilter, todolistId])
+    const onAllClickHandler = useCallback(() => changeFilter(todolistId, 'all'), [changeFilter, todolistId])
+    const onActiveClickHandler = useCallback(() => changeFilter(todolistId, 'active'), [changeFilter, todolistId])
+    const onCompletedClickHandler = useCallback(() => changeFilter(todolistId, 'completed'), [changeFilter, todolistId])
 
     const deleteAllTodoHandler = () => {
         removeTodolist(todolistId)
@@ -56,7 +55,7 @@ export const Todolist = memo((props: PropsType) => {
 
     const addTaskHandler = useCallback((title: string) => {
         addTask(todolistId, title)
-    },[addTask, todolistId])
+    }, [addTask, todolistId])
 
     const updateTodolistHandler = (newTitle: string) => {
         changeTodolistTitle(todolistId, newTitle)
@@ -122,38 +121,55 @@ export const Todolist = memo((props: PropsType) => {
                         {mappedTask}
                     </List>
             }
-            <HocButton filter={filter}
-                       changeFilter={changeFilter}
-                       todolistId={todolistId}
-            />
-            {/*<Box sx={filterButtonContainerSx}>*/}
+            {/*Мой вариант кнопки*/}
+            {/*<HocButton filter={filter}*/}
+            {/*           changeFilter={changeFilter}*/}
+            {/*           todolistId={todolistId}*/}
+            {/*/>*/}
 
-            {/*    /!*<Button variant={filter === 'all' ? 'outlined' : 'contained'}*!/*/}
-            {/*    /!*        color={"success"}*!/*/}
-            {/*    /!*        onClick={() => changeFilterTasksHandler('all')}*!/*/}
-            {/*    /!*>All</Button>*!/*/}
-            {/*    /!*<Button variant={filter === 'active' ? 'outlined' : 'contained'}*!/*/}
-            {/*    /!*        color={"primary"}*!/*/}
-            {/*    /!*        onClick={() => changeFilterTasksHandler('active')}*!/*/}
-            {/*    /!*>Active</Button>*!/*/}
-            {/*    /!*<Button variant={filter === 'completed' ? 'outlined' : 'contained'}*!/*/}
-            {/*    /!*        color={"secondary"}*!/*/}
-            {/*    /!*        onClick={() => changeFilterTasksHandler('completed')}*!/*/}
-            {/*    /!*>Completed</Button>*!/*/}
+            <Box sx={filterButtonContainerSx}>
 
-            {/*    <Button variant={filter === 'all' ? 'outlined' : 'contained'}*/}
-            {/*            color={"success"}*/}
-            {/*            onClick={onAllClickHandler}*/}
-            {/*    >All</Button>*/}
-            {/*    <Button variant={filter === 'active' ? 'outlined' : 'contained'}*/}
-            {/*            color={"primary"}*/}
-            {/*            onClick={onActiveClickHandler}*/}
-            {/*    >Active</Button>*/}
-            {/*    <Button variant={filter === 'completed' ? 'outlined' : 'contained'}*/}
-            {/*            color={"secondary"}*/}
-            {/*            onClick={onCompletedClickHandler}*/}
-            {/*    >Completed</Button>*/}
-            {/*</Box>*/}
+                {/*<Button variant={filter === 'all' ? 'outlined' : 'contained'}*/}
+                {/*        color={"success"}*/}
+                {/*        onClick={() => changeFilterTasksHandler('all')}*/}
+                {/*>All</Button>*/}
+                {/*<Button variant={filter === 'active' ? 'outlined' : 'contained'}*/}
+                {/*        color={"primary"}*/}
+                {/*        onClick={() => changeFilterTasksHandler('active')}*/}
+                {/*>Active</Button>*/}
+                {/*<Button variant={filter === 'completed' ? 'outlined' : 'contained'}*/}
+                {/*        color={"secondary"}*/}
+                {/*        onClick={() => changeFilterTasksHandler('completed')}*/}
+                {/*>Completed</Button>*/}
+
+                <ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'contained'}
+                                color={"inherit"}
+                                onClick={onAllClickHandler}
+                                title={"All"}
+                />
+                <ButtonWithMemo variant={filter === 'active' ? 'outlined' : 'contained'}
+                                color={"primary"}
+                                onClick={onActiveClickHandler}
+                                title={"Active"}
+                />
+                <ButtonWithMemo variant={filter === 'completed' ? 'outlined' : 'contained'}
+                                color={"secondary"}
+                                onClick={onCompletedClickHandler}
+                                title={"Completed"}
+                />
+            </Box>
         </div>
     )
 })
+
+// // вариант Валеры
+// type ButtonWithMemoPropsType = ButtonProps & {}
+//
+// const ButtonWithMemo = ({...props}: ButtonWithMemoPropsType) => {
+//     return <Button
+//         variant={props.variant}
+//         onClick={props.onClick}
+//         color={props.color}
+//         {...props}
+//     >{props.title}</Button>
+// }

@@ -20,7 +20,8 @@ export const HocButton = memo((props: HocButtonType) => {
     return (
         <Box sx={filterButtonContainerSx}>
             <Button variant={filter === 'all' ? 'outlined' : 'contained'}
-                    color={"success"}
+                    // color={"success"}
+                    color={"inherit"}
                     onClick={onAllClickHandler}
             >All</Button>
             <Button variant={filter === 'active' ? 'outlined' : 'contained'}
