@@ -59,8 +59,10 @@ test('correct task should be added to correct array', () => {
     expect(endState['todolistId1'].length).toBe(3)
     expect(endState['todolistId2'].length).toBe(4)
     expect(endState['todolistId2'][0].id).toBeDefined()
+    // expect(endState['todolistId2'][0].id).not.toBeUndefined()
     expect(endState['todolistId2'][0].title).toBe('juce')
     expect(endState['todolistId2'][0].isDone).toBe(false)
+    // expect(endState['todolistId2'][0].isDone).toBeFalsy()
 })
 
 test('status of specified task should be changed', () => {
@@ -77,7 +79,7 @@ test('status of specified task should be changed', () => {
     //     ]
     // }
 
-    const action = changeTaskStatusAC({todolistID: 'todolistId2', taskId: '2', taskStatus: false})
+    const action = changeTaskStatusAC({todolistID: 'todolistId2', taskId: '2', isDone: false})
 
     const endState = tasksReducer(startState, action)
 

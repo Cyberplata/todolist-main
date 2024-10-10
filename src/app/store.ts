@@ -1,6 +1,6 @@
 import { combineReducers, legacy_createStore } from 'redux'
-import {tasksReducer} from "../module/tasks-reducer";
-import {todolistsReducer} from "../module/todolists-reducer";
+import {tasksReducer} from "../model/tasks-reducer";
+import {todolistsReducer} from "../model/todolists-reducer";
 
 
 // объединяя reducer-ы с помощью combineReducers,

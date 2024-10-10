@@ -8,8 +8,8 @@ import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {AppBarHeader} from "../AppBarHeader";
-import {addTodolistAC, changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../module/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../module/tasks-reducer";
+import {addTodolistAC, changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../model/todolists-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../model/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./store";
 import {TodolistWithRedux} from "../TodolistWithRedux";
@@ -76,7 +76,7 @@ function App() {
         dispatch(action)
     },[dispatch]);
     const changeTaskStatus = useCallback((todolistID: string, taskId: string, taskStatus: boolean) => {
-        const action = changeTaskStatusAC({todolistID, taskId, taskStatus})
+        const action = changeTaskStatusAC({todolistID, taskId, isDone: taskStatus})
         dispatch(action)
     },[dispatch]);
     const changeTaskTitle = useCallback((todolistID: string, taskId: string, title: string) => {
