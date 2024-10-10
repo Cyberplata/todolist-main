@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {AppBarHeader} from "../AppBarHeader";
-import {addTodolistAC, changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../model/todolists-reducer";
+import {addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../model/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../model/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./store";
@@ -94,7 +94,7 @@ function App() {
         dispatch(action)
     }, [dispatch]);
     const changeFilter = useCallback((id: string, filter: FilterValuesType) => {
-        const action = changeFilterAC({id, filter})
+        const action = changeTodolistFilterAC({id, filter})
         dispatch(action)
     },[dispatch]);
     const changeTodolistTitle = useCallback((id: string, title: string) => {

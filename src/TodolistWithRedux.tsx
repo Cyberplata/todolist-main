@@ -11,7 +11,7 @@ import {filterButtonContainerSx} from "./Todolist.styles";
 import {Task} from "./Task";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./app/store";
-import {changeFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./model/todolists-reducer";
+import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./model/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./model/tasks-reducer";
 
 // Отдаём todolist вместо всех пропсов, потому что, думаем, что мне нужно для отрисовки моих компонент? Нам нужны тудулисты и таски.
@@ -47,7 +47,7 @@ export const TodolistWithRedux = ({todolist}: PropsType) => {
 
     const changeFilterTasksHandler = (filter: FilterValuesType) => {
         // dispatch(changeFilterAC(id, filter))
-        dispatch(changeFilterAC({id, filter}))
+        dispatch(changeTodolistFilterAC({id, filter}))
     }
 
     const deleteAllTodoHandler = () => {

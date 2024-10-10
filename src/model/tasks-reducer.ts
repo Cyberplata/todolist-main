@@ -51,7 +51,7 @@ export const tasksReducer = (
                 ...state,
                 [todolistID]: state[todolistID].map(el =>
                     el.id === taskId
-                        ? {...el, isDone: isDone}
+                        ? {...el, isDone}
                         : el
                 )
             }
@@ -83,16 +83,16 @@ export const tasksReducer = (
         }
         case "REMOVE-TODOLIST": {
             // first variant
-            // let copyState = {...state}
-            // delete copyState[action.todolistID]
-            // return copyState
+            const copyState = {...state}
+            delete copyState[action.payload.id]
+            return copyState
 
-            // second variant
-            const {
-                [action.payload.id]: [],
-                ...rest
-            } = state
-            return rest
+            // // second variant
+            // const {
+            //     [action.payload.id]: [],
+            //     ...rest
+            // } = state
+            // return rest
         }
         default:
             return state
@@ -150,7 +150,7 @@ export type AddTaskActionType = ReturnType<typeof addTaskAC>
 export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
 export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
 
-// Используем Action Type из todolists-reducer.ts просто импортим, не нужно их создавать
+// Используем Action Type: AddTodolistActionType и RemoveTodolistActionType из todolists-reducer.ts просто импортим, не нужно их создавать!!!
 // export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
 // export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 
