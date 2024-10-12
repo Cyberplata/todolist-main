@@ -47,7 +47,7 @@ export const TodolistWithRedux = ({todolist}: PropsType) => {
 
     const changeFilterTasksHandler = (filter: FilterValuesType) => {
         // dispatch(changeFilterAC(id, filter))
-        dispatch(changeTodolistFilterAC({id, filter}))
+        dispatch(changeTodolistFilterAC({todolistID: id, filter}))
     }
 
     const deleteAllTodoHandler = () => {
@@ -59,7 +59,7 @@ export const TodolistWithRedux = ({todolist}: PropsType) => {
     }, []);
 
     const updateTodolistHandler = (title: string) => {
-        dispatch(changeTodolistTitleAC({id, title}))
+        dispatch(changeTodolistTitleAC({todolistID: id, title}))
     }
 
     // const updateTaskHandler = (taskId: string, newTitle: string) => {

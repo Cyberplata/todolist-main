@@ -1,4 +1,4 @@
-import { combineReducers, legacy_createStore } from 'redux'
+import { combineReducers, legacy_createStore as createStore } from 'redux'
 import {tasksReducer} from "../model/tasks-reducer";
 import {todolistsReducer} from "../model/todolists-reducer";
 
@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
     todolists: todolistsReducer,
 })
 // непосредственно создаём store
-export const store = legacy_createStore(rootReducer)
+export const store = createStore(rootReducer)
 
 // определить автоматически тип всего объекта состояния
 export type RootState = ReturnType<typeof store.getState>

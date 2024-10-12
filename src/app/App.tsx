@@ -72,38 +72,38 @@ function App() {
 
     // CRUD tasks:
     const addTask = useCallback((todolistID: string, title: string) => {
-        const action = addTaskAC({todolistID, title})
-        dispatch(action)
+        // const action = addTaskAC({todolistID, title})
+        // dispatch(action)
+        dispatch(addTaskAC({todolistID, title}))
     },[dispatch]);
+
     const changeTaskStatus = useCallback((todolistID: string, taskId: string, taskStatus: boolean) => {
-        const action = changeTaskStatusAC({todolistID, taskId, isDone: taskStatus})
-        dispatch(action)
+        dispatch(changeTaskStatusAC({todolistID, taskId, isDone: taskStatus}))
     },[dispatch]);
+
     const changeTaskTitle = useCallback((todolistID: string, taskId: string, title: string) => {
-        const action = changeTaskTitleAC({todolistID, taskId, title})
-        dispatch(action)
+        dispatch(changeTaskTitleAC({todolistID, taskId, title}))
     },[dispatch]);
+
     const removeTask = useCallback((todolistID: string, taskId: string) => {
-        const action = removeTaskAC({todolistID, taskId})
-        dispatch(action)
+        dispatch(removeTaskAC({todolistID, taskId}))
     },[dispatch]);
 
     // CRUD todolist:
     const addTodolist = useCallback((title: string) => {
-        const action = addTodolistAC(title)
-        dispatch(action)
+        dispatch(addTodolistAC(title))
     }, [dispatch]);
+
     const changeFilter = useCallback((id: string, filter: FilterValuesType) => {
-        const action = changeTodolistFilterAC({id, filter})
-        dispatch(action)
+        dispatch(changeTodolistFilterAC({todolistID: id, filter}))
     },[dispatch]);
-    const changeTodolistTitle = useCallback((id: string, title: string) => {
-        const action = changeTodolistTitleAC({id, title})
-        dispatch(action)
+
+    const changeTodolistTitle = useCallback((todolistID: string, title: string) => {
+        dispatch(changeTodolistTitleAC({todolistID, title}))
     },[dispatch]);
+
     const removeTodolist = useCallback((todolistID: string) => {
-        const action = removeTodolistAC(todolistID)
-        dispatch(action)
+        dispatch(removeTodolistAC(todolistID))
     },[dispatch]);
 
     // UI:
