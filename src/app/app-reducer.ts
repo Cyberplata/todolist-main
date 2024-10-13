@@ -1,9 +1,9 @@
-export type ThemeMode = 'dark' | 'light'
+export type ThemeModeType = 'dark' | 'light'
 
 type InitialState = typeof initialState
 
 const initialState = {
-    themeMode: 'light' as ThemeMode,
+    themeMode: 'light' as ThemeModeType,
 }
 
 export const appReducer = (
@@ -22,7 +22,7 @@ export const appReducer = (
 }
 
 // Action creators
-export const changeThemeAC = (theme: ThemeMode) => {
+export const changeThemeAC = (theme: ThemeModeType) => {
     return {
         type: 'CHANGE_THEME',
         payload: {theme}

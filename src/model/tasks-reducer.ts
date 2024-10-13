@@ -1,7 +1,5 @@
 import {v1} from "uuid";
-import type {TasksStateType, TaskType} from "../app/App";
 import type {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
-
 
 
 // let todolistID1 = v1()
@@ -143,26 +141,10 @@ export const tasksReducer = (
 //     }
 // }
 
-// Запись через ReturnType
-export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
-export type AddTaskActionType = ReturnType<typeof addTaskAC>
-export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
-export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
 
-// Используем Action Type: AddTodolistActionType и RemoveTodolistActionType из todolists-reducer.ts просто импортим, не нужно их создавать!!!
-// export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
-// export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 
-export type TasksReducerActionsType =
-    | RemoveTaskActionType
-    | AddTaskActionType
-    | ChangeTaskStatusActionType
-    | ChangeTaskTitleActionType
-    | AddTodolistActionType
-    | RemoveTodolistActionType
 
-//В tasks-reducer.ts все action creators принимают 2 и более параметра.
-// Поэтому для того, чтобы не допустить ошибку при передаче параметров мы упаковали параметры в payload
+// Action creators
 export const removeTaskAC = (payload: { todolistID: string, taskId: string }) => {
     return {
         type: 'REMOVE-TASK',
@@ -191,12 +173,28 @@ export const changeTaskTitleAC = (payload: { todolistID: string, taskId: string,
     } as const
 }
 
-// // C полем payload
-// export const RemoveTodolistAC = (todolistId: string) => {
-//     return {
-//         type: 'REMOVE-TODOLIST',
-//         payload: {
-//             todolistId
-//         },
-//     } as const
-// }
+
+// TYPE
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
+
+// Запись через ReturnType
+export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
+export type AddTaskActionType = ReturnType<typeof addTaskAC>
+export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
+export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
+
+export type TasksReducerActionsType =
+    | RemoveTaskActionType
+    | AddTaskActionType
+    | ChangeTaskStatusActionType
+    | ChangeTaskTitleActionType
+    | AddTodolistActionType
+    | RemoveTodolistActionType

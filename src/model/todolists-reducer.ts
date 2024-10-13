@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import type {FilterValuesType, TodolistType} from "../app/App";
 
 // let todolistID1 = v1()
 // let todolistID2 = v1()
@@ -53,18 +52,8 @@ export const todolistsReducer = (
     }
 }
 
-// запись через ReturnType Actions type
-export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
-export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
-export type ChangeTodolistTitleActionType = ReturnType<typeof changeTodolistTitleAC>
-export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
 
-export type TodolistsReducerActionsType =
-    | RemoveTodolistActionType
-    | AddTodolistActionType
-    | ChangeTodolistTitleActionType
-    | ChangeTodolistFilterActionType
-
+// Action creators
 export const removeTodolistAC = (todolistID: string) => {
     return {
         type: 'REMOVE-TODOLIST',
@@ -97,3 +86,24 @@ export const changeTodolistFilterAC = (payload: { todolistID: string, filter: Fi
         payload,
     } as const
 }
+
+// Typing
+export type TodolistType = {
+    id: string,
+    title: string
+    filter: FilterValuesType
+}
+
+export type FilterValuesType = 'all' | 'active' | 'completed'
+
+// запись через ReturnType Actions type
+export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
+export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
+export type ChangeTodolistTitleActionType = ReturnType<typeof changeTodolistTitleAC>
+export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
+
+export type TodolistsReducerActionsType =
+    | RemoveTodolistActionType
+    | AddTodolistActionType
+    | ChangeTodolistTitleActionType
+    | ChangeTodolistFilterActionType
