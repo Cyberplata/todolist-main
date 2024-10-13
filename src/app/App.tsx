@@ -1,19 +1,24 @@
 import './App.css';
-import {useCallback, useState} from "react";
-import {AddItemForm} from "../AddItemForm";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import {AppBarHeader} from "../AppBarHeader";
-import {addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../model/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../model/tasks-reducer";
+import {useCallback, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "./store";
-import {TodolistWithRedux} from "../TodolistWithRedux";
+import {AddItemForm} from "../AddItemForm";
+import {AppBarHeader} from "../AppBarHeader";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../model/tasks-reducer";
+import {
+    addTodolistAC,
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    removeTodolistAC
+} from "../model/todolists-reducer";
 import {Todolist} from "../Todolist";
+import {changeThemeAC, type ThemeMode} from "./app-reducer";
+import type {RootState} from "./store";
 
 
 export type TaskType = {
@@ -34,7 +39,7 @@ export type TodolistType = {
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
-type ThemeMode = 'dark' | 'light'
+
 
 function App() {
     // console.log("App is called")
@@ -48,6 +53,8 @@ function App() {
     // Фактический мы привязали нашу компоненту и ререндер, что делать не стоит,
     // так как это лишний ререндер
     const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
+
+    const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode)
 
     const dispatch = useDispatch()
 
@@ -94,8 +101,8 @@ function App() {
         dispatch(addTodolistAC(title))
     }, [dispatch]);
 
-    const changeFilter = useCallback((id: string, filter: FilterValuesType) => {
-        dispatch(changeTodolistFilterAC({todolistID: id, filter}))
+    const changeFilter = useCallback((todolistID: string, filter: FilterValuesType) => {
+        dispatch(changeTodolistFilterAC({todolistID, filter}))
     },[dispatch]);
 
     const changeTodolistTitle = useCallback((todolistID: string, title: string) => {
@@ -107,14 +114,16 @@ function App() {
     },[dispatch]);
 
     // UI:
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+    // const [themeMode, setThemeMode] = useState<ThemeMode>('light')
     const changeModeHandler = () => {
-        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+        dispatch(changeThemeAC(themeMode === 'light' ? 'dark' : 'light'))
+        // setThemeMode(themeMode === 'light' ? 'dark' : 'light')
     }
 
     const theme = createTheme({
         palette: {
-            mode: themeMode === 'light' ? 'light' : 'dark',
+            // mode: themeMode === 'light' ? 'light' : 'dark',
+            mode: themeMode,
             primary: {
                 main: '#7017ee',
                 contrastText: 'white',

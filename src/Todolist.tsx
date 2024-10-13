@@ -1,15 +1,14 @@
-import {FilterValuesType, TaskType} from "./app/App";
-import {ChangeEvent, memo, useCallback} from "react";
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
-import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import List from '@mui/material/List';
 import Box from '@mui/material/Box';
-import {filterButtonContainerSx} from "./Todolist.styles";
-import {Task} from "./Task";
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import {memo, useCallback} from "react";
+import {AddItemForm} from "./AddItemForm";
+import type {FilterValuesType, TaskType} from "./app/App";
 import {ButtonWithMemo} from "./ButtonWithMemo";
+import {EditableSpan} from "./EditableSpan";
 import {TaskValera} from "./TaskValera";
+import {filterButtonContainerSx} from "./Todolist.styles";
 
 type PropsType = {
     todolistId: string
