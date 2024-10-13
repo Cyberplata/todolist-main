@@ -9,6 +9,7 @@ import {useCallback, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AddItemForm} from "../AddItemForm";
 import {AppBarHeader} from "../AppBarHeader";
+import {getTheme} from "../common/theme/theme";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../model/tasks-reducer";
 import {
     addTodolistAC,
@@ -55,27 +56,10 @@ function App() {
     const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
 
     const themeMode = useSelector<RootState, ThemeMode>(state => state.app.themeMode)
+    const theme = getTheme(themeMode)
 
     const dispatch = useDispatch()
 
-    // let todolistID1 = v1()
-    // let todolistID2 = v1()
-    // let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
-    //     {id: todolistID1, title: 'What to learn', filter: 'all'},
-    //     {id: todolistID2, title: 'What to buy', filter: 'all'},
-    // ])
-    //
-    // let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
-    //     [todolistID1]: [
-    //         {id: v1(), title: 'HTML&CSS', isDone: true},
-    //         {id: v1(), title: 'JS', isDone: true},
-    //         {id: v1(), title: 'ReactJS', isDone: false},
-    //     ],
-    //     [todolistID2]: [
-    //         {id: v1(), title: 'Rest API', isDone: true},
-    //         {id: v1(), title: 'GraphQL', isDone: false},
-    //     ],
-    // })
 
     // CRUD tasks:
     const addTask = useCallback((todolistID: string, title: string) => {
@@ -120,22 +104,22 @@ function App() {
         // setThemeMode(themeMode === 'light' ? 'dark' : 'light')
     }
 
-    const theme = createTheme({
-        palette: {
-            // mode: themeMode === 'light' ? 'light' : 'dark',
-            mode: themeMode,
-            primary: {
-                main: '#7017ee',
-                contrastText: 'white',
-            },
-            secondary: {
-                light: '#757ce8',
-                main: '#3f50b5',
-                dark: '#002884',
-                contrastText: '#fff',
-            },
-        },
-    })
+    // const theme = createTheme({
+    //     palette: {
+    //         // mode: themeMode === 'light' ? 'light' : 'dark',
+    //         mode: themeMode,
+    //         primary: {
+    //             main: '#7017ee',
+    //             contrastText: 'white',
+    //         },
+    //         secondary: {
+    //             light: '#757ce8',
+    //             main: '#3f50b5',
+    //             dark: '#002884',
+    //             contrastText: '#fff',
+    //         },
+    //     },
+    // })
 
     return (
         <div className="App">

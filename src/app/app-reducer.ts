@@ -1,5 +1,3 @@
-import type {TasksStateType} from "../app/App";
-
 export type ThemeMode = 'dark' | 'light'
 
 type InitialState = typeof initialState
