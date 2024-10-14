@@ -29,32 +29,32 @@ export const Todolists = () => {
         // const action = addTaskAC({todolistID, title})
         // dispatch(action)
         dispatch(addTaskAC({todolistID, title}))
-    },[dispatch]);
+    }, [dispatch]);
 
     const changeTaskStatus = useCallback((todolistID: string, taskId: string, taskStatus: boolean) => {
         dispatch(changeTaskStatusAC({todolistID, taskId, isDone: taskStatus}))
-    },[dispatch]);
+    }, [dispatch]);
 
     const changeTaskTitle = useCallback((todolistID: string, taskId: string, title: string) => {
         dispatch(changeTaskTitleAC({todolistID, taskId, title}))
-    },[dispatch]);
+    }, [dispatch]);
 
     const removeTask = useCallback((todolistID: string, taskId: string) => {
         dispatch(removeTaskAC({todolistID, taskId}))
-    },[dispatch]);
+    }, [dispatch]);
 
     // CRUD todolist:
-    const changeFilter = useCallback((todolistID: string, filter: FilterValuesType) => {
-        dispatch(changeTodolistFilterAC({todolistID, filter}))
-    },[dispatch]);
+    // const changeFilter = useCallback((todolistID: string, filter: FilterValuesType) => {
+    //     dispatch(changeTodolistFilterAC({todolistID, filter}))
+    // }, [dispatch]);
 
     const changeTodolistTitle = useCallback((todolistID: string, title: string) => {
         dispatch(changeTodolistTitleAC({todolistID, title}))
-    },[dispatch]);
+    }, [dispatch]);
 
     const removeTodolist = useCallback((todolistID: string) => {
         dispatch(removeTodolistAC(todolistID))
-    },[dispatch]);
+    }, [dispatch]);
 
     return (
         <div>
@@ -69,17 +69,21 @@ export const Todolists = () => {
                 return (
                     <Grid key={el.id} item>
                         <Paper elevation={6} sx={{p: '20px'}}>
-                            <Todolist todolistId={el.id}
-                                      title={el.title}
-                                      tasks={tasks[el.id]}
-                                      removeTask={removeTask}
-                                      changeFilter={changeFilter}
-                                      addTask={addTask}
-                                      filter={el.filter}
-                                      changeTaskStatus={changeTaskStatus}
-                                      removeTodolist={removeTodolist}
-                                      changeTaskTitle={changeTaskTitle}
-                                      changeTodolistTitle={changeTodolistTitle}
+                            <Todolist
+                                todolist={el}
+                                tasks={tasks[el.id]}
+                                removeTask={removeTask}
+                                // changeFilter={changeFilter}
+                                addTask={addTask}
+                                changeTaskStatus={changeTaskStatus}
+                                removeTodolist={removeTodolist}
+                                changeTaskTitle={changeTaskTitle}
+                                changeTodolistTitle={changeTodolistTitle}
+
+                                // todolistId={el.id}
+                                // title={el.title}
+                                // filter={el.filter}
+
                             />
                         </Paper>
                     </Grid>
