@@ -1,26 +1,11 @@
 import './App.css';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useCallback, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AddItemForm} from "../AddItemForm";
-import {AppBarHeader} from "../AppBarHeader";
+import {ThemeProvider} from '@mui/material/styles';
+import {useSelector} from "react-redux";
 import {getTheme} from "../common/theme/theme";
 import {Header} from "../Header";
 import {Main} from "../Main";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../model/tasks-reducer";
-import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC
-} from "../model/todolists-reducer";
-import {Todolist} from "../Todolist";
-import {changeThemeAC, type ThemeModeType} from "./app-reducer";
+import type {ThemeModeType} from "./app-reducer";
 import type {RootState} from "./store";
 
 
@@ -43,7 +28,7 @@ import type {RootState} from "./store";
 // export type FilterValuesType = 'all' | 'active' | 'completed'
 
 
-function App() {
+export const App = () => {
     // console.log("App is called")
     // BLL:
     // Global States:
@@ -124,13 +109,16 @@ function App() {
 
     return (
         <div className="App">
-            <ThemeProvider theme={themeMode}>
+            {/*<ThemeProvider theme={themeMode}>*/}
+            {/*<ThemeProvider theme={theme}>*/}
+            <ThemeProvider theme={getTheme(themeMode)}>
                 <CssBaseline/>
                 {/*<Box sx={{flexGrow: 1, mb: 10}}>*/}
                 {/*    <AppBarHeader changeModeHandler={changeModeHandler}/>*/}
                 {/*</Box>*/}
                 <Header/>
 
+                <Main/>
                 {/*<Container fixed>*/}
                 {/*    <Grid container sx={{mb: 5}}>*/}
                 {/*        <AddItemForm addItem={addTodolist}/>*/}
@@ -166,11 +154,9 @@ function App() {
                 {/*        })}*/}
                 {/*    </Grid>*/}
                 {/*</Container>*/}
-                <Main/>
             </ThemeProvider>
-
         </div>
     );
 }
 
-export default App;
+// export default App;

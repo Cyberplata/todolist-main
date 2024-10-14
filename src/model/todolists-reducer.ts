@@ -8,6 +8,16 @@ import {v1} from "uuid";
 //     {id: todolistID2, title: 'What to buy', filter: 'all'},
 // ]
 
+// Typing
+export type TodolistType = {
+    id: string,
+    title: string
+    filter: FilterValuesType
+}
+
+export type FilterValuesType = 'all' | 'active' | 'completed'
+
+
 const initialState: TodolistType[] = []
 
 export const todolistsReducer = (
@@ -86,15 +96,6 @@ export const changeTodolistFilterAC = (payload: { todolistID: string, filter: Fi
         payload,
     } as const
 }
-
-// Typing
-export type TodolistType = {
-    id: string,
-    title: string
-    filter: FilterValuesType
-}
-
-export type FilterValuesType = 'all' | 'active' | 'completed'
 
 // запись через ReturnType Actions type
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>

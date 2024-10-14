@@ -1,8 +1,8 @@
 import React, {memo, useCallback} from 'react';
 import Button from "@mui/material/Button";
+import type {FilterValuesType} from "./model/todolists-reducer";
 import {filterButtonContainerSx} from "./Todolist.styles";
 import Box from "@mui/material/Box";
-import {FilterValuesType} from "./app/App";
 
 export type HocButtonType = {
     filter: FilterValuesType

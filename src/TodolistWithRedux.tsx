@@ -1,4 +1,3 @@
-import {FilterValuesType, TaskType, TodolistType} from "./app/App";
 import {ChangeEvent, useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -11,8 +10,13 @@ import {filterButtonContainerSx} from "./Todolist.styles";
 import {Task} from "./Task";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./app/store";
-import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "./model/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./model/tasks-reducer";
+import {
+    changeTodolistFilterAC,
+    changeTodolistTitleAC, type FilterValuesType,
+    removeTodolistAC,
+    type TodolistType
+} from "./model/todolists-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, type TaskType} from "./model/tasks-reducer";
 
 // Отдаём todolist вместо всех пропсов, потому что, думаем, что мне нужно для отрисовки моих компонент? Нам нужны тудулисты и таски.
 // Могу ли я вытащить тудулисты зная id? - да, с использованием useSelector().

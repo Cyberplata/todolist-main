@@ -4,9 +4,10 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import {memo, useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
-import type {FilterValuesType, TaskType} from "./app/App";
 import {ButtonWithMemo} from "./ButtonWithMemo";
 import {EditableSpan} from "./EditableSpan";
+import type {TaskType} from "./model/tasks-reducer";
+import type {FilterValuesType} from "./model/todolists-reducer";
 import {TaskValera} from "./TaskValera";
 import {filterButtonContainerSx} from "./Todolist.styles";
 

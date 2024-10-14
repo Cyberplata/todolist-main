@@ -1,5 +1,5 @@
 // вариант Валеры
-import {ButtonProps} from "@mui/material/Button";
+import type {ButtonProps} from "@mui/material/Button";
 import Button from "@mui/material/Button";
 import {memo} from "react";
 

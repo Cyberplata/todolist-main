@@ -17,6 +17,18 @@ import type {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-
 //     ],
 // }
 
+// Typing
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+
+export type TasksStateType = {
+    [key: string]: Array<TaskType>
+}
+
+
 const initialState: TasksStateType = {}
 
 export const tasksReducer = (
@@ -174,16 +186,7 @@ export const changeTaskTitleAC = (payload: { todolistID: string, taskId: string,
 }
 
 
-// TYPE
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
 
 // Запись через ReturnType
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>

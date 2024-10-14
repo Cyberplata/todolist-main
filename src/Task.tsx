@@ -1,10 +1,10 @@
 import React, {ChangeEvent, memo} from 'react';
-import {TaskType} from './app/App';
 import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {EditableSpan} from './EditableSpan';
+import type {TaskType} from "./model/tasks-reducer";
 import {getListItemSx} from './Todolist.styles';
 
 type TaskPropsType = {

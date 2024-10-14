@@ -6,7 +6,6 @@ import {useCallback} from "react";
 import * as React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AddItemForm} from "./AddItemForm";
-// import type {FilterValuesType, TasksStateType, TodolistType} from "./app/App";
 import type {RootState} from "./app/store";
 import {
     addTaskAC,
@@ -23,10 +22,8 @@ import {
 } from "./model/todolists-reducer";
 import {Todolist} from "./Todolist";
 
-type Props = {
-    
-};
-export const Main = (props: Props) => {
+
+export const Main = () => {
 
     const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists)
     const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
