@@ -1,16 +1,13 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import {memo, useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
-import {ButtonWithMemo} from "./ButtonWithMemo";
 import {EditableSpan} from "./EditableSpan";
 import {FilterTasksButtons} from "./FilterTasksButtons";
 import type {TaskType} from "./model/tasks-reducer";
-import type {FilterValuesType, TodolistType} from "./model/todolists-reducer";
+import type {TodolistType} from "./model/todolists-reducer";
 import {TaskValera} from "./TaskValera";
-import {filterButtonContainerSx} from "./Todolist.styles";
 
 type Props = {
     todolist: TodolistType
@@ -58,7 +55,7 @@ export const Todolist = memo((props: Props) => {
 
     const updateTodolistHandler = useCallback((newTitle: string) => {
         changeTodolistTitle(todolist.id, newTitle)
-    },[changeTodolistTitle, todolist.id])
+    }, [changeTodolistTitle, todolist.id])
 
     // const updateTaskHandler = (taskId: string, newTitle: string) => {
     //     changeTaskTitle(todolistId, taskId, newTitle)

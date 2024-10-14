@@ -10,6 +10,8 @@ type Props = {
 }
 
 export const FilterTasksButtons = ({todolist}: Props) => {
+    console.log("FilterTasksButtons is called")
+
     const {filter, id} = todolist
 
     const dispatch = useDispatch()
@@ -21,9 +23,9 @@ export const FilterTasksButtons = ({todolist}: Props) => {
     //     changeFilter(filter, id)
     // }
 
-    const changeFilterTasksHandler = (filter: FilterValuesType) => {
+    const changeFilterTasksHandler = useCallback((filter: FilterValuesType) => {
         dispatch(changeTodolistFilterAC({todolistID: id, filter}))
-    }
+    }, [changeTodolistFilterAC, id])
 
     // const onAllClickHandler = useCallback(() => changeFilter(todolistId, 'all'), [changeFilter, todolistId])
     // const onActiveClickHandler = useCallback(() => changeFilter(todolistId, 'active'), [changeFilter, todolistId])

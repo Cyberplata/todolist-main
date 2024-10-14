@@ -10,12 +10,7 @@ import {
     removeTaskAC,
     type TasksStateType
 } from "./model/tasks-reducer";
-import {
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    type FilterValuesType, removeTodolistAC,
-    type TodolistType
-} from "./model/todolists-reducer";
+import {changeTodolistTitleAC, removeTodolistAC, type TodolistType} from "./model/todolists-reducer";
 import {Todolist} from "./Todolist";
 
 export const Todolists = () => {
