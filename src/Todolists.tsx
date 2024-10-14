@@ -15,7 +15,7 @@ import {Todolist} from "./Todolist";
 
 export const Todolists = () => {
     const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists)
-    const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
+    // const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
 
     const dispatch = useDispatch()
 
@@ -26,17 +26,17 @@ export const Todolists = () => {
         dispatch(addTaskAC({todolistID, title}))
     }, [dispatch]);
 
-    const changeTaskStatus = useCallback((todolistID: string, taskId: string, taskStatus: boolean) => {
-        dispatch(changeTaskStatusAC({todolistID, taskId, isDone: taskStatus}))
-    }, [dispatch]);
+    // const changeTaskStatus = useCallback((todolistID: string, taskId: string, taskStatus: boolean) => {
+    //     dispatch(changeTaskStatusAC({todolistID, taskId, isDone: taskStatus}))
+    // }, [dispatch]);
 
-    const changeTaskTitle = useCallback((todolistID: string, taskId: string, title: string) => {
-        dispatch(changeTaskTitleAC({todolistID, taskId, title}))
-    }, [dispatch]);
+    // const changeTaskTitle = useCallback((todolistID: string, taskId: string, title: string) => {
+    //     dispatch(changeTaskTitleAC({todolistID, taskId, title}))
+    // }, [dispatch]);
 
-    const removeTask = useCallback((todolistID: string, taskId: string) => {
-        dispatch(removeTaskAC({todolistID, taskId}))
-    }, [dispatch]);
+    // const removeTask = useCallback((todolistID: string, taskId: string) => {
+    //     dispatch(removeTaskAC({todolistID, taskId}))
+    // }, [dispatch]);
 
     // CRUD todolist:
     // const changeFilter = useCallback((todolistID: string, filter: FilterValuesType) => {
@@ -66,13 +66,13 @@ export const Todolists = () => {
                         <Paper elevation={6} sx={{p: '20px'}}>
                             <Todolist
                                 todolist={el}
-                                tasks={tasks[el.id]}
-                                removeTask={removeTask}
+                                // tasks={tasks[el.id]}
+                                // removeTask={removeTask}
                                 // changeFilter={changeFilter}
                                 addTask={addTask}
-                                changeTaskStatus={changeTaskStatus}
+                                // changeTaskStatus={changeTaskStatus}
                                 removeTodolist={removeTodolist}
-                                changeTaskTitle={changeTaskTitle}
+                                // changeTaskTitle={changeTaskTitle}
                                 changeTodolistTitle={changeTodolistTitle}
 
                                 // todolistId={el.id}

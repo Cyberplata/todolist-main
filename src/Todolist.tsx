@@ -7,18 +7,20 @@ import {EditableSpan} from "./EditableSpan";
 import {FilterTasksButtons} from "./FilterTasksButtons";
 import type {TaskType} from "./model/tasks-reducer";
 import type {TodolistType} from "./model/todolists-reducer";
+import {Tasks} from "./Tasks";
 import {TaskValera} from "./TaskValera";
 
 type Props = {
     todolist: TodolistType
-    tasks: TaskType[]
-    removeTask: (todolistID: string, taskId: string) => void
-    // changeFilter: (todolistId: string, filterValue: FilterValuesType) => void
+    // tasks: TaskType[]
     addTask: (todolistID: string, title: string) => void
-    changeTaskStatus: (todolistID: string, taskId: string, taskStatus: boolean) => void
     removeTodolist: (todolistId: string) => void
-    changeTaskTitle: (todolistID: string, taskId: string, title: string) => void
     changeTodolistTitle: (todolistID: string, title: string) => void
+
+    // changeFilter: (todolistId: string, filterValue: FilterValuesType) => void
+    // removeTask: (todolistID: string, taskId: string) => void
+    // changeTaskStatus: (todolistID: string, taskId: string, taskStatus: boolean) => void
+    // changeTaskTitle: (todolistID: string, taskId: string, title: string) => void
 
     // todolistId: string
     // title: string
@@ -31,13 +33,13 @@ export const Todolist = memo((props: Props) => {
     const {
         todolist,
         removeTodolist,
-        tasks,
-        removeTask,
-        // changeFilter,
         addTask,
-        changeTaskStatus,
-        changeTaskTitle,
         changeTodolistTitle,
+        // tasks,
+        // removeTask,
+        // changeFilter,
+        // changeTaskStatus,
+        // changeTaskTitle,
 
         // todolistId,
         // title,
@@ -65,48 +67,48 @@ export const Todolist = memo((props: Props) => {
     //     removeTask(todolistId, taskId)
     // }
 
-    // Отфильтрованные таски, вынес из map-а компоненты App
-    const filteredTasks = () => {
-        let tasksForTodolist = tasks;
-        if (todolist.filter === 'active') {
-            tasksForTodolist = tasks.filter(task => !task.isDone)
-        }
-        if (todolist.filter === 'completed') {
-            tasksForTodolist = tasks.filter(task => task.isDone)
-        }
-        return tasksForTodolist;
-    }
-
-    // Отмэпленные таски
+    // // Отфильтрованные таски, вынес из map-а компоненты App
+    // const filteredTasks = () => {
+    //     let tasksForTodolist = tasks;
+    //     if (todolist.filter === 'active') {
+    //         tasksForTodolist = tasks.filter(task => !task.isDone)
+    //     }
+    //     if (todolist.filter === 'completed') {
+    //         tasksForTodolist = tasks.filter(task => task.isDone)
+    //     }
+    //     return tasksForTodolist;
+    // }
+    //
+    // // Отмэпленные таски
+    // // const mappedTask = filteredTasks().map((t) => {
+    // //     const removeTaskHandler = () => {
+    // //         removeTask(todolistId, t.id)
+    // //     }
+    // //     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    // //         const newStatusValue = e.currentTarget.checked
+    // //         changeTaskStatus(todolistId, t.id, newStatusValue)
+    // //     }
+    // //     const updateTaskHandler = (newTitle: string) => {
+    // //         changeTaskTitle(todolistId, t.id, newTitle)
+    // //     }
+    // //     return <Task
+    // //         key={t.id}
+    // //         task={t}
+    // //         removeTaskHandler={removeTaskHandler}
+    // //         changeTaskStatusHandler={changeTaskStatusHandler}
+    // //         updateTaskHandler={updateTaskHandler}
+    // //     />
+    // // })
+    //
     // const mappedTask = filteredTasks().map((t) => {
-    //     const removeTaskHandler = () => {
-    //         removeTask(todolistId, t.id)
-    //     }
-    //     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //         const newStatusValue = e.currentTarget.checked
-    //         changeTaskStatus(todolistId, t.id, newStatusValue)
-    //     }
-    //     const updateTaskHandler = (newTitle: string) => {
-    //         changeTaskTitle(todolistId, t.id, newTitle)
-    //     }
-    //     return <Task
-    //         key={t.id}
-    //         task={t}
-    //         removeTaskHandler={removeTaskHandler}
-    //         changeTaskStatusHandler={changeTaskStatusHandler}
-    //         updateTaskHandler={updateTaskHandler}
+    //     return <TaskValera key={t.id}
+    //                        todolistId={todolist.id}
+    //                        task={t}
+    //                        removeTask={removeTask}
+    //                        changeTaskStatus={changeTaskStatus}
+    //                        changeTaskTitle={changeTaskTitle}
     //     />
     // })
-
-    const mappedTask = filteredTasks().map((t) => {
-        return <TaskValera key={t.id}
-                           todolistId={todolist.id}
-                           task={t}
-                           removeTask={removeTask}
-                           changeTaskStatus={changeTaskStatus}
-                           changeTaskTitle={changeTaskTitle}
-        />
-    })
 
     return (
         <div>
@@ -119,13 +121,16 @@ export const Todolist = memo((props: Props) => {
             <div>
                 <AddItemForm addItem={addTaskHandler}/>
             </div>
-            {
-                tasks.length === 0
-                    ? <p>Тасок нет</p>
-                    : <List>
-                        {mappedTask}
-                    </List>
-            }
+
+            <Tasks todolist={todolist}/>
+
+            {/*{*/}
+            {/*    tasks.length === 0*/}
+            {/*        ? <p>Тасок нет</p>*/}
+            {/*        : <List>*/}
+            {/*            {mappedTask}*/}
+            {/*        </List>*/}
+            {/*}*/}
 
             <FilterTasksButtons todolist={todolist}/>
         </div>
