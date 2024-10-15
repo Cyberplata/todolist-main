@@ -2,10 +2,10 @@
 import Box from "@mui/material/Box";
 import * as React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {changeThemeAC, type ThemeModeType} from "../../app/app-reducer";
-import type {RootState} from "../../app/store";
-import {AppBarHeader} from "../../AppBarHeader";
-import {getTheme} from "../theme/theme";
+import {changeThemeAC, type ThemeModeType} from "../../../app/app-reducer";
+import type {RootState} from "../../../app/store";
+import {AppBarHeader} from "./AppBarHeader/AppBarHeader";
+import {getTheme} from "../../theme/theme";
 
 export const Header = () => {
     const themeMode = useSelector<RootState, ThemeModeType>(state => state.app.themeMode)

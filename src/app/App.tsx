@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider} from '@mui/material/styles';
 import {useSelector} from "react-redux";
 import {getTheme} from "../common/theme/theme";
-import {Header} from "../common/components/Header";
+import {Header} from "../common/components/Header/Header";
 import {Main} from "./Main";
 import type {ThemeModeType} from "./app-reducer";
 import type {RootState} from "./store";

@@ -7,7 +7,7 @@ import {useDispatch} from "react-redux";
 import {EditableSpan} from '../../../../../../common/components/EditableSpan';
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, type TaskType} from "../../../../../../model/tasks-reducer";
 import type {TodolistType} from "../../../../../../model/todolists-reducer";
-import {getListItemSx} from '../../../../../../Todolist.styles';
+import {getListItemSx} from "./Task.styles";
 
 type Props = {
     todolist: TodolistType
