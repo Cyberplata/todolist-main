@@ -1,10 +1,10 @@
 import List from "@mui/material/List";
 import React from 'react';
 import {useSelector} from "react-redux";
-import type {RootState} from "./app/store";
-import {type TasksStateType} from "./model/tasks-reducer";
-import type {TodolistType} from "./model/todolists-reducer";
-import {TaskValera} from "./TaskValera";
+import type {RootState} from "../../../../../app/store";
+import {type TasksStateType} from "../../../../../model/tasks-reducer";
+import type {TodolistType} from "../../../../../model/todolists-reducer";
+import {Task} from "./Task/Task";
 
 type Props = {
     todolist: TodolistType
@@ -45,9 +45,9 @@ export const Tasks = ({todolist}: Props) => {
     // },[])
 
     const mappedTask = filteredTasks().map((t) => {
-        return <TaskValera key={t.id}
-                           todolist={todolist}
-                           task={t}
+        return <Task key={t.id}
+                     todolist={todolist}
+                     task={t}
         />
     })
 
