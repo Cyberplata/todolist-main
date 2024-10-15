@@ -6,7 +6,7 @@ import {useCallback} from "react";
 import {useDispatch} from "react-redux";
 import {AddItemForm} from "./AddItemForm";
 import {addTodolistAC} from "./model/todolists-reducer";
-import {Todolists} from "./Todolists";
+import {Todolists} from "./features/todolists/ui/Todolists";
 
 export const Main = () => {
     const dispatch = useDispatch()
@@ -21,7 +21,6 @@ export const Main = () => {
             <Grid container sx={{mb: 5}}>
                 <AddItemForm addItem={addTodolist}/>
             </Grid>
-
             <Grid container spacing={4}>
                 <Todolists/>
             </Grid>
