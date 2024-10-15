@@ -4,9 +4,9 @@ import Grid from "@mui/material/Grid";
 import * as React from "react";
 import {useCallback} from "react";
 import {useDispatch} from "react-redux";
-import {AddItemForm} from "./common/components/AddItemForm";
-import {addTodolistAC} from "./model/todolists-reducer";
-import {Todolists} from "./features/todolists/ui/Todolists";
+import {AddItemForm} from "../common/components/AddItemForm";
+import {addTodolistAC} from "../model/todolists-reducer";
+import {Todolists} from "../features/todolists/ui/Todolists";
 
 export const Main = () => {
     const dispatch = useDispatch()
