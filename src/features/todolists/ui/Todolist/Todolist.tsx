@@ -1,6 +1,6 @@
 import {memo, useCallback} from "react";
 import {useDispatch} from "react-redux";
-import {AddItemForm} from "../../../../AddItemForm";
+import {AddItemForm} from "../../../../common/components/AddItemForm";
 import {FilterTasksButtons} from "./FilterTasksButtons/FilterTasksButtons";
 import {addTaskAC} from "../../../../model/tasks-reducer";
 import type {TodolistType} from "../../../../model/todolists-reducer";
