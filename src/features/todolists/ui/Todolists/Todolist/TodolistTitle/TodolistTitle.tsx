@@ -29,7 +29,7 @@ export const TodolistTitle = memo(({todolist}: Props) => {
         //         <DeleteIcon/>
         //     </IconButton>
         // </div>
-        <div className={'todolist-title-container'}>
+        <div className={'container'}>
             <h3><EditableSpan odlTitle={todolist.title} updateItem={updateTodolistHandler}/>
                 <IconButton aria-label="delete" onClick={removeTodolistHandler}>
                     <DeleteIcon/>

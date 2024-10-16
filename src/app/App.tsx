@@ -1,4 +1,3 @@
-import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider} from '@mui/material/styles';
 import {useSelector} from "react-redux";
