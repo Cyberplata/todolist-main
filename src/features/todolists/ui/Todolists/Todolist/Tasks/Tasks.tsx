@@ -1,6 +1,7 @@
 import List from "@mui/material/List";
 import React from 'react';
 import {useAppSelector} from "../../../../../../common/hooks/useAppSelector";
+import {selectTasks} from "../../../../model/tasksSelectors";
 import type {TodolistType} from "../../../../model/todolists-reducer";
 
 import {Task} from "./Task/Task";
@@ -12,7 +13,7 @@ type Props = {
 export const Tasks = ({todolist}: Props) => {
     console.log("Tasks is called")
 
-    const tasks = useAppSelector(state => state.tasks)
+    const tasks = useAppSelector(selectTasks)
 
     // TODO: нужно ли выносить в отельный компонент функцию filteredTasks+tasks?
     // Отфильтрованные таски, вынес из map-а компоненты App

@@ -1,18 +1,16 @@
 import {ChangeEvent, memo, useState} from "react";
 import TextField from "@mui/material/TextField";
 
-type EditableSpanType = {
+type Props = {
     odlTitle: string
     updateItem: (newTitle: string) => void
-    // newTaskId: string
 };
 
-export const EditableSpan = memo(({odlTitle, updateItem}: EditableSpanType) => {
+export const EditableSpan = memo(({odlTitle, updateItem}: Props) => {
     console.log("EditableSpan is called")
 
     const [editMode, setEditMode] = useState(false)
     const [newTitle, setNewTitle] = useState(odlTitle)
-    // console.log(newTitle)
 
     const activateEditModeHandler = () => {
         setEditMode(!editMode)

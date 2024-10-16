@@ -8,10 +8,10 @@ import {
 } from "../../../features/todolists/ui/Todolists/Todolist/FilterTasksButtons/FilterTasksButtons.styles";
 
 
-type AddItemFormType = {
+type Props = {
     addItem: (title: string) => void
 };
-export const AddItemForm = memo(({addItem}: AddItemFormType) => {
+export const AddItemForm = memo(({addItem}: Props) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
