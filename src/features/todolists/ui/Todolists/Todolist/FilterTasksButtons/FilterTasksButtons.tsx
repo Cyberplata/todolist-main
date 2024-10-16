@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import React, {useCallback} from 'react';
 import {useDispatch} from "react-redux";
 import {ButtonWithMemo} from "../../../../../../common/components/ButtonWithMemo/ButtonWithMemo";
+import {useAppDispatch} from "../../../../../../common/hooks/useAppDispatch";
 import {
     changeTodolistFilterAC,
     type FilterValuesType,
@@ -18,7 +19,7 @@ export const FilterTasksButtons = ({todolist}: Props) => {
 
     const {filter, id} = todolist
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
 
     const changeFilterTasksHandler = useCallback((filter: FilterValuesType) => {

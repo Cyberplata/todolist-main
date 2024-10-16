@@ -5,6 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import React, {ChangeEvent, memo, useCallback} from 'react';
 import {useDispatch} from "react-redux";
 import {EditableSpan} from "../../../../../../../common/components/EditableSpan/EditableSpan";
+import {useAppDispatch} from "../../../../../../../common/hooks/useAppDispatch";
 import {
     changeTaskStatusAC,
     changeTaskTitleAC,
@@ -24,7 +25,7 @@ export const Task = memo((props: Props) => {
 
     const {todolist, task} = props
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     // Final????? Стоит ли оборачивать в хук useCallback()?
     const removeTaskHandler = useCallback(() => {

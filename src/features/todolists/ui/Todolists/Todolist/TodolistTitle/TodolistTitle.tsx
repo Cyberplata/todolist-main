@@ -3,14 +3,16 @@ import IconButton from "@mui/material/IconButton";
 import React, {memo, useCallback} from 'react';
 import {useDispatch} from "react-redux";
 import {EditableSpan} from "../../../../../../common/components/EditableSpan/EditableSpan";
+import {useAppDispatch} from "../../../../../../common/hooks/useAppDispatch";
 import {changeTodolistTitleAC, removeTodolistAC, type TodolistType} from "../../../../model/todolists-reducer";
+import styles from "./TodolistTitle.module.css"
 
 type Props = {
     todolist: TodolistType
 }
 
 export const TodolistTitle = memo(({todolist}: Props) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const removeTodolistHandler = useCallback(() => {
         dispatch(removeTodolistAC(todolist.id))
@@ -21,7 +23,7 @@ export const TodolistTitle = memo(({todolist}: Props) => {
     }, [dispatch, todolist.id])
 
     return (
-        // <div className={'todolist-title-container'}>
+        // <div className={'container'}>
         //     <h3>
         //         <EditableSpan odlTitle={todolist.title} updateItem={updateTodolistHandler}/>
         //     </h3>
@@ -29,8 +31,11 @@ export const TodolistTitle = memo(({todolist}: Props) => {
         //         <DeleteIcon/>
         //     </IconButton>
         // </div>
-        <div className={'container'}>
-            <h3><EditableSpan odlTitle={todolist.title} updateItem={updateTodolistHandler}/>
+        <div className={styles.container}>
+            <h3>
+                <EditableSpan odlTitle={todolist.title}
+                              updateItem={updateTodolistHandler}
+                />
                 <IconButton aria-label="delete" onClick={removeTodolistHandler}>
                     <DeleteIcon/>
                 </IconButton>
