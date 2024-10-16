@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import {useDispatch, useSelector} from "react-redux";
 import {changeThemeAC, type ThemeModeType} from "../../../../app/app-reducer";
 import type {RootState} from "../../../../app/store";
-import {MenuButton} from "../../MenuButton";
+import {MenuButton} from "../../MenuButton/MenuButton";
 import Switch from "@mui/material/Switch";
 import AppBar from "@mui/material/AppBar";
 import React from 'react';

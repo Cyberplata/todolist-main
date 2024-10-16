@@ -2,8 +2,8 @@ import List from "@mui/material/List";
 import React from 'react';
 import {useSelector} from "react-redux";
 import type {RootState} from "../../../../../../app/store";
-import type {TasksStateType} from "../../../../../../model/tasks-reducer";
-import type {TodolistType} from "../../../../../../model/todolists-reducer";
+import type {TasksStateType} from "../../../../model/tasks-reducer";
+import type {TodolistType} from "../../../../model/todolists-reducer";
 
 import {Task} from "./Task/Task";
 

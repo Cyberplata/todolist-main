@@ -6,7 +6,7 @@ import {
     changeTodolistFilterAC,
     type FilterValuesType,
     type TodolistType
-} from "../../../../../../model/todolists-reducer";
+} from "../../../../model/todolists-reducer";
 import {filterButtonContainerSx} from "./FilterTasksButtons.styles";
 
 type Props = {
