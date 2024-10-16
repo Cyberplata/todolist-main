@@ -1,5 +1,4 @@
 import {memo, useCallback} from "react";
-import {useDispatch} from "react-redux";
 import {AddItemForm} from "../../../../../common/components/AddItemForm/AddItemForm";
 import {useAppDispatch} from "../../../../../common/hooks/useAppDispatch";
 import {addTaskAC} from "../../../model/tasks-reducer";
