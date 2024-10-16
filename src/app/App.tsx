@@ -3,6 +3,7 @@ import {ThemeProvider} from '@mui/material/styles';
 import {Header} from "../common/components/Header/Header";
 import {useAppSelector} from "../common/hooks/useAppSelector";
 import {getTheme} from "../common/theme/theme";
+import {selectThemeMode} from "./appSelectors";
 import {Main} from "./Main";
 
 
@@ -19,7 +20,7 @@ export const App = () => {
     // так как это лишний ререндер
     // const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
 
-    const themeMode = useAppSelector(state => state.app.themeMode)
+    const themeMode = useAppSelector(selectThemeMode)
 
     return (
         <div className="App">

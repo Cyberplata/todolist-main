@@ -1,19 +1,18 @@
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import AppBar from "@mui/material/AppBar";
+import IconButton from "@mui/material/IconButton";
+import Switch from "@mui/material/Switch";
+import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import {useDispatch, useSelector} from "react-redux";
-import {changeThemeAC, type ThemeModeType} from "../../../../app/app-reducer";
-import type {RootState} from "../../../../app/store";
+import React from 'react';
+import {changeThemeAC} from "../../../../app/app-reducer";
+import {selectThemeMode} from "../../../../app/appSelectors";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 import {useAppSelector} from "../../../hooks/useAppSelector";
 import {MenuButton} from "../../MenuButton/MenuButton";
-import Switch from "@mui/material/Switch";
-import AppBar from "@mui/material/AppBar";
-import React from 'react';
 
 export const AppBarHeader = () => {
-    const themeMode = useAppSelector(state => state.app.themeMode)
+    const themeMode = useAppSelector(selectThemeMode)
 
     const dispatch = useAppDispatch()
 

@@ -43,7 +43,7 @@ export const Tasks = ({todolist}: Props) => {
     //     return tasksForTodolist;
     // },[])
 
-    const mappedTask = filteredTasks().map((t) => {
+    const mappedTasks = filteredTasks().map((t) => {
         return <Task key={t.id}
                      todolist={todolist}
                      task={t}
@@ -57,7 +57,7 @@ export const Tasks = ({todolist}: Props) => {
                 filteredTasks().length === 0
                     ? <p>Тасок нет</p>
                     : <List>
-                        {mappedTask}
+                        {mappedTasks}
                     </List>
             }
         </>

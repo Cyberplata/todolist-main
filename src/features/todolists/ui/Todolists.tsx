@@ -1,8 +1,11 @@
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import React from 'react';
+import type {RootState} from "../../../app/store";
 import {useAppSelector} from "../../../common/hooks/useAppSelector";
 import {Todolist} from "./Todolists/Todolist/Todolist";
+
+const selectTodolists = (state: RootState) => state.todolists
 
 export const Todolists = () => {
     const todolists = useAppSelector(state => state.todolists)
