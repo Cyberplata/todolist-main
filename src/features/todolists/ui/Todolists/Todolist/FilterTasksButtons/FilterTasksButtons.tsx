@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import React, {useCallback} from 'react';
 import {useDispatch} from "react-redux";
-import {ButtonWithMemo} from "../../../../../../ButtonWithMemo";
+import {ButtonWithMemo} from "../../../../../../common/components/ButtonWithMemo/ButtonWithMemo";
 import {
     changeTodolistFilterAC,
     type FilterValuesType,
