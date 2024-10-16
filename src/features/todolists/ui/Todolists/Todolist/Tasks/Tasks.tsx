@@ -16,11 +16,11 @@ export const Tasks = ({todolist}: Props) => {
 
     const tasks = useSelector<RootState, TasksStateType>(state => state.tasks)
 
+    // TODO: нужно ли выносить в отельный компонент функцию filteredTasks+tasks?
     // Отфильтрованные таски, вынес из map-а компоненты App
     const filteredTasks = () => {
         const allTodolistTasks = tasks[todolist.id]
 
-        // let tasksForTodolist = tasks;
         let tasksForTodolist = allTodolistTasks;
         if (todolist.filter === 'active') {
             tasksForTodolist = allTodolistTasks.filter(task => !task.isDone)

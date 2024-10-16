@@ -22,10 +22,7 @@ type Props = {
 export const Task = memo((props: Props) => {
     console.log("TaskValera is called")
 
-    const {
-        todolist,
-        task,
-    } = props
+    const {todolist, task} = props
 
     const dispatch = useDispatch()
 
@@ -44,6 +41,7 @@ export const Task = memo((props: Props) => {
         dispatch(changeTaskTitleAC({todolistID: todolist.id, taskId: task.id, title: newTitle}))
     }, [dispatch, todolist.id, task.id])
 
+    // TODO: Нужна ли тут эта проверка?
     if (!task) {
         console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         return null; // или любой другой способ обработки ошибки

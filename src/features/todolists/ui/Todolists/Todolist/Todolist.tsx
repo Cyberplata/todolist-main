@@ -23,9 +23,7 @@ export const Todolist = memo(({todolist}: Props) => {
     return (
         <>
             <TodolistTitle todolist={todolist}/>
-            {/*<div>*/}
             <AddItemForm addItem={addTaskHandler}/>
-            {/*</div>*/}
             <Tasks todolist={todolist}/>
             <FilterTasksButtons todolist={todolist}/>
         </>
