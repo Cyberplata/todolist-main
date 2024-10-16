@@ -1,9 +1,9 @@
 import {memo, useCallback} from "react";
 import {useDispatch} from "react-redux";
-import {AddItemForm} from "../../../../common/components/AddItemForm";
+import {AddItemForm} from "../../../../../common/components/AddItemForm";
+import {addTaskAC} from "../../../../../model/tasks-reducer";
+import type {TodolistType} from "../../../../../model/todolists-reducer";
 import {FilterTasksButtons} from "./FilterTasksButtons/FilterTasksButtons";
-import {addTaskAC} from "../../../../model/tasks-reducer";
-import type {TodolistType} from "../../../../model/todolists-reducer";
 import {Tasks} from "./Tasks/Tasks";
 import {TodolistTitle} from "./TodolistTitle/TodolistTitle";
 

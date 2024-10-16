@@ -5,7 +5,8 @@ import Box from '@mui/material/Box';
 import TextField from "@mui/material/TextField";
 import {
     filterButtonContainerSx
-} from "../../features/todolists/ui/Todolist/FilterTasksButtons/FilterTasksButtons.styles";
+} from "../../features/todolists/ui/Todolists/Todolist/FilterTasksButtons/FilterTasksButtons.styles";
+
 
 type AddItemFormType = {
     addItem: (title: string) => void

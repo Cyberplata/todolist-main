@@ -4,7 +4,7 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import type {RootState} from "../../../app/store";
 import {type TodolistType} from "../../../model/todolists-reducer";
-import {Todolist} from "./Todolist/Todolist";
+import {Todolist} from "./Todolists/Todolist/Todolist";
 
 export const Todolists = () => {
     const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists)
