@@ -27,7 +27,7 @@ export const Task = memo((props: Props) => {
 
     const dispatch = useAppDispatch()
 
-    // Final????? Стоит ли оборачивать в хук useCallback()?
+    // Final????? TODO: Стоит ли оборачивать хэндлеры в хук useCallback()? А правильные ли я зависимости поставил?
     const removeTaskHandler = useCallback(() => {
         // removeTask(todolist.id, task.id)
         dispatch(removeTaskAC({todolistID: todolist.id, taskId: task.id}))

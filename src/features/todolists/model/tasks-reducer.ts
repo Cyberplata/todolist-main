@@ -64,14 +64,6 @@ export const tasksReducer = (
                         : el
                 )
             }
-            // return {
-            //     ...state,
-            //     [action.payload.todolistID]: state[action.payload.todolistID].map(el =>
-            //         el.id === action.payload.taskId
-            //             ? {...el, isDone: action.payload.isDone}
-            //             : el
-            //     )
-            // }
         }
         case "CHANGE-TASK-TITLE": {
             return {
@@ -107,54 +99,6 @@ export const tasksReducer = (
             return state
     }
 }
-
-// Стандартная запись через объект action
-// export type RemoveTaskActionType = {
-//     type: 'REMOVE-TASK'
-//     payload: {
-//         todolistID: string
-//         taskId: string
-//     }
-// }
-// export type AddTaskActionType = {
-//     type: 'ADD-TASK'
-//     payload: {
-//         todolistID: string
-//         title: string
-//     }
-// }
-// export type ChangeTaskStatusActionType = {
-//     type: 'CHANGE-TASK-STATUS'
-//     payload: {
-//         todolistID: string
-//         taskId: string
-//         taskStatus: boolean
-//     }
-// }
-// export type ChangeTaskTitleActionType = {
-//     type: 'CHANGE-TASK-TITLE'
-//     payload: {
-//         todolistID: string
-//         taskId: string
-//         title: string
-//     }
-// }
-// export type AddTodolistActionType = {
-//     type: 'ADD-TODOLIST',
-//     payload: {
-//         title: string
-//         newTodolistId: string
-//     }
-// }
-// export type RemoveTodolistActionType = {
-//     type: 'REMOVE-TODOLIST',
-//     payload: {
-//         todolistId: string
-//     }
-// }
-
-
-
 
 // Action creators
 export const removeTaskAC = (payload: { todolistID: string, taskId: string }) => {
