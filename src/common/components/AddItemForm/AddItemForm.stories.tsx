@@ -11,30 +11,25 @@ import {
 import {AddItemForm, type Props} from "./AddItemForm";
 
 // ----- AddItemFormStory -----
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-    title: 'Todolists/AddItemForm',
+    title: 'Todolists/AddItemForm', // Название папки/Название подпапки
     component: AddItemForm,
-    parameters: {
-        // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
+    parameters: { // Это свойства, которые позволяют сохранять нам статические данные нашей компоненты
         layout: 'centered',
     },
-    // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-    tags: ['autodocs'],
-    // More on argTypes: https://storybook.js.org/docs/api/argtypes
-    argTypes: {
+    tags: ['autodocs'], // Создаёт папку Документация
+    argTypes: { // Предназначен, чтобы писать свойства, которые заданы неявно и ограничить значение пропсов
         addItem: {
             description: 'Button clicked inside form'
         }
     },
-    // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-    args: {addItem: fn()},
-} satisfies Meta<typeof AddItemForm>;
+    args: {addItem: fn()}, // Основное свойство, в котором мы задаём пропсы для нашей компоненты.
+                           // Самое важное, что когда мы создаём эти пропсы args они попадают во все наши Истории Сторибуковские
+} satisfies Meta<typeof AddItemForm>; // Протипизировать можно сверху либо здесь -> meta:Meta<typeof AddItemForm>
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const AddItemFormStory: Story = {}
 
 
@@ -91,3 +86,4 @@ export const AddItemFormWithErrorStory = {
     // Ещё способ создавать истории через метод render() и передачу args
     render: (args: Props) => <AddItemFormWithError addItem={args.addItem}/>
 }
+// Time 43:54 - https://www.youtube.com/watch?v=0U_isB5xkoU
