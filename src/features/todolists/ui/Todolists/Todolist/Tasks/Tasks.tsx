@@ -17,7 +17,7 @@ export const Tasks = memo(({todolist}: Props) => {
 
     // TODO: нужно ли выносить в отельный компонент функцию filteredTasks+tasks? Стоит ли оборачивать в useCallback, useMemo, memo если будем выносить в функцию-хэлпер?
     // Отфильтрованные таски, вынес из map-а компоненты App
-    const filteredTasks = () => {
+    const filterTasks = () => {
         const allTodolistTasks = tasks[todolist.id]
 
         let tasksForTodolist = allTodolistTasks;
@@ -29,6 +29,7 @@ export const Tasks = memo(({todolist}: Props) => {
         }
         return tasksForTodolist;
     }
+
 
     // const filteredTasks = useCallback(() => {
     //     const allTodolistTasks = tasks[todolist.id]
@@ -67,8 +68,9 @@ export const Tasks = memo(({todolist}: Props) => {
     //     ));
     // };
 
+    const filteredTasks = filterTasks()
 
-    const mappedTasks = filteredTasks().map((t) => {
+    const mappedTasks = filteredTasks.map((t) => {
         return <Task key={t.id}
                      todolist={todolist}
                      task={t}
@@ -79,7 +81,7 @@ export const Tasks = memo(({todolist}: Props) => {
         <>
             {
                 // tasks[todolist.id].length === 0
-                filteredTasks().length === 0
+                filteredTasks.length === 0
                     ? <p>Тасок нет</p>
                     : <List>
                         {mappedTasks}
