@@ -32,8 +32,8 @@ export const TodolistTitle = memo(({todolist}: Props) => {
         // </div>
         <div className={styles.container}>
             <h3>
-                <EditableSpan odlTitle={todolist.title}
-                              updateItem={updateTodolistHandler}
+                <EditableSpan value={todolist.title}
+                              onChange={updateTodolistHandler}
                 />
                 <IconButton aria-label="delete" onClick={removeTodolistHandler}>
                     <DeleteIcon/>

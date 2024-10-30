@@ -52,7 +52,7 @@ export const Task = memo((props: Props) => {
         <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
             <div>
                 <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                <EditableSpan odlTitle={task.title} updateItem={changeTaskTitleHandler}/>
+                <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
             </div>
             <IconButton aria-label="delete" onClick={removeTaskHandler}>
                 <DeleteIcon/>

@@ -2,20 +2,20 @@ import {ChangeEvent, memo, useState} from "react";
 import TextField from "@mui/material/TextField";
 
 type Props = {
-    odlTitle: string
-    updateItem: (newTitle: string) => void
+    value: string
+    onChange: (newTitle: string) => void
 };
 
-export const EditableSpan = memo(({odlTitle, updateItem}: Props) => {
+export const EditableSpan = memo(({value, onChange}: Props) => {
     console.log("EditableSpan is called")
 
     const [editMode, setEditMode] = useState(false)
-    const [newTitle, setNewTitle] = useState(odlTitle)
+    const [newTitle, setNewTitle] = useState(value)
 
     const activateEditModeHandler = () => {
         setEditMode(!editMode)
         if (editMode) {
-            updateItem(newTitle)
+            onChange(newTitle)
         }
     }
 
@@ -36,6 +36,6 @@ export const EditableSpan = memo(({odlTitle, updateItem}: Props) => {
                 size='small'
                 autoFocus
             />
-            : <span onDoubleClick={activateEditModeHandler}>{odlTitle}</span>
+            : <span onDoubleClick={activateEditModeHandler}>{value}</span>
     );
 });
