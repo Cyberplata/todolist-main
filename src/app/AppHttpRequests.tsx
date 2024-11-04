@@ -5,8 +5,11 @@ import {AddItemForm} from '../common/components/AddItemForm/AddItemForm'
 import {EditableSpan} from '../common/components/EditableSpan/EditableSpan'
 import {Todolist} from "../features/todolists/ui/Todolists/Todolist/Todolist";
 
-const token = '8b1d77f1-f223-4bbe-91c0-9f0435b8f7df'
+const token = '635699a8-1b04-4d52-9bab-ce03e12b0529'
 const apiKey = '2ce9edc9-5880-4110-ab2d-4e4ef2fb6acf'
+
+// const token = process.env.REACT_APP_API_TOKEN;
+// const apiKey = process.env.REACT_APP_API_KEY;
 
 // вынести хэдеры сюда
 const options = {
@@ -38,25 +41,20 @@ type Task = {
     addedDate: string
 }
 
+type GetTasksResponse = {
+    totalCount: number
+    error: string
+    items: Task[]
+}
+
+// Примерно такая структура создаётся на бэкэнде
 enum TaskStatus {
     notReady = 0,
     part = 1,
     done = 2,
 }
 
-//
-// const a = TaskStatus.done
-
-type FieldError = {
-    error: string
-    field: string
-}
-
-type GetTasksResponse = {
-    totalCount: number
-    error: string
-    items: Task[]
-}
+// const a = TaskStatus.done // 2
 
 type UpdateTaskModel = {
     description: string | null
@@ -67,6 +65,23 @@ type UpdateTaskModel = {
     deadline: string | null
 }
 
+type FieldError = {
+    error: string
+    field: string
+}
+
+type Response<T = {}> = {
+    data: T
+    resultCode: number
+    messages: string[]
+    fieldsErrors: FieldError[]
+}
+
+// type Data = {
+//     item: Todolist
+// }
+
+// Эту типизацию заменили на type Response
 // type CreateTodolistResponse = {
 //     data: {
 //         item: Todolist
@@ -83,12 +98,31 @@ type UpdateTaskModel = {
 //     fieldsErrors: FieldError[]
 // }
 
-type Response<T = {}> = {
-    data: T
-    resultCode: number
-    messages: string[]
-    fieldsErrors: FieldError[]
-}
+// Пример как использовать универсальный тип через дженерики и несколько параметров
+// type Response<T, D, S> = {
+//     data: T
+//     resultCode: D
+//     messages: S[]
+//     fieldsErrors: FieldError[]
+// }
+//
+// const a: Response<{}, number, string>
+
+// Как можно объединять типы, если разные свойства-данные есть
+// type BaseResponse = {
+//     resultCode: number
+//     messages: string[]
+//     fieldsErrors: FieldError[]
+// }
+//
+// type CreateTodolistResponse = BaseResponse & {
+//     data1: {
+//         item: Todolist
+//     }
+// }
+// type RemoveTodolistResponse = BaseResponse & {
+//     data2: {}
+// }
 
 export const AppHttpRequests = () => {
     const [todolists, setTodolists] = useState<Todolist[]>([])
@@ -115,10 +149,10 @@ export const AppHttpRequests = () => {
     // }, [])
 
 
-        // .then(() => {
-        //     setTodolists((prevTodolists) =>
-        //         prevTodolists.map((tl) => (tl.id === id ? { ...tl, title } : tl)),
-        //     );
+    // .then(() => {
+    //     setTodolists((prevTodolists) =>
+    //         prevTodolists.map((tl) => (tl.id === id ? { ...tl, title } : tl)),
+    //     );
 
     useEffect(() => {
             axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
@@ -146,49 +180,61 @@ export const AppHttpRequests = () => {
 
     const createTodolistHandler = (title: string = '') => {
         // create todolist
-        axios.post<Response<{ item: Todolist }>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'API-KEY': apiKey,
-            },
-        }).then(res => {
-            const newTodolist = res.data.data.item
-            setTodolists([newTodolist, ...todolists])
-        })
+        // axios.post<Response<Data>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, options)
+        axios.post<Response<{
+            item: Todolist
+        }>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, options)
+            .then(res => {
+                const newTodolist = res.data.data.item
+                // setTodolists([newTodolist, ...todolists])
+                setTodolists(prevTodolists => [newTodolist, ...prevTodolists])
+            })
     }
 
     const removeTodolistHandler = (id: string) => {
         // remove todolist
-        axios.delete<Response>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'API-KEY': apiKey,
-            },
-        }).then(res => {
-            if (res.data.resultCode === 0) {
-                // Удаляем тудулист из состояния
-                setTodolists(prevTodolists => prevTodolists.filter(todolist => todolist.id !== id));
-                //  setTodolist(todolists.filter(tl => tl.id !== id));
-            } else {
-                // Обработка ошибки, если resultCode не равен 0
-                console.error('Error deleting todolist:', res.data.messages);
-            }
-        }).catch(error => {
+        axios.delete<Response>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, options)
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    // Удаляем тудулист из состояния
+                    setTodolists(prevTodolists => prevTodolists.filter(todolist => todolist.id !== id));
+                    //  setTodolist(todolists.filter(tl => tl.id !== id));
+                } else {
+                    // Обработка ошибки, если resultCode не равен 0
+                    console.error('Error deleting todolist:', res.data.messages);
+                }
+            }).catch(error => {
             // Обработка ошибки запроса
             console.error('Request failed:', error);
         });
     }
 
+    // const removeTodolistHandler = (id: string) => {
+    //     axios.post<Response>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, options)
+    //         .then(() => {
+    //             // setTodolists(prevState => (prevState.filter(tl => tl.id !== id)))
+    //             setTodolists(prevTodolists => prevTodolists.filter(todolist => todolist.id !== id));
+    //         })
+    // }
+
+
     const updateTodolistHandler = (id: string, title: string) => {
         // update todolist title
         axios.put<Response<{
             item: Todolist
-        }>>(`https://social-network.samuraijs.com/api/1.1//todo-lists/${id}`, {title}, options)
+        }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, options)
             .then(() => {
                 // console.log(res.data)
-                setTodolists(todolists.map(tl => tl.id === id
-                    ? {...tl, title}
-                    : tl)
+
+                // .then(() => {
+                //     setTodolists((prevTodolists) =>
+                //         prevTodolists.map((tl) => (tl.id === id ? { ...tl, title } : tl)),
+                //     );
+
+                setTodolists(prevTodolists => prevTodolists.map(tl => tl.id === id
+                        ? {...tl, title}
+                        : tl
+                    )
                 )
             })
     }
@@ -199,17 +245,35 @@ export const AppHttpRequests = () => {
             item: Task
         }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks`, {title}, options)
             .then(res => {
-                setTasks({...tasks, [todolistId]: [res.data.data.item, ...tasks[todolistId]]})
+                // setTasks({...tasks, [todolistId]: [res.data.data.item, ...tasks[todolistId]]})
+                setTasks(prevTasks => (
+                        {
+                            ...prevTasks,
+                            [todolistId]: [res.data.data.item, ...(prevTasks[todolistId] || [])]
+                        }
+                    )
+                )
             })
     }
 
     const removeTaskHandler = (taskId: string, todolistId: string) => {
         // remove task
+        axios
+            .delete<Response>(
+                `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${taskId}`,
+                options
+            )
+            .then(res => {
+                console.log(res)
+                setTasks(prevTasks => ({
+                    ...prevTasks,
+                    [todolistId]: prevTasks[todolistId].filter(t => t.id !== taskId)
+                }))
+            })
     }
 
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: Task, todolistId: string) => {
         // update task status
-
         const model: UpdateTaskModel = {
             description: task.description,
             title: task.title,
@@ -225,13 +289,38 @@ export const AppHttpRequests = () => {
         }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${task.id}`, model, options)
             .then(res => {
                 const newTask = res.data.data.item
-                setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === task.id ? newTask : t)})
+                setTasks(prevTasks => ({
+                    ...prevTasks,
+                    [todolistId]: prevTasks[todolistId].map(t => t.id === task.id ? newTask : t)
+                }))
+                // setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === task.id ? newTask : t)})
             })
     }
 
-    const changeTaskTitleHandler = (title: string, task: any) => {
+    const changeTaskTitleHandler = (title: string, task: Task, todolistId: string) => {
         // update task title
+        const model: UpdateTaskModel = {
+            description: task.description,
+            title,
+            status: task.status,
+            priority: task.priority,
+            startDate: task.startDate,
+            deadline: task.deadline,
+        }
 
+        axios.put<Response<{
+            item: Task
+        }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${task.id}`, model, options)
+            .then(() => {
+                // console.log(res)
+                setTasks(prevTasks => ({
+                    ...prevTasks,
+                    [todolistId]: prevTasks[todolistId].map(t => t.id === task.id
+                        ? {...t, title}
+                        : t
+                    )
+                }))
+            })
     }
 
     return (
@@ -262,7 +351,7 @@ export const AppHttpRequests = () => {
                                         />
                                         <EditableSpan
                                             value={task.title}
-                                            onChange={title => changeTaskTitleHandler(title, task)}
+                                            onChange={title => changeTaskTitleHandler(title, task, tl.id)}
                                         />
                                         <button onClick={() => removeTaskHandler(task.id, tl.id)}>x</button>
                                     </div>
