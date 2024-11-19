@@ -3,9 +3,16 @@ import axios from "axios";
 import React, {ChangeEvent, useEffect, useState} from 'react'
 import {AddItemForm} from '../common/components/AddItemForm/AddItemForm'
 import {EditableSpan} from '../common/components/EditableSpan/EditableSpan'
-import {Todolist} from "../features/todolists/ui/Todolists/Todolist/Todolist";
+import {
+    type GetTasksResponse,
+    type Task,
+    TaskStatus,
+    type UpdateTaskModel
+} from "../features/todolists/api/tasksApi.types";
+import type {Todolist} from "../features/todolists/api/todolistsApi.types";
+import type {Response} from "../features/todolists/api/todolistsApi.types";
 
-const token = '635699a8-1b04-4d52-9bab-ce03e12b0529'
+const token = '8b9a2fbd-c45a-4345-8354-54a75198a961'
 const apiKey = '2ce9edc9-5880-4110-ab2d-4e4ef2fb6acf'
 
 // const token = process.env.REACT_APP_API_TOKEN;
@@ -19,140 +26,9 @@ const options = {
     },
 }
 
-
-export type Todolist = {
-    id: string
-    title: string
-    addedDate: string
-    order: number
-}
-
-type Task = {
-    description: string | null
-    title: string
-    status: number
-    // status: TaskStatus
-    priority: number
-    startDate: string | null
-    deadline: string | null
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
-
-type GetTasksResponse = {
-    totalCount: number
-    error: string
-    items: Task[]
-}
-
-// Примерно такая структура создаётся на бэкэнде
-enum TaskStatus {
-    notReady = 0,
-    part = 1,
-    done = 2,
-}
-
-// const a = TaskStatus.done // 2
-
-type UpdateTaskModel = {
-    description: string | null
-    title: string
-    status: TaskStatus
-    priority: number
-    startDate: string | null
-    deadline: string | null
-}
-
-type FieldError = {
-    error: string
-    field: string
-}
-
-type Response<T = {}> = {
-    data: T
-    resultCode: number
-    messages: string[]
-    fieldsErrors: FieldError[]
-}
-
-// type Data = {
-//     item: Todolist
-// }
-
-// Эту типизацию заменили на type Response
-// type CreateTodolistResponse = {
-//     data: {
-//         item: Todolist
-//     }
-//     resultCode: number
-//     messages: string[]
-//     fieldsErrors: FieldError[]
-// }
-//
-// type DeleteTodolistResponse = {
-//     data: {}
-//     resultCode: number
-//     messages: string[]
-//     fieldsErrors: FieldError[]
-// }
-
-// Пример как использовать универсальный тип через дженерики и несколько параметров
-// type Response<T, D, S> = {
-//     data: T
-//     resultCode: D
-//     messages: S[]
-//     fieldsErrors: FieldError[]
-// }
-//
-// const a: Response<{}, number, string>
-
-// Как можно объединять типы, если разные свойства-данные есть
-// type BaseResponse = {
-//     resultCode: number
-//     messages: string[]
-//     fieldsErrors: FieldError[]
-// }
-//
-// type CreateTodolistResponse = BaseResponse & {
-//     data1: {
-//         item: Todolist
-//     }
-// }
-// type RemoveTodolistResponse = BaseResponse & {
-//     data2: {}
-// }
-
 export const AppHttpRequests = () => {
     const [todolists, setTodolists] = useState<Todolist[]>([])
     const [tasks, setTasks] = useState<{ [key: string]: Task[] }>({})
-
-    // useEffect(() => {
-    //     // get todolists
-    //     axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
-    //         headers: {
-    //             // Authorization: 'Bearer ' + '8b1d77f1-f223-4bbe-91c0-9f0435b8f7df'
-    //             // Authorization: token
-    //             Authorization: `Bearer ${token}`
-    //         }
-    //     }).then(res => {
-    //         const todolists = res.data
-    //         setTodolists(todolists)
-    //         todolists.forEach(tl => {
-    //             axios.get<Todolist[]>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${tl.id}/tasks`, option)
-    //                 .then(res => {
-    //                     console.log(res)
-    //                 })
-    //         })
-    //     })
-    // }, [])
-
-
-    // .then(() => {
-    //     setTodolists((prevTodolists) =>
-    //         prevTodolists.map((tl) => (tl.id === id ? { ...tl, title } : tl)),
-    //     );
 
     useEffect(() => {
             axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
@@ -209,28 +85,12 @@ export const AppHttpRequests = () => {
         });
     }
 
-    // const removeTodolistHandler = (id: string) => {
-    //     axios.post<Response>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, options)
-    //         .then(() => {
-    //             // setTodolists(prevState => (prevState.filter(tl => tl.id !== id)))
-    //             setTodolists(prevTodolists => prevTodolists.filter(todolist => todolist.id !== id));
-    //         })
-    // }
-
-
     const updateTodolistHandler = (id: string, title: string) => {
         // update todolist title
         axios.put<Response<{
             item: Todolist
         }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, options)
             .then(() => {
-                // console.log(res.data)
-
-                // .then(() => {
-                //     setTodolists((prevTodolists) =>
-                //         prevTodolists.map((tl) => (tl.id === id ? { ...tl, title } : tl)),
-                //     );
-
                 setTodolists(prevTodolists => prevTodolists.map(tl => tl.id === id
                         ? {...tl, title}
                         : tl
@@ -245,7 +105,6 @@ export const AppHttpRequests = () => {
             item: Task
         }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks`, {title}, options)
             .then(res => {
-                // setTasks({...tasks, [todolistId]: [res.data.data.item, ...tasks[todolistId]]})
                 setTasks(prevTasks => (
                         {
                             ...prevTasks,
@@ -293,7 +152,6 @@ export const AppHttpRequests = () => {
                     ...prevTasks,
                     [todolistId]: prevTasks[todolistId].map(t => t.id === task.id ? newTask : t)
                 }))
-                // setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === task.id ? newTask : t)})
             })
     }
 
