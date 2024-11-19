@@ -3,6 +3,7 @@ import axios from "axios";
 import React, {ChangeEvent, useEffect, useState} from 'react'
 import {AddItemForm} from '../common/components/AddItemForm/AddItemForm'
 import {EditableSpan} from '../common/components/EditableSpan/EditableSpan'
+import {tasksApi} from "../features/todolists/api/tasksApi";
 import {
     type GetTasksResponse,
     type Task,
@@ -37,7 +38,8 @@ export const AppHttpRequests = () => {
                 setTodolists(todolists)
 
                 todolists.forEach(tl => {
-                    axios.get<GetTasksResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${tl.id}/tasks`, options)
+                    // axios.get<GetTasksResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${tl.id}/tasks`, options)
+                    tasksApi.getTasks(tl.id)
                         .then(res => {
                             setTasks(prevTasks => ({...prevTasks, [tl.id]: res.data.items}))
                         })
@@ -84,9 +86,7 @@ export const AppHttpRequests = () => {
     }
 
     const createTaskHandler = (title: string, todolistId: string) => {
-        axios.post<Response<{
-            item: Task
-        }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks`, {title}, options)
+        tasksApi.createTask({title, todolistId})
             .then(res => {
                 setTasks(prevTasks => (
                         {
@@ -99,11 +99,7 @@ export const AppHttpRequests = () => {
     }
 
     const removeTaskHandler = (taskId: string, todolistId: string) => {
-        axios
-            .delete<Response>(
-                `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${taskId}`,
-                options
-            )
+        tasksApi.removeTask({taskId, todolistId})
             .then(res => {
                 console.log(res)
                 setTasks(prevTasks => ({
@@ -114,19 +110,7 @@ export const AppHttpRequests = () => {
     }
 
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: Task, todolistId: string) => {
-        const model: UpdateTaskModel = {
-            description: task.description,
-            title: task.title,
-            status: e.currentTarget.checked ? TaskStatus.done : TaskStatus.notReady,
-            // status: e.currentTarget.checked ? 2 : 0,
-            priority: task.priority,
-            startDate: task.startDate,
-            deadline: task.deadline,
-        }
-
-        axios.put<Response<{
-            item: Task
-        }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${task.id}`, model, options)
+        tasksApi.changeTaskStatus({e, task, todolistId})
             .then(res => {
                 const newTask = res.data.data.item
                 setTasks(prevTasks => ({
@@ -137,20 +121,8 @@ export const AppHttpRequests = () => {
     }
 
     const changeTaskTitleHandler = (title: string, task: Task, todolistId: string) => {
-        const model: UpdateTaskModel = {
-            description: task.description,
-            title,
-            status: task.status,
-            priority: task.priority,
-            startDate: task.startDate,
-            deadline: task.deadline,
-        }
-
-        axios.put<Response<{
-            item: Task
-        }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${task.id}`, model, options)
+        tasksApi.changeTaskTitle({title, task, todolistId})
             .then(() => {
-                // console.log(res)
                 setTasks(prevTasks => ({
                     ...prevTasks,
                     [todolistId]: prevTasks[todolistId].map(t => t.id === task.id
