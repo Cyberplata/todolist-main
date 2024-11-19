@@ -11,15 +11,16 @@ import {
 } from "../features/todolists/api/tasksApi.types";
 import type {Todolist} from "../features/todolists/api/todolistsApi.types";
 import type {Response} from "../features/todolists/api/todolistsApi.types";
+import {todolistsApi} from '../features/todolists/api/todolistsApi';
 
-const token = '8b9a2fbd-c45a-4345-8354-54a75198a961'
-const apiKey = '2ce9edc9-5880-4110-ab2d-4e4ef2fb6acf'
+export const token = '8b9a2fbd-c45a-4345-8354-54a75198a961'
+export const apiKey = '2ce9edc9-5880-4110-ab2d-4e4ef2fb6acf'
 
 // const token = process.env.REACT_APP_API_TOKEN;
 // const apiKey = process.env.REACT_APP_API_KEY;
 
 // вынести хэдеры сюда
-const options = {
+export const options = {
     headers: {
         Authorization: `Bearer ${token}`,
         'API-KEY': apiKey,
@@ -31,23 +32,14 @@ export const AppHttpRequests = () => {
     const [tasks, setTasks] = useState<{ [key: string]: Task[] }>({})
 
     useEffect(() => {
-            axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(res => {
+            todolistsApi.getTodolists().then(res => {
                 const todolists = res.data
                 setTodolists(todolists)
-
-                // const tasks2 = {
-                // 'tl.id': [],
-                // }
 
                 todolists.forEach(tl => {
                     axios.get<GetTasksResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${tl.id}/tasks`, options)
                         .then(res => {
                             setTasks(prevTasks => ({...prevTasks, [tl.id]: res.data.items}))
-                            // setTasks(tasks => ({...tasks2, [tl.id]: res.data.items}))
                         })
                 })
             })
@@ -55,11 +47,7 @@ export const AppHttpRequests = () => {
     )
 
     const createTodolistHandler = (title: string = '') => {
-        // create todolist
-        // axios.post<Response<Data>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, options)
-        axios.post<Response<{
-            item: Todolist
-        }>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, options)
+        todolistsApi.createTodolist(title)
             .then(res => {
                 const newTodolist = res.data.data.item
                 // setTodolists([newTodolist, ...todolists])
@@ -68,8 +56,7 @@ export const AppHttpRequests = () => {
     }
 
     const removeTodolistHandler = (id: string) => {
-        // remove todolist
-        axios.delete<Response>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, options)
+        todolistsApi.deleteTodolist(id)
             .then(res => {
                 if (res.data.resultCode === 0) {
                     // Удаляем тудулист из состояния
@@ -86,10 +73,7 @@ export const AppHttpRequests = () => {
     }
 
     const updateTodolistHandler = (id: string, title: string) => {
-        // update todolist title
-        axios.put<Response<{
-            item: Todolist
-        }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, options)
+        todolistsApi.updateTodolist({id, title})
             .then(() => {
                 setTodolists(prevTodolists => prevTodolists.map(tl => tl.id === id
                         ? {...tl, title}
@@ -100,7 +84,6 @@ export const AppHttpRequests = () => {
     }
 
     const createTaskHandler = (title: string, todolistId: string) => {
-        // create task
         axios.post<Response<{
             item: Task
         }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks`, {title}, options)
@@ -116,7 +99,6 @@ export const AppHttpRequests = () => {
     }
 
     const removeTaskHandler = (taskId: string, todolistId: string) => {
-        // remove task
         axios
             .delete<Response>(
                 `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${taskId}`,
@@ -132,7 +114,6 @@ export const AppHttpRequests = () => {
     }
 
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: Task, todolistId: string) => {
-        // update task status
         const model: UpdateTaskModel = {
             description: task.description,
             title: task.title,
@@ -156,7 +137,6 @@ export const AppHttpRequests = () => {
     }
 
     const changeTaskTitleHandler = (title: string, task: Task, todolistId: string) => {
-        // update task title
         const model: UpdateTaskModel = {
             description: task.description,
             title,
