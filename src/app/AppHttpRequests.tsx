@@ -2,15 +2,16 @@ import Checkbox from '@mui/material/Checkbox'
 import React, {ChangeEvent, useEffect, useState} from 'react'
 import {AddItemForm} from '../common/components/AddItemForm/AddItemForm'
 import {EditableSpan} from '../common/components/EditableSpan/EditableSpan'
+import {TaskStatus} from "../common/enums/enums";
 import {tasksApi} from "../features/todolists/api/tasksApi";
-import {type Task, TaskStatus} from "../features/todolists/api/tasksApi.types";
+import {type DomainTask} from "../features/todolists/api/tasksApi.types";
 import {todolistsApi} from '../features/todolists/api/todolistsApi';
 import type {Todolist} from "../features/todolists/api/todolistsApi.types";
 
 
 export const AppHttpRequests = () => {
     const [todolists, setTodolists] = useState<Todolist[]>([])
-    const [tasks, setTasks] = useState<{ [key: string]: Task[] }>({})
+    const [tasks, setTasks] = useState<{ [key: string]: DomainTask[] }>({})
 
     useEffect(() => {
             todolistsApi.getTodolists().then(res => {
@@ -87,7 +88,7 @@ export const AppHttpRequests = () => {
             })
     }
 
-    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: Task, todolistId: string) => {
+    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: DomainTask, todolistId: string) => {
         tasksApi.changeTaskStatus({e, task, todolistId})
             .then(res => {
                 const newTask = res.data.data.item
@@ -98,7 +99,7 @@ export const AppHttpRequests = () => {
             })
     }
 
-    const changeTaskTitleHandler = (title: string, task: Task, todolistId: string) => {
+    const changeTaskTitleHandler = (title: string, task: DomainTask, todolistId: string) => {
         tasksApi.changeTaskTitle({title, task, todolistId})
             .then(() => {
                 setTasks(prevTasks => ({
@@ -134,7 +135,7 @@ export const AppHttpRequests = () => {
                                 return (
                                     <div key={task.id}>
                                         <Checkbox
-                                            checked={task.status === TaskStatus.done}
+                                            checked={task.status === TaskStatus.Completed}
                                             onChange={e => changeTaskStatusHandler(e, task, tl.id)}
                                         />
                                         <EditableSpan
