@@ -1,32 +1,15 @@
 import Checkbox from '@mui/material/Checkbox'
-import axios from "axios";
 import React, {ChangeEvent, useEffect, useState} from 'react'
 import {AddItemForm} from '../common/components/AddItemForm/AddItemForm'
 import {EditableSpan} from '../common/components/EditableSpan/EditableSpan'
 import {tasksApi} from "../features/todolists/api/tasksApi";
-import {
-    type GetTasksResponse,
-    type Task,
-    TaskStatus,
-    type UpdateTaskModel
-} from "../features/todolists/api/tasksApi.types";
-import type {Todolist} from "../features/todolists/api/todolistsApi.types";
-import type {Response} from "../features/todolists/api/todolistsApi.types";
+import {type Task, TaskStatus} from "../features/todolists/api/tasksApi.types";
 import {todolistsApi} from '../features/todolists/api/todolistsApi';
+import type {Todolist} from "../features/todolists/api/todolistsApi.types";
 
-export const token = '8b9a2fbd-c45a-4345-8354-54a75198a961'
-export const apiKey = '2ce9edc9-5880-4110-ab2d-4e4ef2fb6acf'
 
 // const token = process.env.REACT_APP_API_TOKEN;
 // const apiKey = process.env.REACT_APP_API_KEY;
-
-// вынести хэдеры сюда
-export const options = {
-    headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey,
-    },
-}
 
 export const AppHttpRequests = () => {
     const [todolists, setTodolists] = useState<Todolist[]>([])
@@ -38,7 +21,6 @@ export const AppHttpRequests = () => {
                 setTodolists(todolists)
 
                 todolists.forEach(tl => {
-                    // axios.get<GetTasksResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${tl.id}/tasks`, options)
                     tasksApi.getTasks(tl.id)
                         .then(res => {
                             setTasks(prevTasks => ({...prevTasks, [tl.id]: res.data.items}))
@@ -52,7 +34,6 @@ export const AppHttpRequests = () => {
         todolistsApi.createTodolist(title)
             .then(res => {
                 const newTodolist = res.data.data.item
-                // setTodolists([newTodolist, ...todolists])
                 setTodolists(prevTodolists => [newTodolist, ...prevTodolists])
             })
     }

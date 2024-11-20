@@ -1,36 +1,21 @@
 import axios from 'axios'
 import {ChangeEvent} from "react";
-import {options, token} from "../../../app/AppHttpRequests";
+import {instance} from "../../../common/instance/instance";
 import {type GetTasksResponse, type Task, TaskStatus, type UpdateTaskModel} from "./tasksApi.types";
 import type {Response, Todolist} from "./todolistsApi.types";
 
 
 export const tasksApi = {
     getTasks(id: string) {
-        const promise = axios.get<GetTasksResponse>(
-            `https://social-network.samuraijs.com/api/1.1/todo-lists/${id}/tasks`,
-            options
-        )
-        return promise
+        return instance.get<GetTasksResponse>(`todo-lists/${id}/tasks`)
     },
     createTask(payload: { title: string, todolistId: string }) {
         const {todolistId, title} = payload
-        const promise = axios.post<Response<{
-            item: Task
-        }>>(
-            `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks`,
-            {title},
-            options
-        )
-        return promise
+        return instance.post<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks`, {title})
     },
     removeTask(payload: { taskId: string, todolistId: string }) {
         const {todolistId, taskId} = payload
-        const promise = axios.delete<Response>(
-            `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${taskId}`,
-            options
-        )
-        return promise
+        return instance.delete<Response>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     changeTaskStatus(payload: { e: ChangeEvent<HTMLInputElement>, task: Task, todolistId: string }) {
         const {e, task, todolistId} = payload
@@ -44,14 +29,7 @@ export const tasksApi = {
             deadline: task.deadline,
         }
 
-        const promise = axios.put<Response<{
-            item: Task
-        }>>(
-            `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${task.id}`,
-            model,
-            options
-        )
-        return promise
+        return instance.put<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks/${task.id}`, model)
     },
     changeTaskTitle(payload: { title: string, task: Task, todolistId: string }) {
         const {title, task, todolistId} = payload
@@ -64,13 +42,6 @@ export const tasksApi = {
             deadline: task.deadline,
         }
 
-        const promise = axios.put<Response<{
-            item: Task
-        }>>(
-            `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}/tasks/${task.id}`,
-            model,
-            options
-        )
-        return promise
+        return instance.put<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks/${task.id}`, model)
     }
 }
