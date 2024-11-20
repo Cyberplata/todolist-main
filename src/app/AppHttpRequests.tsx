@@ -8,9 +8,6 @@ import {todolistsApi} from '../features/todolists/api/todolistsApi';
 import type {Todolist} from "../features/todolists/api/todolistsApi.types";
 
 
-// const token = process.env.REACT_APP_API_TOKEN;
-// const apiKey = process.env.REACT_APP_API_KEY;
-
 export const AppHttpRequests = () => {
     const [todolists, setTodolists] = useState<Todolist[]>([])
     const [tasks, setTasks] = useState<{ [key: string]: Task[] }>({})

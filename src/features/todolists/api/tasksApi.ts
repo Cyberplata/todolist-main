@@ -1,9 +1,7 @@
-import axios from 'axios'
 import {ChangeEvent} from "react";
 import {instance} from "../../../common/instance/instance";
 import type {BaseResponse} from "../../../common/types/types";
 import {type GetTasksResponse, type Task, TaskStatus, type UpdateTaskModel} from "./tasksApi.types";
-import type {Todolist} from "./todolistsApi.types";
 
 
 export const tasksApi = {
