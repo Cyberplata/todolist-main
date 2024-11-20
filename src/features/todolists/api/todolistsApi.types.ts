@@ -5,17 +5,17 @@ export type Todolist = {
     order: number
 }
 
-export type FieldError = {
-    error: string
-    field: string
-}
-
-export type Response<T = {}> = {
-    data: T
-    resultCode: number
-    messages: string[]
-    fieldsErrors: FieldError[]
-}
+// export type FieldError = {
+//     error: string
+//     field: string
+// }
+//
+// export type Response<T = {}> = {
+//     data: T
+//     resultCode: number
+//     messages: string[]
+//     fieldsErrors: FieldError[]
+// }
 
 // type Data = {
 //     item: Todolist

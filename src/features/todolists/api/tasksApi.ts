@@ -1,8 +1,9 @@
 import axios from 'axios'
 import {ChangeEvent} from "react";
 import {instance} from "../../../common/instance/instance";
+import type {BaseResponse} from "../../../common/types/types";
 import {type GetTasksResponse, type Task, TaskStatus, type UpdateTaskModel} from "./tasksApi.types";
-import type {Response, Todolist} from "./todolistsApi.types";
+import type {Todolist} from "./todolistsApi.types";
 
 
 export const tasksApi = {
@@ -11,11 +12,11 @@ export const tasksApi = {
     },
     createTask(payload: { title: string, todolistId: string }) {
         const {todolistId, title} = payload
-        return instance.post<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<BaseResponse<{ item: Task }>>(`todo-lists/${todolistId}/tasks`, {title})
     },
     removeTask(payload: { taskId: string, todolistId: string }) {
         const {todolistId, taskId} = payload
-        return instance.delete<Response>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        return instance.delete<BaseResponse>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     changeTaskStatus(payload: { e: ChangeEvent<HTMLInputElement>, task: Task, todolistId: string }) {
         const {e, task, todolistId} = payload
@@ -29,7 +30,7 @@ export const tasksApi = {
             deadline: task.deadline,
         }
 
-        return instance.put<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks/${task.id}`, model)
+        return instance.put<BaseResponse<{ item: Task }>>(`todo-lists/${todolistId}/tasks/${task.id}`, model)
     },
     changeTaskTitle(payload: { title: string, task: Task, todolistId: string }) {
         const {title, task, todolistId} = payload
@@ -42,6 +43,6 @@ export const tasksApi = {
             deadline: task.deadline,
         }
 
-        return instance.put<Response<{ item: Task }>>(`todo-lists/${todolistId}/tasks/${task.id}`, model)
+        return instance.put<BaseResponse>(`todo-lists/${todolistId}/tasks/${task.id}`, model)
     }
 }
