@@ -65,6 +65,7 @@
     "@storybook/react-webpack5": "8.3.6",
     "@storybook/test": "8.3.6",
     "eslint-plugin-storybook": "^0.10.1",
+    "prettier": "3.3.3",
     "prop-types": "15.8.1",
     "storybook": "8.3.6",
     "webpack": "5.95.0"
