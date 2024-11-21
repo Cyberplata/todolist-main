@@ -1,8 +1,8 @@
 import { TaskStatus } from "common/enums"
+import { instance } from "common/instance"
 import { ChangeEvent } from "react"
-import { instance } from "../../../common/instance/instance"
 import type { BaseResponse } from "common/types"
-import { type GetTasksResponse, type DomainTask, type UpdateTaskModel } from "./tasksApi.types"
+import type { DomainTask, GetTasksResponse, UpdateTaskModel } from "./tasksApi.types"
 
 export const tasksApi = {
   getTasks(id: string) {

@@ -8,8 +8,8 @@ import { MenuButton } from "common/components"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import React from "react"
+import { selectThemeMode } from "../../../../app"
 import { changeThemeAC } from "../../../../app/app-reducer"
-import { selectThemeMode } from "../../../../app/appSelectors"
 
 export const AppBarHeader = () => {
   const themeMode = useAppSelector(selectThemeMode)
