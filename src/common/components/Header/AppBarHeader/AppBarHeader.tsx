@@ -12,28 +12,28 @@ import { selectThemeMode } from "../../../../app"
 import { changeThemeAC } from "../../../../app/app-reducer"
 
 export const AppBarHeader = () => {
-  const themeMode = useAppSelector(selectThemeMode)
+   const themeMode = useAppSelector(selectThemeMode)
 
-  const dispatch = useAppDispatch()
+   const dispatch = useAppDispatch()
 
-  const changeModeHandler = () => {
-    dispatch(changeThemeAC(themeMode === "light" ? "dark" : "light"))
-  }
+   const changeModeHandler = () => {
+      dispatch(changeThemeAC(themeMode === "light" ? "dark" : "light"))
+   }
 
-  return (
-    <AppBar position="fixed">
-      <Toolbar>
-        <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          News
-        </Typography>
-        <MenuButton color="inherit">Login</MenuButton>
-        <MenuButton color="inherit">Logout</MenuButton>
-        <MenuButton color="inherit">Faq</MenuButton>
-        <Switch color={"default"} onChange={changeModeHandler} />
-      </Toolbar>
-    </AppBar>
-  )
+   return (
+      <AppBar position="fixed">
+         <Toolbar>
+            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+               <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+               News
+            </Typography>
+            <MenuButton color="inherit">Login</MenuButton>
+            <MenuButton color="inherit">Logout</MenuButton>
+            <MenuButton color="inherit">Faq</MenuButton>
+            <Switch color={"default"} onChange={changeModeHandler} />
+         </Toolbar>
+      </AppBar>
+   )
 }
