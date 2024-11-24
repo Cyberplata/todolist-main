@@ -1,4 +1,5 @@
 export { EditableSpan } from "./EditableSpan/EditableSpan"
 export { AddItemForm } from "./AddItemForm/AddItemForm"
 export { MenuButton } from "./MenuButton/MenuButton"
+export { ButtonWithMemo } from "./ButtonWithMemo/ButtonWithMemo"
 export { Header } from "./Header/Header"

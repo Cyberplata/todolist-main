@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box"
-import { ButtonWithMemo } from "common/components/ButtonWithMemo/ButtonWithMemo"
+import { ButtonWithMemo } from "common/components"
 import { useAppDispatch } from "common/hooks"
 import {
    changeTodolistFilterAC,

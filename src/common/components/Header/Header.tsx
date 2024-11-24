@@ -1,7 +1,6 @@
-// @flow
 import Box from "@mui/material/Box"
 import * as React from "react"
-import { AppBarHeader } from "./AppBarHeader/AppBarHeader"
+import { AppBarHeader } from "common/components/Header/AppBarHeader"
 
 export const Header = () => {
    return (

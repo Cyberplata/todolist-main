@@ -1,9 +1,9 @@
-import { filterButtonContainerSx } from "features/todolists/ui/Todolists/Todolist/FilterTasksButtons/FilterTasksButtons.styles"
 import { ChangeEvent, KeyboardEvent, memo, useState } from "react"
 import AddBoxIcon from "@mui/icons-material/AddBox"
 import IconButton from "@mui/material/IconButton"
 import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
+import { filterButtonContainerSx } from "../../../features/todolists/ui/Todolists/Todolist/FilterTasksButtons/FilterTasksButtons.styles"
 
 export type Props = {
    addItem: (title: string) => void

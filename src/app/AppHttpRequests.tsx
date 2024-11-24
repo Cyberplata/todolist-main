@@ -1,8 +1,8 @@
 import Checkbox from "@mui/material/Checkbox"
 import { AddItemForm, EditableSpan } from "common/components"
-import { type DomainTask, tasksApi, type Todolist, todolistsApi } from "features/todolists/api"
-import { TaskStatus } from "features/todolists/lib/enums"
 import React, { ChangeEvent, useEffect, useState } from "react"
+import { type DomainTask, tasksApi, type Todolist, todolistsApi } from "../features/todolists/api"
+import { TaskStatus } from "../features/todolists/lib/enums"
 // import { todolistsApi } from "../features/todolists/api/todolistsApi"
 // import type { Todolist } from "../features/todolists/api/todolistsApi.types"
 

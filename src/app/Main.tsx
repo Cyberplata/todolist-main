@@ -1,4 +1,3 @@
-// @flow
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import { AddItemForm } from "common/components"

@@ -19,7 +19,6 @@
       "paths": {
          "common/*": ["common/*"],
          "app/*": ["app/*"],
-         "features/*": ["features/*"]
       }
    },
    "include": ["src"]
