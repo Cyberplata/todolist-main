@@ -6,11 +6,11 @@ import React, { ChangeEvent, memo, useCallback } from "react"
 import { EditableSpan } from "common/components"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, type TaskType } from "../../../../../model/tasks-reducer"
-import type { TodolistType } from "../../../../../model/todolists-reducer"
+import type { DomainTodolist } from "../../../../../model/todolists-reducer"
 import { getListItemSx } from "./Task.styles"
 
 type Props = {
-   todolist: TodolistType
+   todolist: DomainTodolist
    task: TaskType
 }
 

@@ -4,13 +4,13 @@ import { useAppDispatch } from "common/hooks"
 import {
    changeTodolistFilterAC,
    type FilterValuesType,
-   type TodolistType,
+   type DomainTodolist,
 } from "features/todolists/model/todolists-reducer"
 import React, { useCallback } from "react"
 import { filterButtonContainerSx } from "./FilterTasksButtons.styles"
 
 type Props = {
-   todolist: TodolistType
+   todolist: DomainTodolist
 }
 
 export const FilterTasksButtons = ({ todolist }: Props) => {

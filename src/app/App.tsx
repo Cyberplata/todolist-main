@@ -12,7 +12,7 @@ export const App = () => {
    // Global States:
 
    // Переписали на Redux
-   // const todolists = useSelector<RootState, TodolistType[]>(state => state.todolists)
+   // const todolists = useSelector<RootState, DomainTodolist[]>(state => state.todolists)
 
    // Селектор всё равно работает, даже если данные не используются.
    // Фактический мы привязали нашу компоненту и ререндер, что делать не стоит,

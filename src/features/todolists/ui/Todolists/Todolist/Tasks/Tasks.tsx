@@ -2,11 +2,11 @@ import List from "@mui/material/List"
 import { useAppSelector } from "common/hooks"
 import React, { memo } from "react"
 import { selectTasks } from "../../../../model/tasksSelectors"
-import type { TodolistType } from "../../../../model/todolists-reducer"
+import type { DomainTodolist } from "../../../../model/todolists-reducer"
 import { Task } from "./Task"
 
 type Props = {
-   todolist: TodolistType
+   todolist: DomainTodolist
 }
 
 export const Tasks = memo(({ todolist }: Props) => {
@@ -30,8 +30,7 @@ export const Tasks = memo(({ todolist }: Props) => {
    }
 
    const filteredTasks = filterTasks()
-
-   const mappedTasks = filteredTasks.map((t) => {
+   const mappedTasks = filteredTasks?.map((t) => {
       return <Task key={t.id} todolist={todolist} task={t} />
    })
 
@@ -39,7 +38,7 @@ export const Tasks = memo(({ todolist }: Props) => {
       <>
          {
             // tasks[todolist.id].length === 0
-            filteredTasks.length === 0 ? <p>Тасок нет</p> : <List>{mappedTasks}</List>
+            filteredTasks?.length === 0 ? <p>Тасок нет</p> : <List>{mappedTasks}</List>
          }
       </>
    )
