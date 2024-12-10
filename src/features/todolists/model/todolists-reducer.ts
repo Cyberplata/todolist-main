@@ -1,4 +1,6 @@
+import type { AppDispatch } from "app/store"
 import { v1 } from "uuid"
+import { todolistsApi } from "../api"
 
 // Typing
 // export type DomainTodolist = {
@@ -104,3 +106,12 @@ export type TodolistsReducerActionsType =
    | ChangeTodolistTitleActionType
    | ChangeTodolistFilterActionType
    | SetTodolistsActionType
+
+// Thunks
+export const fetchTodolistsThunk = (dispatch: AppDispatch) => {
+   // внутри санки можно делать побочные эффекты (запросы на сервер)
+   todolistsApi.getTodolists().then((res) => {
+      // и диспатчить экшены (action) или другие санки (thunk)
+      dispatch(setTodolistsAC(res.data))
+   })
+}
