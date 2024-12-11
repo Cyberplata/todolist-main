@@ -16,11 +16,11 @@ export type Todolist = {
 //     messages: string[]
 //     fieldsErrors: FieldError[]
 // }
-
+//
 // type Data = {
 //     item: Todolist
 // }
-
+//
 // Эту типизацию заменили на type Response
 // type CreateTodolistResponse = {
 //     data: {

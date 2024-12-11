@@ -1,6 +1,8 @@
 import List from "@mui/material/List"
-import { useAppSelector } from "common/hooks"
-import React, { memo } from "react"
+import { useAppDispatch, useAppSelector } from "common/hooks"
+import React, { memo, useEffect } from "react"
+import { TaskStatus } from "../../../../lib/enums"
+import { fetchTasksTC } from "../../../../model/tasks-reducer"
 import { selectTasks } from "../../../../model/tasksSelectors"
 import type { DomainTodolist } from "../../../../model/todolists-reducer"
 import { Task } from "./Task"
@@ -10,21 +12,26 @@ type Props = {
 }
 
 export const Tasks = memo(({ todolist }: Props) => {
-   console.log("Tasks is called")
+   // console.log("Tasks is called")
 
    const tasks = useAppSelector(selectTasks)
 
-   // TODO: нужно ли выносить в отельный компонент функцию filteredTasks+tasks? Стоит ли оборачивать в useCallback, useMemo, memo если будем выносить в функцию-хэлпер?
+   const dispatch = useAppDispatch()
+
+   useEffect(() => {
+      dispatch(fetchTasksTC(todolist.id))
+   }, [])
+
    // Отфильтрованные таски, вынес из map-а компоненты App
    const filterTasks = () => {
       const allTodolistTasks = tasks[todolist.id]
 
       let tasksForTodolist = allTodolistTasks
       if (todolist.filter === "active") {
-         tasksForTodolist = allTodolistTasks.filter((task) => !task.isDone)
+         tasksForTodolist = allTodolistTasks.filter((task) => task.status === TaskStatus.New)
       }
       if (todolist.filter === "completed") {
-         tasksForTodolist = allTodolistTasks.filter((task) => task.isDone)
+         tasksForTodolist = allTodolistTasks.filter((task) => task.status == TaskStatus.Completed)
       }
       return tasksForTodolist
    }

@@ -42,10 +42,10 @@ export const todolistsReducer = (
          return [...state, newTodolist]
       }
       case "CHANGE-TODOLIST-TITLE": {
-         return state.map((tl) => (tl.id === action.payload.todolistID ? { ...tl, title: action.payload.title } : tl))
+         return state.map((tl) => (tl.id === action.payload.todolistId ? { ...tl, title: action.payload.title } : tl))
       }
       case "CHANGE-TODOLIST-FILTER": {
-         return state.map((tl) => (tl.id === action.payload.todolistID ? { ...tl, filter: action.payload.filter } : tl))
+         return state.map((tl) => (tl.id === action.payload.todolistId ? { ...tl, filter: action.payload.filter } : tl))
       }
       case "SET-TODOLISTS": {
          return action.todolists.map((tl) => ({ ...tl, filter: "all" }))
@@ -56,11 +56,11 @@ export const todolistsReducer = (
 }
 
 // Action creators
-export const removeTodolistAC = (todolistID: string) => {
+export const removeTodolistAC = (todolistId: string) => {
    return {
       type: "REMOVE-TODOLIST",
       payload: {
-         id: todolistID,
+         id: todolistId,
       },
    } as const
 }
@@ -75,14 +75,14 @@ export const addTodolistAC = (title: string) => {
    } as const
 }
 
-export const changeTodolistTitleAC = (payload: { todolistID: string; title: string }) => {
+export const changeTodolistTitleAC = (payload: { todolistId: string; title: string }) => {
    return {
       type: "CHANGE-TODOLIST-TITLE",
       payload,
    } as const
 }
 
-export const changeTodolistFilterAC = (payload: { todolistID: string; filter: FilterValuesType }) => {
+export const changeTodolistFilterAC = (payload: { todolistId: string; filter: FilterValuesType }) => {
    return {
       type: "CHANGE-TODOLIST-FILTER",
       payload,

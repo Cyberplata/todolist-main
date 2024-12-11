@@ -23,7 +23,7 @@ export const TodolistTitle = memo(({ todolist }: Props) => {
 
    const updateTodolistHandler = useCallback(
       (newTitle: string) => {
-         dispatch(changeTodolistTitleAC({ todolistID: todolist.id, title: newTitle }))
+         dispatch(changeTodolistTitleAC({ todolistId: todolist.id, title: newTitle }))
       },
       [dispatch, todolist.id],
    )

@@ -22,7 +22,7 @@ export const FilterTasksButtons = ({ todolist }: Props) => {
 
    const changeFilterTasksHandler = useCallback(
       (filter: FilterValuesType) => {
-         dispatch(changeTodolistFilterAC({ todolistID: id, filter }))
+         dispatch(changeTodolistFilterAC({ todolistId: id, filter }))
       },
       [changeTodolistFilterAC, id],
    )

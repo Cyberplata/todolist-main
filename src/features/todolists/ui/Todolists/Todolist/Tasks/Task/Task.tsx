@@ -2,40 +2,42 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import Checkbox from "@mui/material/Checkbox"
 import IconButton from "@mui/material/IconButton"
 import ListItem from "@mui/material/ListItem"
-import React, { ChangeEvent, memo, useCallback } from "react"
 import { EditableSpan } from "common/components"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
-import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, type TaskType } from "../../../../../model/tasks-reducer"
+import React, { ChangeEvent, memo, useCallback } from "react"
+import type { DomainTask } from "../../../../../api"
+import { TaskStatus } from "../../../../../lib/enums"
+import { changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from "../../../../../model/tasks-reducer"
 import type { DomainTodolist } from "../../../../../model/todolists-reducer"
 import { getListItemSx } from "./Task.styles"
 
 type Props = {
    todolist: DomainTodolist
-   task: TaskType
+   task: DomainTask
 }
 
 export const Task = memo((props: Props) => {
-   console.log("TaskValera is called")
+   // console.log("TaskValera is called")
 
    const { todolist, task } = props
 
    const dispatch = useAppDispatch()
 
    const removeTaskHandler = useCallback(() => {
-      dispatch(removeTaskAC({ todolistID: todolist.id, taskId: task.id }))
+      dispatch(removeTaskAC({ todolistId: todolist.id, taskId: task.id }))
    }, [dispatch, todolist.id, task.id])
 
    const changeTaskStatusHandler = useCallback(
       (e: ChangeEvent<HTMLInputElement>) => {
          const newStatusValue = e.currentTarget.checked
-         dispatch(changeTaskStatusAC({ todolistID: todolist.id, taskId: task.id, isDone: newStatusValue }))
+         dispatch(changeTaskStatusAC({ todolistId: todolist.id, taskId: task.id, isDone: newStatusValue }))
       },
       [dispatch, todolist.id, task.id],
    )
 
    const changeTaskTitleHandler = useCallback(
       (newTitle: string) => {
-         dispatch(changeTaskTitleAC({ todolistID: todolist.id, taskId: task.id, title: newTitle }))
+         dispatch(changeTaskTitleAC({ todolistId: todolist.id, taskId: task.id, title: newTitle }))
       },
       [dispatch, todolist.id, task.id],
    )
@@ -47,9 +49,9 @@ export const Task = memo((props: Props) => {
    }
 
    return (
-      <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
+      <ListItem key={task.id} sx={getListItemSx(task.status === TaskStatus.Completed)}>
          <div>
-            <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler} />
+            <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
             <EditableSpan value={task.title} onChange={changeTaskTitleHandler} />
          </div>
          <IconButton aria-label="delete" onClick={removeTaskHandler}>
