@@ -2,7 +2,7 @@ import List from "@mui/material/List"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import React, { memo, useEffect } from "react"
 import { TaskStatus } from "../../../../lib/enums"
-import { fetchTasksTC } from "../../../../model/tasks-reducer"
+import { setTasksTC } from "../../../../model/tasks-reducer"
 import { selectTasks } from "../../../../model/tasksSelectors"
 import type { DomainTodolist } from "../../../../model/todolists-reducer"
 import { Task } from "./Task"
@@ -12,14 +12,12 @@ type Props = {
 }
 
 export const Tasks = memo(({ todolist }: Props) => {
-   // console.log("Tasks is called")
-
    const tasks = useAppSelector(selectTasks)
 
    const dispatch = useAppDispatch()
 
    useEffect(() => {
-      dispatch(fetchTasksTC(todolist.id))
+      dispatch(setTasksTC(todolist.id))
    }, [])
 
    // Отфильтрованные таски, вынес из map-а компоненты App

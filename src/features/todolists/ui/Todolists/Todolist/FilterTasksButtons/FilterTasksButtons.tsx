@@ -14,8 +14,6 @@ type Props = {
 }
 
 export const FilterTasksButtons = ({ todolist }: Props) => {
-   console.log("FilterTasksButtons is called")
-
    const { filter, id } = todolist
 
    const dispatch = useAppDispatch()
