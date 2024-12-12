@@ -1,7 +1,7 @@
 import Checkbox from "@mui/material/Checkbox"
 import { AddItemForm, EditableSpan } from "common/components"
 import React, { ChangeEvent, useEffect, useState } from "react"
-import { type DomainTask, tasksApi, type Todolist, todolistsApi } from "../features/todolists/api"
+import { type DomainTask, tasksApi, type Todolist, todolistsApi, type UpdateTaskModel } from "../features/todolists/api"
 import { TaskStatus } from "../features/todolists/lib/enums"
 // import { todolistsApi } from "../features/todolists/api/todolistsApi"
 // import type { Todolist } from "../features/todolists/api/todolistsApi.types"
@@ -65,8 +65,7 @@ export const AppHttpRequests = () => {
    }
 
    const removeTaskHandler = (taskId: string, todolistId: string) => {
-      tasksApi.removeTask({ taskId, todolistId }).then((res) => {
-         console.log(res)
+      tasksApi.deleteTask({ taskId, todolistId }).then((res) => {
          setTasks((prevTasks) => ({
             ...prevTasks,
             [todolistId]: prevTasks[todolistId].filter((t) => t.id !== taskId),
@@ -75,12 +74,25 @@ export const AppHttpRequests = () => {
    }
 
    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: DomainTask, todolistId: string) => {
-      tasksApi.changeTaskStatus({ e, task, todolistId }).then((res) => {
-         const newTask = res.data.data.item
-         setTasks((prevTasks) => ({
-            ...prevTasks,
-            [todolistId]: prevTasks[todolistId].map((t) => (t.id === task.id ? newTask : t)),
-         }))
+      // tasksApi.changeTaskStatus({ e, task, todolistId }).then((res) => {
+      //    const newTask = res.data.data.item
+      //    setTasks((prevTasks) => ({
+      //       ...prevTasks,
+      //       [todolistId]: prevTasks[todolistId].map((t) => (t.id === task.id ? newTask : t)),
+      //    }))
+      // })
+
+      const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
+      const model: UpdateTaskModel = {
+         status,
+         title: task.title,
+         deadline: task.deadline,
+         description: task.description,
+         priority: task.priority,
+         startDate: task.startDate,
+      }
+      tasksApi.changeTaskStatus({ taskId: task.id, model, todolistId: task.todoListId }).then(() => {
+         const newTasks = tasks[task.todoListId].map((t) => (t.id === task.id ? { ...t, ...model } : t))
       })
    }
 

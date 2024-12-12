@@ -7,7 +7,12 @@ import { useAppDispatch } from "common/hooks/useAppDispatch"
 import React, { ChangeEvent, memo, useCallback } from "react"
 import type { DomainTask } from "../../../../../api"
 import { TaskStatus } from "../../../../../lib/enums"
-import { changeTaskStatusAC, changeTaskTitleAC, removeTaskTC } from "../../../../../model/tasks-reducer"
+import {
+   changeTaskStatusAC,
+   changeTaskStatusTC,
+   changeTaskTitleAC,
+   removeTaskTC,
+} from "../../../../../model/tasks-reducer"
 import type { DomainTodolist } from "../../../../../model/todolists-reducer"
 import { getListItemSx } from "./Task.styles"
 
@@ -31,8 +36,8 @@ export const Task = memo((props: Props) => {
 
    const changeTaskStatusHandler = useCallback(
       (e: ChangeEvent<HTMLInputElement>) => {
-         const newStatusValue = e.currentTarget.checked
-         dispatch(changeTaskStatusAC({ todolistId: todolist.id, taskId: task.id, isDone: newStatusValue }))
+         const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
+         dispatch(changeTaskStatusTC({ todolistId: todolist.id, taskId: task.id, status }))
       },
       [dispatch, todolist.id, task.id],
    )

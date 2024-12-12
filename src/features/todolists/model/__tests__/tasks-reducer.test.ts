@@ -59,7 +59,7 @@ test("correct task should be added to correct array", () => {
 })
 
 test("status of specified task should be changed", () => {
-   const action = changeTaskStatusAC({ todolistId: "todolistId2", taskId: "2", isDone: false })
+   const action = changeTaskStatusAC({ todolistId: "todolistId2", taskId: "2", status: false })
 
    const endState = tasksReducer(startState, action)
 
