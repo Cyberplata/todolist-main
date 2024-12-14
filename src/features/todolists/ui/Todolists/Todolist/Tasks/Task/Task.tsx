@@ -11,7 +11,7 @@ import {
    changeTaskStatusAC,
    changeTaskStatusTC,
    changeTaskTitleAC,
-   removeTaskTC,
+   deleteTaskTC,
 } from "../../../../../model/tasks-reducer"
 import type { DomainTodolist } from "../../../../../model/todolists-reducer"
 import { getListItemSx } from "./Task.styles"
@@ -31,7 +31,7 @@ export const Task = memo((props: Props) => {
    // }, [])
 
    const removeTaskHandler = useCallback(() => {
-      dispatch(removeTaskTC({ todolistId: todolist.id, taskId: task.id }))
+      dispatch(deleteTaskTC({ todolistId: todolist.id, taskId: task.id }))
    }, [dispatch, todolist.id, task.id])
 
    const changeTaskStatusHandler = useCallback(

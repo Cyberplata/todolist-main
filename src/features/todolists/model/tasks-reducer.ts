@@ -1,4 +1,4 @@
-import type { AppDispatch, RootState } from "app/store"
+import type { AppDispatch, AppThunk, RootState } from "app/store"
 import type { AddTodolistActionType, RemoveTodolistActionType } from "features/todolists/model/todolists-reducer"
 import { v1 } from "uuid"
 import { type DomainTask, tasksApi, type UpdateTaskModel } from "../api"
@@ -19,22 +19,25 @@ import { TaskPriority, TaskStatus } from "../lib/enums"
 //     ],
 // }
 
-// Typing
-// export type DomainTask = {
-//    id: string
-//    title: string
-//    isDone: boolean
-// }
-
 export type TasksStateType = {
    [key: string]: Array<DomainTask>
 }
 
 const initialState: TasksStateType = {}
 
+// {
+//    'todoID1': [{taskId: string, title: string}]
+//    'todoID2': [{taskId: string, title: string}]
+// }
+
 export const tasksReducer = (state: TasksStateType = initialState, action: TasksReducerActionsType): TasksStateType => {
    // debugger
    switch (action.type) {
+      case "SET-TASKS": {
+         const stateCopy = { ...state }
+         stateCopy[action.payload.todolistId] = action.payload.tasks
+         return stateCopy
+      }
       case "REMOVE-TASK": {
          return {
             ...state,
@@ -100,11 +103,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
          delete copyState[action.payload.id]
          return copyState
       }
-      case "SET-TASKS": {
-         const stateCopy = { ...state }
-         stateCopy[action.payload.todolistId] = action.payload.tasks
-         return stateCopy
-      }
       default:
          return state
    }
@@ -147,24 +145,10 @@ export const setTasksAC = (payload: { todolistId: string; tasks: DomainTask[] })
    } as const
 }
 
-// Запись через ReturnType
-export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
-export type AddTaskActionType = ReturnType<typeof addTaskAC>
-export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
-export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
-export type setTasksActionType = ReturnType<typeof setTasksAC>
-
-export type TasksReducerActionsType =
-   | RemoveTaskActionType
-   | AddTaskActionType
-   | ChangeTaskStatusActionType
-   | ChangeTaskTitleActionType
-   | AddTodolistActionType
-   | RemoveTodolistActionType
-   | setTasksActionType
 
 // Thunks
-export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
+// export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
+export const fetchTasksTC = (todolistId: string): AppThunk => (dispatch) => {
    // 1. API
    tasksApi.getTasks(todolistId).then((res) => {
       const tasks = res.data.items
@@ -173,21 +157,24 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
    })
 }
 
-export const removeTaskTC = (arg: { todolistId: string; taskId: string }) => (dispatch: AppDispatch) => {
+export const deleteTaskTC = (arg: { todolistId: string; taskId: string }): AppThunk => (dispatch) => {
    tasksApi.deleteTask(arg).then((res) => {
       dispatch(removeTaskAC(arg))
+      // вариант, чтобы удалялось одновременно у нескольких пользователей
+      // dispatch(fetchTasksTC(arg.todolistId))
    })
 }
 
-export const addTaskTC = (arg: { title: string; todolistId: string }) => (dispatch: AppDispatch) => {
+export const addTaskTC = (arg: { title: string; todolistId: string }): AppThunk => (dispatch) => {
    tasksApi.createTask(arg).then((res) => {
       dispatch(addTaskAC({ task: res.data.data.item }))
    })
 }
 
 export const changeTaskStatusTC =
-   (arg: { taskId: string; status: TaskStatus; todolistId: string }) =>
-   (dispatch: AppDispatch, getState: () => RootState) => {
+   (arg: { taskId: string; status: TaskStatus; todolistId: string }): AppThunk =>
+   (dispatch, getState) => {
+   // (dispatch: AppDispatch, getState: () => RootState) => {
       const { todolistId, taskId, status } = arg
 
       const allTasksFromState = getState().tasks
@@ -209,3 +196,19 @@ export const changeTaskStatusTC =
          })
       }
    }
+
+// Запись через ReturnType
+export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
+export type AddTaskActionType = ReturnType<typeof addTaskAC>
+export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
+export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
+export type setTasksActionType = ReturnType<typeof setTasksAC>
+
+export type TasksReducerActionsType =
+   | RemoveTaskActionType
+   | AddTaskActionType
+   | ChangeTaskStatusActionType
+   | ChangeTaskTitleActionType
+   | AddTodolistActionType
+   | RemoveTodolistActionType
+   | setTasksActionType

@@ -1,4 +1,4 @@
-import type { AppDispatch } from "app/store"
+import type { AppDispatch, AppThunk } from "app/store"
 import { v1 } from "uuid"
 import { todolistsApi } from "../api"
 
@@ -28,6 +28,10 @@ export const todolistsReducer = (
    action: TodolistsReducerActionsType,
 ): DomainTodolist[] => {
    switch (action.type) {
+      case "SET-TODOLISTS": {
+         // 6
+         return action.todolists.map((tl) => ({ ...tl, filter: "all" }))
+      }
       case "REMOVE-TODOLIST": {
          return state.filter((tl) => tl.id !== action.payload.id)
       }
@@ -46,9 +50,6 @@ export const todolistsReducer = (
       }
       case "CHANGE-TODOLIST-FILTER": {
          return state.map((tl) => (tl.id === action.payload.todolistId ? { ...tl, filter: action.payload.filter } : tl))
-      }
-      case "SET-TODOLISTS": {
-         return action.todolists.map((tl) => ({ ...tl, filter: "all" }))
       }
       default:
          return state
@@ -93,6 +94,28 @@ export const setTodolistsAC = (todolists: Todolist[]) => {
    return { type: "SET-TODOLISTS", todolists } as const
 }
 
+// Thunks
+// export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
+export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
+   // 2
+   // внутри санки можно делать побочные эффекты (запросы на сервер)
+   todolistsApi.getTodolists().then((res) => {
+      // 5
+      // и диспатчить экшены (action) или другие санки (thunk)
+      dispatch(setTodolistsAC(res.data))
+   })
+}
+
+// export const fetchTodolistsThunk = (dispatch: AppDispatch) => {
+//    // 2
+//    // внутри санки можно делать побочные эффекты (запросы на сервер)
+//    todolistsApi.getTodolists().then((res) => {
+//       // 5
+//       // и диспатчить экшены (action) или другие санки (thunk)
+//       dispatch(setTodolistsAC(res.data))
+//    })
+// }
+
 // запись через ReturnType Actions type
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
@@ -106,12 +129,3 @@ export type TodolistsReducerActionsType =
    | ChangeTodolistTitleActionType
    | ChangeTodolistFilterActionType
    | SetTodolistsActionType
-
-// Thunks
-export const fetchTodolistsThunk = (dispatch: AppDispatch) => {
-   // внутри санки можно делать побочные эффекты (запросы на сервер)
-   todolistsApi.getTodolists().then((res) => {
-      // и диспатчить экшены (action) или другие санки (thunk)
-      dispatch(setTodolistsAC(res.data))
-   })
-}
