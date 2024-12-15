@@ -55,12 +55,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
             ...state,
             [todolistId]: state[todolistId].map((t) =>
                t.id === taskId
-                  ? {
-                     ...t,
-                     status,
-                     // title: title ?? t.title
-                     title
-                  }
+                  ? { ...t, status, title }
                   : t
             )
          }
@@ -314,20 +309,20 @@ export const updateTaskTC =
       (dispatch: AppDispatch, getState: () => RootState) => {
          const { todolistId, taskId, domainModel } = arg
 
-         const allTasksFromState = getState().tasks
-         const tasksForCurrentTodolist = allTasksFromState[todolistId]
-         const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
-
-         if (task) {
-            const model: UpdateTaskModel = {
-               status: task.status,
-               title: task.title,
-               deadline: task.deadline,
-               description: task.description,
-               priority: task.priority,
-               startDate: task.startDate
-            }
-            tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model }).then((res) => {
+         // const allTasksFromState = getState().tasks
+         // const tasksForCurrentTodolist = allTasksFromState[todolistId]
+         // const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
+         //
+         // if (task) {
+         //    const model: UpdateTaskDomainModel = {
+         //       status: domainModel.status,
+         //       title: domainModel.title,
+         //       deadline: domainModel.deadline,
+         //       description: domainModel.description,
+         //       priority: domainModel.priority,
+         //       startDate: domainModel.startDate
+         //    }
+            tasksApi.updateTask({ todolistId, taskId, model: domainModel }).then((res) => {
                dispatch(updateTaskAC({ todolistId, taskId, domainModel }))
             })
          }
