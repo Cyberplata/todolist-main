@@ -49,13 +49,12 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
       //    }
       // }
       case "UPDATE-TASK": { // getState()
-         const { todolistId, taskId } = action.payload
-         const { status, title } = action.payload.domainModel
+         const { todolistId, taskId, domainModel } = action.payload
          return {
             ...state,
             [todolistId]: state[todolistId].map((t) =>
                t.id === taskId
-                  ? { ...t, status, title }
+                  ? { ...t, ...domainModel } // обновляем только изменённые поля
                   : t
             )
          }
@@ -69,40 +68,13 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
          }
       }
       case "ADD-TASK": {
-         // const newTask: DomainTask = {
-         //    title: action.payload.title,
-         //    todoListId: action.payload.todolistId,
-         //    startDate: "",
-         //    priority: TaskPriority.Low,
-         //    description: "",
-         //    deadline: "",
-         //    status: TaskStatus.New,
-         //    addedDate: "",
-         //    order: 0,
-         //    id: v1(),
-         // }
          const newTask = action.payload.task
          return {
             ...state,
             [newTask.todoListId]: [newTask, ...state[newTask.todoListId]]
          }
       }
-      // case "CHANGE-TASK-STATUS": {
-      //    return {
-      //       ...state,
-      //       [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
-      //          t.id === action.payload.taskId
-      //             ? {
-      //                ...t,
-      //                status: action.payload.status
-      //             }
-      //             : t
-      //       )
-      //    }
-      // }
       case "CHANGE-TASK-STATUS": {
-         // const newTask = action.payload.task
-         // const { todoListId, id, status } = newTask
          const { todoListId, id, status } = action.payload.task
          return {
             ...state,
@@ -123,7 +95,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
          }
       }
       case "ADD-TODOLIST": {
-         // const newTodolistId = v1()
          return {
             ...state,
             [action.payload.newTodolistId]: []
@@ -305,24 +276,24 @@ export const changeTaskTitleTC = (task: DomainTask): AppThunk =>
 
 // 2. Вариант через getState()
 export const updateTaskTC =
-   (arg: { taskId: string; todolistId: string; domainModel: UpdateTaskModel }) =>
+   (arg: { taskId: string; todolistId: string; domainModel: UpdateTaskDomainModel }) =>
       (dispatch: AppDispatch, getState: () => RootState) => {
          const { todolistId, taskId, domainModel } = arg
 
-         // const allTasksFromState = getState().tasks
-         // const tasksForCurrentTodolist = allTasksFromState[todolistId]
-         // const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
-         //
-         // if (task) {
-         //    const model: UpdateTaskDomainModel = {
-         //       status: domainModel.status,
-         //       title: domainModel.title,
-         //       deadline: domainModel.deadline,
-         //       description: domainModel.description,
-         //       priority: domainModel.priority,
-         //       startDate: domainModel.startDate
-         //    }
-            tasksApi.updateTask({ todolistId, taskId, model: domainModel }).then((res) => {
+         const allTasksFromState = getState().tasks
+         const tasksForCurrentTodolist = allTasksFromState[todolistId]
+         const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
+
+         // // Достаём текущую таску из стейта
+         // const currentTask = getState().tasks[todolistId]?.find(task => task.id === taskId)
+
+         if (task) {
+            // Создаем обновлённую модель задачи, объединяя текущую таску с переданным domainModel
+            const model: UpdateTaskModel = {
+               ...task, // берём все текущие поля из задачи
+               ...domainModel // переопределяем (перезаписываем) поля, которые есть в domainModel
+            }
+            tasksApi.updateTask({ todolistId, taskId, model }).then((res) => {
                dispatch(updateTaskAC({ todolistId, taskId, domainModel }))
             })
          }

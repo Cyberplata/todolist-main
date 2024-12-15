@@ -6,7 +6,6 @@ import { EditableSpan } from "common/components"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import React, { ChangeEvent, memo, useCallback } from "react"
 import type { DomainTask } from "../../../../../api"
-import type { UpdateTaskDomainModel } from "../../../../../api/tasksApi.types"
 import { TaskStatus } from "../../../../../lib/enums"
 import { deleteTaskTC, updateTaskTC } from "../../../../../model/tasks-reducer"
 import type { DomainTodolist } from "../../../../../model/todolists-reducer"
@@ -15,17 +14,12 @@ import { getListItemSx } from "./Task.styles"
 type Props = {
    todolist: DomainTodolist
    task: DomainTask
-   // task: UpdateTaskDomainModel
 }
 
 export const Task = memo((props: Props) => {
    const { todolist, task } = props
 
    const dispatch = useAppDispatch()
-
-   // useEffect(() => {
-   //    dispatch(fetchTasksTC(todolist.id))
-   // }, [])
 
    const removeTaskHandler = useCallback(() => {
       dispatch(deleteTaskTC({ todolistId: todolist.id, taskId: task.id }))
