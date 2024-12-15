@@ -1,8 +1,7 @@
-import type { AppDispatch, AppThunk, RootState } from "app/store"
+import type { AppThunk } from "app/store"
 import type { AddTodolistActionType, RemoveTodolistActionType } from "features/todolists/model/todolists-reducer"
-import { v1 } from "uuid"
 import { type DomainTask, tasksApi, type UpdateTaskModel } from "../api"
-import { TaskPriority, TaskStatus } from "../lib/enums"
+import type { UpdateTaskDomainModel } from "../api/tasksApi.types"
 
 // let todolistID1 = v1()
 // let todolistID2 = v1()
@@ -37,6 +36,17 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
          const stateCopy = { ...state }
          stateCopy[action.payload.todolistId] = action.payload.tasks
          return stateCopy
+      }
+      case "UPDATE-TASK": {
+         const { todoListId, id, status, title } = action.payload.task
+         return {
+            ...state,
+            [todoListId]: state[todoListId].map((t) =>
+               t.id === id ?
+                  { ...t, status, title }
+                  : t
+            )
+         }
       }
       case "REMOVE-TASK": {
          return {
@@ -156,6 +166,13 @@ export const setTasksAC = (payload: { todolistId: string; tasks: DomainTask[] })
    } as const
 }
 
+export const updateTaskAC = (payload: { task: DomainTask }) => {
+   return {
+      type: "UPDATE-TASK",
+      payload
+   } as const
+}
+
 
 // Thunks
 // export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
@@ -223,7 +240,7 @@ export const changeTaskStatusTC = (task: DomainTask): AppThunk =>
          startDate: task.startDate
       }
 
-      tasksApi.updateTask({ taskId: task.id, todolistId: task.todoListId, model }).then((res) => {
+      tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model }).then((res) => {
          dispatch(changeTaskStatusAC({ task }))
       })
    }
@@ -238,22 +255,44 @@ export const changeTaskStatusTC = (task: DomainTask): AppThunk =>
 //       })
 //    }
 
-// changeTaskTitleTC
-export const changeTaskTitleTC =
-   (task: DomainTask): AppThunk =>
-      (dispatch) => {
-         const model: UpdateTaskModel = {
-            status: task.status,
-            title: task.title,
-            deadline: task.deadline,
-            description: task.description,
-            priority: task.priority,
-            startDate: task.startDate
-         }
-         tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model }).then((res) => {
-            dispatch(changeTaskTitleAC({ task }))
-         })
+// changeTaskTitleTC через props task
+export const changeTaskTitleTC = (task: DomainTask): AppThunk =>
+   (dispatch) => {
+      const model: UpdateTaskModel = {
+         status: task.status,
+         title: task.title,
+         deadline: task.deadline,
+         description: task.description,
+         priority: task.priority,
+         startDate: task.startDate
       }
+      tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model }).then((res) => {
+         dispatch(changeTaskTitleAC({ task }))
+      })
+   }
+
+// Вариант через props task из Task.tsx
+export const updateTaskTC = (task: DomainTask): AppThunk =>
+   (dispatch) => {
+      const model: UpdateTaskModel = {
+         status: task.status,
+         title: task.title,
+         deadline: task.deadline,
+         description: task.description,
+         priority: task.priority,
+         startDate: task.startDate
+      }
+      tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model }).then((res) => {
+         dispatch(updateTaskAC({ task }))
+      })
+   }
+
+// // Вариант через getState()
+// export const updateTaskTC =
+//    (arg: { taskId: string; todolistId: string; domainModel: UpdateTaskDomainModel }) =>
+//       (dispatch: Dispatch, getState: () => RootState) => {
+//          // самостоятельно
+//       }
 
 // Запись через ReturnType
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
@@ -261,6 +300,7 @@ export type AddTaskActionType = ReturnType<typeof addTaskAC>
 export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
 export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
 export type setTasksActionType = ReturnType<typeof setTasksAC>
+export type updateTaskActionType = ReturnType<typeof updateTaskAC>
 
 export type TasksReducerActionsType =
    | RemoveTaskActionType
@@ -270,3 +310,4 @@ export type TasksReducerActionsType =
    | AddTodolistActionType
    | RemoveTodolistActionType
    | setTasksActionType
+   | updateTaskActionType

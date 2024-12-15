@@ -7,7 +7,7 @@ import { useAppDispatch } from "common/hooks/useAppDispatch"
 import React, { ChangeEvent, memo, useCallback } from "react"
 import type { DomainTask } from "../../../../../api"
 import { TaskStatus } from "../../../../../lib/enums"
-import { changeTaskStatusTC, changeTaskTitleTC, deleteTaskTC } from "../../../../../model/tasks-reducer"
+import { deleteTaskTC, updateTaskTC } from "../../../../../model/tasks-reducer"
 import type { DomainTodolist } from "../../../../../model/todolists-reducer"
 import { getListItemSx } from "./Task.styles"
 
@@ -33,16 +33,17 @@ export const Task = memo((props: Props) => {
          const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
          const newTask = { ...task, status }
          // dispatch(changeTaskStatusTC({ todolistId: todolist.id, taskId: task.id, status }))
-         dispatch(changeTaskStatusTC(newTask))
+         // dispatch(changeTaskStatusTC(newTask))
+         dispatch(updateTaskTC(newTask))
       },
       [dispatch, todolist.id, task.id]
    )
 
-   const changeTaskTitleHandler = useCallback(
-      (title: string) => {
+   const changeTaskTitleHandler = useCallback((title: string) => {
          const newTask = { ...task, title }
-         // dispatch(changeTaskTitleTC({ todolistId: todolist.id, taskId: task.id, title: newTitle }))
-         dispatch(changeTaskTitleTC(newTask))
+         // dispatch(changeTaskTitleTC({ todolistId: todolist.id, taskId: task.id, title }))
+         // dispatch(changeTaskTitleTC(newTask))
+         dispatch(updateTaskTC(newTask))
       },
       [dispatch, todolist.id, task.id]
    )

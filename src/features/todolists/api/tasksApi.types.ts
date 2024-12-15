@@ -27,3 +27,15 @@ export type UpdateTaskModel = {
    startDate: string | null
    deadline: string | null
 }
+
+// UpdateTaskDomainModel это такой же тип как и UpdateTaskModel,
+// только все свойства в нем являются необязательными
+// Для способа через props task Task.tsx не нужно, только для getState()
+export type UpdateTaskDomainModel = {
+   title?: string
+   description?: string | null
+   status?: TaskStatus
+   priority?: TaskPriority
+   startDate?: string | null
+   deadline?: string | null
+}
