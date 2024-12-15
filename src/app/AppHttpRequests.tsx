@@ -73,16 +73,9 @@ export const AppHttpRequests = () => {
       })
    }
 
-   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: DomainTask, todolistId: string) => {
-      // tasksApi.changeTaskStatus({ e, task, todolistId }).then((res) => {
-      //    const newTask = res.data.data.item
-      //    setTasks((prevTasks) => ({
-      //       ...prevTasks,
-      //       [todolistId]: prevTasks[todolistId].map((t) => (t.id === task.id ? newTask : t)),
-      //    }))
-      // })
+   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, task: DomainTask) => {
+      let status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
 
-      const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
       const model: UpdateTaskModel = {
          status,
          title: task.title,
@@ -91,17 +84,26 @@ export const AppHttpRequests = () => {
          priority: task.priority,
          startDate: task.startDate,
       }
-      tasksApi.changeTaskStatus({ taskId: task.id, model, todolistId: task.todoListId }).then(() => {
+
+      tasksApi.updateTask({ taskId: task.id, model, todolistId: task.todoListId }).then((res) => {
          const newTasks = tasks[task.todoListId].map((t) => (t.id === task.id ? { ...t, ...model } : t))
+         setTasks({ ...tasks, [task.todoListId]: newTasks })
       })
    }
 
-   const changeTaskTitleHandler = (title: string, task: DomainTask, todolistId: string) => {
-      tasksApi.changeTaskTitle({ title, task, todolistId }).then(() => {
-         setTasks((prevTasks) => ({
-            ...prevTasks,
-            [todolistId]: prevTasks[todolistId].map((t) => (t.id === task.id ? { ...t, title } : t)),
-         }))
+   const changeTaskTitleHandler = (title: string, task: DomainTask) => {
+      const model: UpdateTaskModel = {
+         status: task.status,
+         title,
+         deadline: task.deadline,
+         description: task.description,
+         priority: task.priority,
+         startDate: task.startDate,
+      }
+
+      tasksApi.updateTask({ taskId: task.id, model, todolistId: task.todoListId }).then((res) => {
+         const newTasks = tasks[task.todoListId].map((t) => (t.id === task.id ? { ...t, ...model } : t))
+         setTasks({ ...tasks, [task.todoListId]: newTasks })
       })
    }
 
@@ -126,11 +128,11 @@ export const AppHttpRequests = () => {
                            <div key={task.id}>
                               <Checkbox
                                  checked={task.status === TaskStatus.Completed}
-                                 onChange={(e) => changeTaskStatusHandler(e, task, tl.id)}
+                                 onChange={(e) => changeTaskStatusHandler(e, task)}
                               />
                               <EditableSpan
                                  value={task.title}
-                                 onChange={(title) => changeTaskTitleHandler(title, task, tl.id)}
+                                 onChange={(title) => changeTaskTitleHandler(title, task)}
                               />
                               <button onClick={() => removeTaskHandler(task.id, tl.id)}>x</button>
                            </div>

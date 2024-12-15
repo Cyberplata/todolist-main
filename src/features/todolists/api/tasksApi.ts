@@ -1,6 +1,4 @@
-import { TaskStatus } from "features/todolists/lib/enums"
 import { instance } from "common/instance"
-import { ChangeEvent } from "react"
 import type { BaseResponse } from "common/types"
 import type { DomainTask, GetTasksResponse, UpdateTaskModel } from "./tasksApi.types"
 
@@ -16,35 +14,8 @@ export const tasksApi = {
       const { todolistId, taskId } = payload
       return instance.delete<BaseResponse>(`todo-lists/${todolistId}/tasks/${taskId}`)
    },
-   // updateTask(payload: { todolistId: string; taskId: string; model: UpdateTaskModel }) {
-   //    const { taskId, todolistId, model } = payload
-   //    return instance.put<BaseResponse<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
-   // },
-   changeTaskStatus(payload: { e: ChangeEvent<HTMLInputElement>; task: DomainTask; todolistId: string }) {
-      const { e, task, todolistId } = payload
-      const model: UpdateTaskModel = {
-         description: task.description,
-         title: task.title,
-         status: e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New,
-         // status: e.currentTarget.checked ? 2 : 0,
-         priority: task.priority,
-         startDate: task.startDate,
-         deadline: task.deadline,
-      }
-
-      return instance.put<BaseResponse<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks/${task.id}`, model)
-   },
-   changeTaskTitle(payload: { title: string; task: DomainTask; todolistId: string }) {
-      const { title, task, todolistId } = payload
-      const model: UpdateTaskModel = {
-         description: task.description,
-         title,
-         status: task.status,
-         priority: task.priority,
-         startDate: task.startDate,
-         deadline: task.deadline,
-      }
-
-      return instance.put<BaseResponse>(`todo-lists/${todolistId}/tasks/${task.id}`, model)
+   updateTask(payload: { todolistId: string; taskId: string; model: UpdateTaskModel }) {
+      const { taskId, todolistId, model } = payload
+      return instance.put<BaseResponse<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
    },
 }
