@@ -92,10 +92,11 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
          }
       }
       case "CHANGE-TASK-TITLE": {
+         const { todoListId, id, title } = action.payload.task
          return {
             ...state,
-            [action.payload.todolistId]: state[action.payload.todolistId].map((el) =>
-               el.id === action.payload.taskId ? { ...el, title: action.payload.title } : el
+            [todoListId]: state[todoListId].map((el) =>
+               el.id === id ? { ...el, title: title } : el
             )
          }
       }
@@ -140,7 +141,8 @@ export const changeTaskStatusAC = (payload: { task: DomainTask }) => {
    } as const
 }
 
-export const changeTaskTitleAC = (payload: { todolistId: string; taskId: string; title: string }) => {
+// export const changeTaskTitleAC = (payload: { todolistId: string; taskId: string; title: string }) => {
+export const changeTaskTitleAC = (payload: { task: DomainTask }) => {
    return {
       type: "CHANGE-TASK-TITLE",
       payload
@@ -182,7 +184,8 @@ export const addTaskTC = (arg: { title: string; todolistId: string }): AppThunk 
 }
 
 // changeTaskStatusTC
-// // 1 вариант с созданием модели внутри TC
+
+// // 1 вариант с созданием модели внутри TC и из getState достаём таску
 // export const changeTaskStatusTC =
 //    (arg: { taskId: string; status: TaskStatus; todolistId: string }): AppThunk =>
 //    (dispatch: AppDispatch, getState: () => RootState) => {
@@ -237,28 +240,19 @@ export const changeTaskStatusTC = (task: DomainTask): AppThunk =>
 
 // changeTaskTitleTC
 export const changeTaskTitleTC =
-   (arg: { todolistId: string; taskId: string; title: string }): AppThunk =>
-      (dispatch, getState) => {
-         const { todolistId, taskId, title } = arg
-
-         const allTasksFromState = getState().tasks
-         const tasksForCurrentTodolist = allTasksFromState[todolistId]
-         const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
-
-         if (task) {
-            const model: UpdateTaskModel = {
-               status: task.status,
-               title,
-               deadline: task.deadline,
-               description: task.description,
-               priority: task.priority,
-               startDate: task.startDate
-            }
-            tasksApi.updateTask({ todolistId, taskId, model }).then((res) => {
-               dispatch(changeTaskTitleAC({todolistId, taskId, title}))
-            })
+   (task: DomainTask): AppThunk =>
+      (dispatch) => {
+         const model: UpdateTaskModel = {
+            status: task.status,
+            title: task.title,
+            deadline: task.deadline,
+            description: task.description,
+            priority: task.priority,
+            startDate: task.startDate
          }
-
+         tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model }).then((res) => {
+            dispatch(changeTaskTitleAC({ task }))
+         })
       }
 
 // Запись через ReturnType

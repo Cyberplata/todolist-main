@@ -39,9 +39,10 @@ export const Task = memo((props: Props) => {
    )
 
    const changeTaskTitleHandler = useCallback(
-      (newTitle: string) => {
-         // dispatch(changeTaskTitleAC({ todolistId: todolist.id, taskId: task.id, title: newTitle }))
-         dispatch(changeTaskTitleTC({ todolistId: todolist.id, taskId: task.id, title: newTitle }))
+      (title: string) => {
+         const newTask = { ...task, title }
+         // dispatch(changeTaskTitleTC({ todolistId: todolist.id, taskId: task.id, title: newTitle }))
+         dispatch(changeTaskTitleTC(newTask))
       },
       [dispatch, todolist.id, task.id]
    )
