@@ -6,6 +6,7 @@ import { EditableSpan } from "common/components"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import React, { ChangeEvent, memo, useCallback } from "react"
 import type { DomainTask } from "../../../../../api"
+import type { UpdateTaskDomainModel } from "../../../../../api/tasksApi.types"
 import { TaskStatus } from "../../../../../lib/enums"
 import { deleteTaskTC, updateTaskTC } from "../../../../../model/tasks-reducer"
 import type { DomainTodolist } from "../../../../../model/todolists-reducer"
@@ -14,6 +15,7 @@ import { getListItemSx } from "./Task.styles"
 type Props = {
    todolist: DomainTodolist
    task: DomainTask
+   // task: UpdateTaskDomainModel
 }
 
 export const Task = memo((props: Props) => {
@@ -31,19 +33,21 @@ export const Task = memo((props: Props) => {
 
    const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
          const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-         const newTask = { ...task, status }
+         // const newTask = { ...task, status }
          // dispatch(changeTaskStatusTC({ todolistId: todolist.id, taskId: task.id, status }))
          // dispatch(changeTaskStatusTC(newTask))
-         dispatch(updateTaskTC(newTask))
+         // dispatch(updateTaskTC(newTask)) // через props task
+         dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: task })) // через getState()
       },
       [dispatch, todolist.id, task.id]
    )
 
    const changeTaskTitleHandler = useCallback((title: string) => {
-         const newTask = { ...task, title }
+         // const newTask = { ...task, title }
          // dispatch(changeTaskTitleTC({ todolistId: todolist.id, taskId: task.id, title }))
          // dispatch(changeTaskTitleTC(newTask))
-         dispatch(updateTaskTC(newTask))
+         // dispatch(updateTaskTC(newTask)) // через props task
+         dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: task })) // через getState()
       },
       [dispatch, todolist.id, task.id]
    )
