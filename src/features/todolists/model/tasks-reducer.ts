@@ -182,7 +182,6 @@ export const addTaskTC = (arg: { title: string; todolistId: string }): AppThunk 
 }
 
 // changeTaskStatusTC
-
 // // 1 вариант с созданием модели внутри TC
 // export const changeTaskStatusTC =
 //    (arg: { taskId: string; status: TaskStatus; todolistId: string }): AppThunk =>
@@ -235,6 +234,32 @@ export const changeTaskStatusTC = (task: DomainTask): AppThunk =>
 //          dispatch(changeTaskStatusAC({ task }))
 //       })
 //    }
+
+// changeTaskTitleTC
+export const changeTaskTitleTC =
+   (arg: { todolistId: string; taskId: string; title: string }): AppThunk =>
+      (dispatch, getState) => {
+         const { todolistId, taskId, title } = arg
+
+         const allTasksFromState = getState().tasks
+         const tasksForCurrentTodolist = allTasksFromState[todolistId]
+         const task = tasksForCurrentTodolist.find((t) => t.id === taskId)
+
+         if (task) {
+            const model: UpdateTaskModel = {
+               status: task.status,
+               title,
+               deadline: task.deadline,
+               description: task.description,
+               priority: task.priority,
+               startDate: task.startDate
+            }
+            tasksApi.updateTask({ todolistId, taskId, model }).then((res) => {
+               dispatch(changeTaskTitleAC({todolistId, taskId, title}))
+            })
+         }
+
+      }
 
 // Запись через ReturnType
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
