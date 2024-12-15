@@ -11,7 +11,7 @@ import {
    changeTaskStatusAC,
    changeTaskStatusTC,
    changeTaskTitleAC,
-   deleteTaskTC,
+   deleteTaskTC
 } from "../../../../../model/tasks-reducer"
 import type { DomainTodolist } from "../../../../../model/todolists-reducer"
 import { getListItemSx } from "./Task.styles"
@@ -34,19 +34,20 @@ export const Task = memo((props: Props) => {
       dispatch(deleteTaskTC({ todolistId: todolist.id, taskId: task.id }))
    }, [dispatch, todolist.id, task.id])
 
-   const changeTaskStatusHandler = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
+   const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
          const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-         dispatch(changeTaskStatusTC({ todolistId: todolist.id, taskId: task.id, status }))
+         const newTask = { ...task, status }
+         // dispatch(changeTaskStatusTC({ todolistId: todolist.id, taskId: task.id, status }))
+         dispatch(changeTaskStatusTC(newTask))
       },
-      [dispatch, todolist.id, task.id],
+      [dispatch, todolist.id, task.id]
    )
 
    const changeTaskTitleHandler = useCallback(
       (newTitle: string) => {
          dispatch(changeTaskTitleAC({ todolistId: todolist.id, taskId: task.id, title: newTitle }))
       },
-      [dispatch, todolist.id, task.id],
+      [dispatch, todolist.id, task.id]
    )
 
    // TODO: Нужна ли тут эта проверка?

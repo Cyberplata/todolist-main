@@ -106,16 +106,6 @@ export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
    })
 }
 
-// export const fetchTodolistsThunk = (dispatch: AppDispatch) => {
-//    // 2
-//    // внутри санки можно делать побочные эффекты (запросы на сервер)
-//    todolistsApi.getTodolists().then((res) => {
-//       // 5
-//       // и диспатчить экшены (action) или другие санки (thunk)
-//       dispatch(setTodolistsAC(res.data))
-//    })
-// }
-
 // запись через ReturnType Actions type
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
