@@ -4,8 +4,8 @@ import { EditableSpan } from "common/components"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import {
    changeTodolistTitleAC,
-   removeTodolistAC,
-   type DomainTodolist, removeTodolistTC
+   type DomainTodolist,
+   removeTodolistTC
 } from "features/todolists/model/todolists-reducer"
 import React, { memo, useCallback } from "react"
 import styles from "./TodolistTitle.module.css"

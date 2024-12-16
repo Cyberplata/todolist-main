@@ -33,7 +33,7 @@ export const todolistsReducer = (
          return action.payload.todolists.map((tl) => ({ ...tl, filter: "all" }))
       }
       case "REMOVE-TODOLIST": {
-         return state.filter((tl) => tl.id !== action.payload.id)
+         return state.filter((tl) => tl.id !== action.payload.todolistId)
       }
       case "ADD-TODOLIST": {
          // const newTodolist: DomainTodolist = {
@@ -70,7 +70,7 @@ export const todolistsReducer = (
 //       }
 //    } as const
 // }
-export const removeTodolistAC = (payload: { todolist: Todolist }) => {
+export const removeTodolistAC = (payload: { todolistId: string }) => {
    return { type: "REMOVE-TODOLIST", payload } as const
 }
 
@@ -114,7 +114,7 @@ export const addTodolistTC = (title: string): AppThunk =>
 export const removeTodolistTC = (id: string): AppThunk =>
    (dispatch) => {
       todolistsApi.deleteTodolist(id).then((res) => {
-         dispatch(removeTodolistAC())
+         dispatch(removeTodolistAC({todolistId: id}))
       })
    }
 
