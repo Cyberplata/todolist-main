@@ -148,7 +148,8 @@ export const updateTaskAC = (payload: { taskId: string; todolistId: string; doma
 
 // Thunks
 // export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
-export const fetchTasksTC = (todolistId: string): AppThunk => (dispatch) => {
+export const fetchTasksTC = (todolistId: string): AppThunk =>
+   (dispatch) => {
    // 1. API
    tasksApi.getTasks(todolistId).then((res) => {
       const tasks = res.data.items

@@ -5,7 +5,7 @@ import { useAppDispatch } from "common/hooks/useAppDispatch"
 import {
    changeTodolistTitleAC,
    removeTodolistAC,
-   type DomainTodolist,
+   type DomainTodolist, removeTodolistTC
 } from "features/todolists/model/todolists-reducer"
 import React, { memo, useCallback } from "react"
 import styles from "./TodolistTitle.module.css"
@@ -18,7 +18,7 @@ export const TodolistTitle = memo(({ todolist }: Props) => {
    const dispatch = useAppDispatch()
 
    const removeTodolistHandler = useCallback(() => {
-      dispatch(removeTodolistAC(todolist.id))
+      dispatch(removeTodolistTC(todolist.id))
    }, [dispatch, todolist.id])
 
    const updateTodolistHandler = useCallback(
