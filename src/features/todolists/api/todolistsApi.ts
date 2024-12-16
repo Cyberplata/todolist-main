@@ -4,10 +4,10 @@ import type { Todolist } from "./todolistsApi.types"
 
 export const todolistsApi = {
    getTodolists() {
-      // 3
-      let date = instance.get<Todolist[]>("todo-lists")
-      // 4
-      return date
+      // 3 DAL -> Server
+      let promise = instance.get<Todolist[]>("todo-lists")
+      // 4 Server -> DAL
+      return promise
    },
    updateTodolist(payload: { id: string; title: string }) {
       const { title, id } = payload

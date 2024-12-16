@@ -14,7 +14,6 @@ type Props = {
 export const Todolist = memo(({ todolist }: Props) => {
    const dispatch = useAppDispatch()
 
-   // TODO: Здесь мб стоит вынести хэндлер в дочернюю компоненту AddItemForm?
    const addTaskHandler = useCallback(
       (title: string) => {
          dispatch(addTaskTC({ todolistId: todolist.id, title }))

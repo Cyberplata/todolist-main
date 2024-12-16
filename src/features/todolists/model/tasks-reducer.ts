@@ -3,20 +3,6 @@ import type { AddTodolistActionType, RemoveTodolistActionType } from "features/t
 import { type DomainTask, tasksApi, type UpdateTaskModel } from "../api"
 import type { UpdateTaskDomainModel } from "../api/tasksApi.types"
 
-// let todolistID1 = v1()
-// let todolistID2 = v1()
-
-// const initialState: TasksStateType = {
-//     [todolistID1]: [
-//         {id: v1(), title: 'HTML&CSS', isDone: true},
-//         {id: v1(), title: 'JS', isDone: true},
-//         {id: v1(), title: 'ReactJS', isDone: false},
-//     ],
-//     [todolistID2]: [
-//         {id: v1(), title: 'Rest API', isDone: true},
-//         {id: v1(), title: 'GraphQL', isDone: false},
-//     ],
-// }
 
 export type TasksStateType = {
    [key: string]: Array<DomainTask>
@@ -95,9 +81,11 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
          }
       }
       case "ADD-TODOLIST": {
+         debugger
          return {
             ...state,
-            [action.payload.newTodolistId]: []
+            // [action.payload.newTodolistId]: []
+            [action.payload.todolist.id]: []
          }
       }
       case "REMOVE-TODOLIST": {
