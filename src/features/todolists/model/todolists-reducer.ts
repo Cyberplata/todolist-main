@@ -1,5 +1,4 @@
-import type { AppDispatch, AppThunk } from "app/store"
-import { v1 } from "uuid"
+import type { AppThunk } from "app/store"
 import { todolistsApi } from "../api"
 
 // Typing

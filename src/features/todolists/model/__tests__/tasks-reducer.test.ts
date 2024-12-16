@@ -1,10 +1,11 @@
+import { TaskPriority, TaskStatus } from "../../lib/enums"
 import {
    addTaskAC,
    changeTaskStatusAC,
    changeTaskTitleAC,
    removeTaskAC,
    tasksReducer,
-   type TasksStateType,
+   type TasksStateType
 } from "../tasks-reducer"
 import { addTodolistAC, removeTodolistAC } from "../todolists-reducer"
 
@@ -13,9 +14,12 @@ let startState: TasksStateType
 beforeEach(() => {
    startState = {
       todolistId1: [
-         { id: "1", title: "CSS", isDone: false },
-         { id: "2", title: "JS", isDone: true },
-         { id: "3", title: "React", isDone: false },
+         {
+            id: "1", title: "CSS", status: TaskStatus.New, todoListId: "11", addedDate: "10.01.1995",
+            deadline: "sss", description: "let's go", order: 0, startDate: "29.01.2024", priority: TaskPriority.Low
+         },
+         { id: "2", title: "JS", status: TaskStatus.Completed },
+         { id: "3", title: "React", status: TaskStatus.New },
       ],
       todolistId2: [
          { id: "1", title: "bread", isDone: false },
