@@ -3,9 +3,9 @@ import IconButton from "@mui/material/IconButton"
 import { EditableSpan } from "common/components"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import {
-   changeTodolistTitleAC,
    type DomainTodolist,
-   removeTodolistTC
+   removeTodolistTC,
+   updateTodolistTitleTC
 } from "features/todolists/model/todolists-reducer"
 import React, { memo, useCallback } from "react"
 import styles from "./TodolistTitle.module.css"
@@ -22,8 +22,8 @@ export const TodolistTitle = memo(({ todolist }: Props) => {
    }, [dispatch, todolist.id])
 
    const updateTodolistHandler = useCallback(
-      (newTitle: string) => {
-         dispatch(changeTodolistTitleAC({ todolistId: todolist.id, title: newTitle }))
+      (title: string) => {
+         dispatch(updateTodolistTitleTC({ id: todolist.id, title }))
       },
       [dispatch, todolist.id],
    )

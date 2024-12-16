@@ -65,9 +65,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
          return {
             ...state,
             [todoListId]: state[todoListId].map((t) =>
-               t.id === id ?
-                  { ...t, status }
-                  : t
+               t.id === id ?{ ...t, status }: t
             )
          }
       }
@@ -84,7 +82,6 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
          debugger
          return {
             ...state,
-            // [action.payload.newTodolistId]: []
             [action.payload.todolist.id]: []
          }
       }
