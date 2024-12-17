@@ -14,83 +14,33 @@ let startState: TasksStateType
 beforeEach(() => {
    startState = {
       todolistId1: [
-         {
-            id: "1",
-            title: "CSS",
-            status: TaskStatus.New,
-            todoListId: "todolistId11",
-            addedDate: "10.01.1995",
-            deadline: "sss",
-            description: "let's go",
-            order: 0,
-            startDate: "29.01.2024",
-            priority: TaskPriority.Low
-         },
-         {
-            id: "2",
-            title: "JS",
-            status: TaskStatus.Completed,
-            todoListId: "todolistId22",
-            addedDate: "11.02.1996",
-            deadline: "fff",
-            description: "let's go",
-            order: 1,
-            startDate: "30.01.2024",
-            priority: TaskPriority.Low
-         },
-         {
-            id: "3",
-            title: "React",
-            status: TaskStatus.New,
-            todoListId: "todolistId33",
-            addedDate: "12.03.1997",
-            deadline: "ggg",
-            description: "let's go",
-            order: 2,
-            startDate: "31.01.2024",
-            priority: TaskPriority.Low
-         }
+         { id: "1", title: "CSS", status: TaskStatus.New, todoListId: "todolistId11", addedDate: "10.01.1995", deadline: "sss", description: "let's go", order: 0, startDate: "29.01.2024", priority: TaskPriority.Low },
+         { id: "2", title: "JS", status: TaskStatus.Completed, todoListId: "todolistId22", addedDate: "11.02.1996", deadline: "fff", description: "let's go", order: 1, startDate: "30.01.2024", priority: TaskPriority.Low },
+         { id: "3", title: "React", status: TaskStatus.New, todoListId: "todolistId33", addedDate: "12.03.1997", deadline: "ggg", description: "let's go", order: 2, startDate: "31.01.2024", priority: TaskPriority.Low }
       ],
       todolistId2: [
-         {
-            id: "1",
-            title: "bread",
-            status: TaskStatus.New,
-            todoListId: "todolistId11",
-            addedDate: "10.01.1995",
-            deadline: "sss",
-            description: "let's go",
-            order: 0,
-            startDate: "29.01.2024",
-            priority: TaskPriority.Low
-         },
-         {
-            id: "2",
-            title: "milk",
-            status: TaskStatus.Completed,
-            todoListId: "todolistId22",
-            addedDate: "11.02.1996",
-            deadline: "fff",
-            description: "let's go",
-            order: 1,
-            startDate: "30.01.2024",
-            priority: TaskPriority.Hi
-         },
-         {
-            id: "3",
-            title: "tea",
-            status: TaskStatus.New,
-            todoListId: "todolistId33",
-            addedDate: "12.03.1997",
-            deadline: "ggg",
-            description: "let's go",
-            order: 2,
-            startDate: "31.01.2024",
-            priority: TaskPriority.Low
-         }
+         { id: "1", title: "bread", status: TaskStatus.New, todoListId: "todolistId11", addedDate: "10.01.1995", deadline: "sss", description: "let's go", order: 0, startDate: "29.01.2024", priority: TaskPriority.Low },
+         { id: "2", title: "milk", status: TaskStatus.Completed, todoListId: "todolistId22", addedDate: "11.02.1996", deadline: "fff", description: "let's go", order: 1, startDate: "30.01.2024", priority: TaskPriority.Hi },
+         { id: "3", title: "tea", status: TaskStatus.New, todoListId: "todolistId33", addedDate: "12.03.1997", deadline: "ggg", description: "let's go", order: 2, startDate: "31.01.2024", priority: TaskPriority.Low }
       ]
    }
 })
+
+
+// beforeEach(() => {
+//    startState = {
+//       todolistId1: [
+//          { id: "1", title: "CSS", isDone: false },
+//          { id: "2", title: "JS", isDone: true },
+//          { id: "3", title: "React", isDone: false },
+//       ],
+//       todolistId2: [
+//          { id: "1", title: "bread", isDone: false },
+//          { id: "2", title: "milk", isDone: true },
+//          { id: "3", title: "tea", isDone: false },
+//       ],
+//    }
+// })
 
 test("correct task should be deleted from correct array", () => {
    const action = removeTaskAC({ todolistId: "todolistId2", taskId: "2" })
@@ -101,12 +51,12 @@ test("correct task should be deleted from correct array", () => {
       todolistId1: [
          { id: "1", title: "CSS", isDone: false },
          { id: "2", title: "JS", isDone: true },
-         { id: "3", title: "React", isDone: false },
+         { id: "3", title: "React", isDone: false }
       ],
       todolistId2: [
          { id: "1", title: "bread", isDone: false },
-         { id: "3", title: "tea", isDone: false },
-      ],
+         { id: "3", title: "tea", isDone: false }
+      ]
    })
 })
 
