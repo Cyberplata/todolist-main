@@ -7,21 +7,87 @@ import {
    tasksReducer,
    type TasksStateType
 } from "../tasks-reducer"
-import { addTodolistAC, removeTodolistAC } from "../todolists-reducer"
+import { addTodolistAC, type DomainTodolist, removeTodolistAC, type Todolist } from "../todolists-reducer"
 
 let startState: TasksStateType
 
 beforeEach(() => {
    startState = {
       todolistId1: [
-         { id: "1", title: "CSS", status: TaskStatus.New, todoListId: "todolistId11", addedDate: "10.01.1995", deadline: "sss", description: "let's go", order: 0, startDate: "29.01.2024", priority: TaskPriority.Low },
-         { id: "2", title: "JS", status: TaskStatus.Completed, todoListId: "todolistId22", addedDate: "11.02.1996", deadline: "fff", description: "let's go", order: 1, startDate: "30.01.2024", priority: TaskPriority.Low },
-         { id: "3", title: "React", status: TaskStatus.New, todoListId: "todolistId33", addedDate: "12.03.1997", deadline: "ggg", description: "let's go", order: 2, startDate: "31.01.2024", priority: TaskPriority.Low }
+         {
+            id: "1",
+            title: "CSS",
+            status: TaskStatus.New,
+            todoListId: "todolistId11",
+            addedDate: "10.01.1995",
+            deadline: "sss",
+            description: "let's go",
+            order: 0,
+            startDate: "29.01.2024",
+            priority: TaskPriority.Low
+         },
+         {
+            id: "2",
+            title: "JS",
+            status: TaskStatus.Completed,
+            todoListId: "todolistId22",
+            addedDate: "11.02.1996",
+            deadline: "fff",
+            description: "let's go",
+            order: 1,
+            startDate: "30.01.2024",
+            priority: TaskPriority.Low
+         },
+         {
+            id: "3",
+            title: "React",
+            status: TaskStatus.New,
+            todoListId: "todolistId33",
+            addedDate: "12.03.1997",
+            deadline: "ggg",
+            description: "let's go",
+            order: 2,
+            startDate: "31.01.2024",
+            priority: TaskPriority.Low
+         }
       ],
       todolistId2: [
-         { id: "1", title: "bread", status: TaskStatus.New, todoListId: "todolistId11", addedDate: "10.01.1995", deadline: "sss", description: "let's go", order: 0, startDate: "29.01.2024", priority: TaskPriority.Low },
-         { id: "2", title: "milk", status: TaskStatus.Completed, todoListId: "todolistId22", addedDate: "11.02.1996", deadline: "fff", description: "let's go", order: 1, startDate: "30.01.2024", priority: TaskPriority.Hi },
-         { id: "3", title: "tea", status: TaskStatus.New, todoListId: "todolistId33", addedDate: "12.03.1997", deadline: "ggg", description: "let's go", order: 2, startDate: "31.01.2024", priority: TaskPriority.Low }
+         {
+            id: "1",
+            title: "bread",
+            status: TaskStatus.New,
+            todoListId: "todolistId11",
+            addedDate: "10.01.1995",
+            deadline: "sss",
+            description: "let's go",
+            order: 0,
+            startDate: "29.01.2024",
+            priority: TaskPriority.Low
+         },
+         {
+            id: "2",
+            title: "milk",
+            status: TaskStatus.Completed,
+            todoListId: "todolistId22",
+            addedDate: "11.02.1996",
+            deadline: "fff",
+            description: "let's go",
+            order: 1,
+            startDate: "30.01.2024",
+            priority: TaskPriority.Hi
+         },
+         {
+            id: "3",
+            title: "tea",
+            status: TaskStatus.New,
+            todoListId: "todolistId33",
+            addedDate: "12.03.1997",
+            deadline: "ggg",
+            description: "let's go",
+            order: 2,
+            startDate: "31.01.2024",
+            priority: TaskPriority.Low
+         }
       ]
    }
 })
@@ -48,13 +114,68 @@ test("correct task should be deleted from correct array", () => {
 
    expect(endState).toEqual({
       todolistId1: [
-         { id: "1", title: "CSS", status: TaskStatus.New, todoListId: "todolistId11", addedDate: "10.01.1995", deadline: "sss", description: "let's go", order: 0, startDate: "29.01.2024", priority: TaskPriority.Low },
-         { id: "2", title: "JS", status: TaskStatus.Completed, todoListId: "todolistId22", addedDate: "11.02.1996", deadline: "fff", description: "let's go", order: 1, startDate: "30.01.2024", priority: TaskPriority.Low },
-         { id: "3", title: "React", status: TaskStatus.New, todoListId: "todolistId33", addedDate: "12.03.1997", deadline: "ggg", description: "let's go", order: 2, startDate: "31.01.2024", priority: TaskPriority.Low }
+         {
+            id: "1",
+            title: "CSS",
+            status: TaskStatus.New,
+            todoListId: "todolistId11",
+            addedDate: "10.01.1995",
+            deadline: "sss",
+            description: "let's go",
+            order: 0,
+            startDate: "29.01.2024",
+            priority: TaskPriority.Low
+         },
+         {
+            id: "2",
+            title: "JS",
+            status: TaskStatus.Completed,
+            todoListId: "todolistId22",
+            addedDate: "11.02.1996",
+            deadline: "fff",
+            description: "let's go",
+            order: 1,
+            startDate: "30.01.2024",
+            priority: TaskPriority.Low
+         },
+         {
+            id: "3",
+            title: "React",
+            status: TaskStatus.New,
+            todoListId: "todolistId33",
+            addedDate: "12.03.1997",
+            deadline: "ggg",
+            description: "let's go",
+            order: 2,
+            startDate: "31.01.2024",
+            priority: TaskPriority.Low
+         }
       ],
       todolistId2: [
-         { id: "1", title: "bread", status: TaskStatus.New, todoListId: "todolistId11", addedDate: "10.01.1995", deadline: "sss", description: "let's go", order: 0, startDate: "29.01.2024", priority: TaskPriority.Low },
-         { id: "3", title: "tea", status: TaskStatus.New, todoListId: "todolistId33", addedDate: "12.03.1997", deadline: "ggg", description: "let's go", order: 2, startDate: "31.01.2024", priority: TaskPriority.Low }
+         {
+            id: "1",
+            title: "bread",
+            status: TaskStatus.New,
+            todoListId: "todolistId11",
+            addedDate: "10.01.1995",
+            deadline: "sss",
+            description: "let's go",
+            order: 0,
+            startDate: "29.01.2024",
+            priority: TaskPriority.Low
+         },
+         {
+            id: "3",
+            title: "tea",
+            status: TaskStatus.New,
+            todoListId: "todolistId33",
+            addedDate: "12.03.1997",
+            deadline: "ggg",
+            description: "let's go",
+            order: 2,
+            startDate: "31.01.2024",
+            priority: TaskPriority.Low
+         }
       ]
    })
 })
@@ -131,22 +252,31 @@ test("title of specified task should be changed", () => {
 })
 
 test("new array should be added when new todolist is added", () => {
-   const action = addTodolistAC("new todolist")
+   const newTodolist: Todolist = {
+      id: "todolistId3", // <-- уникальный ID
+      title: "New Todolist",
+      addedDate: "2024-12-17T00:00:00.000Z",
+      order: 0
+   }
+
+   // const action = addTodolistAC("new todolist")
+   const action = addTodolistAC({ todolist: newTodolist })
 
    const endState = tasksReducer(startState, action)
 
+   // получает все ключи объекта endState - ["todolistId1", "todolistId2", "todolistId3"]
    const keys = Object.keys(endState)
-   const newKey = keys.find((k) => k != "todolistId1" && k != "todolistId2")
+   const newKey = keys.find((k) => k != "todolistId1" && k != "todolistId2") // Находит новый ключ, который не был в начальном startState ("todolistId3")
    if (!newKey) {
       throw Error("new key should be added")
    }
 
-   expect(keys.length).toBe(3)
-   expect(endState[newKey]).toEqual([])
+   expect(keys.length).toBe(3) // Проверяет, что ключей стало 3, то есть был добавлен новый тудулист
+   expect(endState[newTodolist.id]).toEqual([]) // Убеждается, что по новому ключу лежит пустой массив, так как новый тудулист ещё не содержит задач.
 })
 
 test("property with todolistId should be deleted", () => {
-   const action = removeTodolistAC("todolistId2")
+   const action = removeTodolistAC({ todolistId: "todolistId2" })
 
    const endState = tasksReducer(startState, action)
 
