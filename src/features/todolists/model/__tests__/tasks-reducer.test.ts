@@ -100,7 +100,7 @@ test("correct task should be added to correct array", () => {
 
 test("status of specified task should be changed", () => {
    const newTask = {
-      id: "4",
+      id: "2",
       title: "juce",
       status: TaskStatus.New,
       todoListId: "todolistId2",
@@ -117,8 +117,10 @@ test("status of specified task should be changed", () => {
 
    const endState = tasksReducer(startState, action)
 
-   expect(endState["todolistId2"][1].isDone).toBe(false)
-   expect(endState["todolistId1"][1].isDone).toBe(true)
+   // expect(endState["todolistId2"][1].isDone).toBe(false)
+   // expect(endState["todolistId1"][1].isDone).toBe(true)
+   expect(endState["todolistId2"][1].status).toBe(TaskStatus.New)
+   expect(endState["todolistId1"][1].status).toBe(TaskStatus.Completed)
 })
 
 test("title of specified task should be changed", () => {
