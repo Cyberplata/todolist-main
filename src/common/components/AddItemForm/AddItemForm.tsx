@@ -34,14 +34,6 @@ export const AddItemForm = memo(({ addItem }: Props) => {
       }
    }
 
-   const buttonStyles = {
-      maxWidth: "30px",
-      maxHeight: "30px",
-      minWidth: "30px",
-      minHeight: "30px",
-      backgroundColor: "red",
-   }
-
    return (
       <Box sx={filterButtonContainerSx}>
          <TextField

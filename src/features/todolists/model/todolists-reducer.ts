@@ -1,3 +1,4 @@
+import { setAppStatusAC } from "app/app-reducer"
 import type { AppThunk } from "app/store"
 import { todolistsApi } from "../api"
 
@@ -89,14 +90,16 @@ export const updateTodolistAC = (payload: { todolistId: string; title: string })
 }
 
 // Thunks
+
+// синтаксис для then
 // export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
 export const fetchTodolistsTC = (): AppThunk =>
    (dispatch) => {
-      // 2 BLL -> DAL
-      // внутри санки можно делать побочные эффекты (запросы на сервер)
+      // Устанавливаем статус "loading", чтобы показать крутилку
+      dispatch(setAppStatusAC('loading'))
       todolistsApi.getTodolists().then((res) => {
-         // 5 DAL -> BLL
-         // и диспатчить экшены (action) или другие санки (thunk)
+         // Скрываем крутилку после успешной загрузки
+         dispatch(setAppStatusAC('succeeded'))
          dispatch(setTodolistsAC({ todolists: res.data }))
       })
    }
@@ -106,6 +109,7 @@ export const addTodolistTC = (title: string): AppThunk =>
       todolistsApi.createTodolist(title).then(res => {
          const newTodo = res.data.data.item
          dispatch(addTodolistAC({ todolist: newTodo }))
+         // dispatch(fetchTodolistsTC())
       })
    }
 

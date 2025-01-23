@@ -211,6 +211,7 @@ export const changeTaskStatusTC = (task: DomainTask): AppThunk =>
 
       tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model }).then((res) => {
          dispatch(changeTaskStatusAC({ task }))
+         // dispatch(changeTaskStatusAC(res.data.data.item))
       })
    }
 
@@ -241,7 +242,8 @@ export const changeTaskTitleTC = (task: DomainTask): AppThunk =>
    }
 
 
-// updateTaskTC
+// // updateTaskTC - вместо changeTaskStatusTC и changeTaskTitleTC напишите универсальную санку
+// для обновления таски updateTaskTC, чтобы избавиться от дублирования кода
 
 // // 1. Вариант через props task из Task.tsx
 // export const updateTaskTC = (task: DomainTask): AppThunk =>

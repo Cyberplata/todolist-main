@@ -1,4 +1,5 @@
 import MenuIcon from "@mui/icons-material/Menu"
+import LinearProgress from "@mui/material/LinearProgress"
 import AppBar from "@mui/material/AppBar"
 import IconButton from "@mui/material/IconButton"
 import Switch from "@mui/material/Switch"
@@ -9,10 +10,11 @@ import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import React from "react"
 import { changeThemeAC } from "app/app-reducer"
-import { selectThemeMode } from "app/appSelectors"
+import { selectSetAppStatus, selectThemeMode } from "app/appSelectors"
 
 export const AppBarHeader = () => {
    const themeMode = useAppSelector(selectThemeMode)
+   const status = useAppSelector(selectSetAppStatus)
 
    const dispatch = useAppDispatch()
 
@@ -34,6 +36,7 @@ export const AppBarHeader = () => {
             <MenuButton color="inherit">Faq</MenuButton>
             <Switch color={"default"} onChange={changeModeHandler} />
          </Toolbar>
+         { status === "loading" && <LinearProgress />}
       </AppBar>
    )
 }
