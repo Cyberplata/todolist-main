@@ -29,21 +29,12 @@ export const todolistsReducer = (
 ): DomainTodolist[] => {
    switch (action.type) {
       case "SET-TODOLISTS": {
-         // 6
          return action.payload.todolists.map((tl) => ({ ...tl, filter: "all" }))
       }
       case "REMOVE-TODOLIST": {
          return state.filter((tl) => tl.id !== action.payload.todolistId)
       }
       case "ADD-TODOLIST": {
-         // const newTodolist: DomainTodolist = {
-         //    id: action.payload.todolist.id,
-         //    title: action.payload.todolist.title,
-         //    filter: "all",
-         //    addedDate: "",
-         //    order: 0
-         // }
-         // const newTodolist = action.payload.todolist as DomainTodolist
          const newTodolist: DomainTodolist = {
             ...action.payload.todolist,
             filter: "all"

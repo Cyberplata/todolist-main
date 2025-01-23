@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, legacy_createStore as createStore, type UnknownAction } from "redux"
 import { thunk, type ThunkAction, type ThunkDispatch } from "redux-thunk"
-import { tasksReducer, type TasksReducerActionsType } from "../features/todolists/model/tasks-reducer"
-import { todolistsReducer, type TodolistsReducerActionsType } from "../features/todolists/model/todolists-reducer"
+import { tasksReducer } from "../features/todolists/model/tasks-reducer"
+import { todolistsReducer } from "../features/todolists/model/todolists-reducer"
 import { appReducer } from "./app-reducer"
 
 // объединяя reducer-ы с помощью combineReducers,
