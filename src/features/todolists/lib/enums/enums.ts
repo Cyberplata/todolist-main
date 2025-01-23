@@ -29,3 +29,9 @@ export enum TaskPriority {
    Urgently = 3,
    Later = 4,
 }
+
+export enum ResultCode {
+   Success = 0, // запрос успешно прошел
+   Error = 1, // произошла ошибка
+   CaptchaError = 10, // captcha ошибка
+}
