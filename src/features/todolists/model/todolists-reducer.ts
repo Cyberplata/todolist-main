@@ -29,7 +29,7 @@ export const todolistsReducer = (
 ): DomainTodolist[] => {
    switch (action.type) {
       case "SET-TODOLISTS": {
-         return action.payload.todolists.map((tl) => ({ ...tl, filter: "all" }))
+         return action.payload.todolists.reverse().map((tl) => ({ ...tl, filter: "all" }))
       }
       case "REMOVE-TODOLIST": {
          return state.filter((tl) => tl.id !== action.payload.todolistId)
@@ -97,8 +97,10 @@ export const fetchTodolistsTC = (): AppThunk =>
 
 export const addTodolistTC = (title: string): AppThunk =>
    (dispatch) => {
+   dispatch(setAppStatusAC('loading'))
       todolistsApi.createTodolist(title).then(res => {
          const newTodo = res.data.data.item
+         dispatch(setAppStatusAC('succeeded'))
          dispatch(addTodolistAC({ todolist: newTodo }))
          // dispatch(fetchTodolistsTC())
       })
@@ -106,7 +108,9 @@ export const addTodolistTC = (title: string): AppThunk =>
 
 export const removeTodolistTC = (id: string): AppThunk =>
    (dispatch) => {
+   dispatch(setAppStatusAC('loading'))
       todolistsApi.deleteTodolist(id).then((res) => {
+         dispatch(setAppStatusAC('succeeded'))
          dispatch(removeTodolistAC({ todolistId: id }))
       })
    }
@@ -115,7 +119,9 @@ export const updateTodolistTitleTC =
    (arg: { id: string; title: string }): AppThunk =>
       (dispatch) => {
          const { id, title } = arg
+         // dispatch(setAppStatusAC('loading')) // остальные thunk самостоятельно доработаете при выполнении д/з
          todolistsApi.updateTodolist({ id, title }).then((res) => {
+            // dispatch(setAppStatusAC('succeeded')) остальные thunk самостоятельно доработаете при выполнении д/з
             dispatch(updateTodolistAC({ todolistId: id, title }))
          })
       }

@@ -28,20 +28,16 @@ export const Task = memo((props: Props) => {
    const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
          const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
          const newTask = { ...task, status }
-         // dispatch(changeTaskStatusTC({ todolistId: todolist.id, taskId: task.id, status }))
-         // dispatch(changeTaskStatusTC(newTask))
-         // dispatch(updateTaskTC(newTask)) // через props task
-         dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: newTask })) // через getState()
+         dispatch(updateTaskTC(newTask)) // через props task
+         // dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: newTask })) // через getState()
       },
       [dispatch, todolist.id, task.id]
    )
 
    const changeTaskTitleHandler = useCallback((title: string) => {
          const newTask = { ...task, title }
-         // dispatch(changeTaskTitleTC({ todolistId: todolist.id, taskId: task.id, title }))
-         // dispatch(changeTaskTitleTC(newTask))
-         // dispatch(updateTaskTC(newTask)) // через props task
-         dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: newTask })) // через getState()
+         dispatch(updateTaskTC(newTask)) // через props task
+         // dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: newTask })) // через getState()
       },
       [dispatch, todolist.id, task.id]
    )
