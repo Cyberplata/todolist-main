@@ -1,5 +1,7 @@
 import { setAppErrorAC, setAppStatusAC } from "app/app-reducer"
 import type { AppDispatch, AppThunk, RootState } from "app/store"
+import { handleServerAppError } from "common/utils/handleServerAppError"
+import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import type { AddTodolistActionType, RemoveTodolistActionType } from "features/todolists/model/todolists-reducer"
 import { type DomainTask, tasksApi, type UpdateTaskModel } from "../api"
 import type { UpdateTaskDomainModel } from "../api/tasksApi.types"
@@ -175,16 +177,15 @@ export const addTaskTC = (arg: { title: string; todolistId: string }): AppThunk 
             if (res.data.messages.length) {
                dispatch(setAppErrorAC(res.data.messages[0]))
             } else {
-               dispatch(setAppErrorAC("Some error occurred"))
+               handleServerAppError(res.data, dispatch)
             }
-            dispatch(setAppStatusAC("failed"))
-            // res.data.messages.length ? dispatch(setAppErrorAC(res.data.messages[0])) : dispatch(setAppErrorAC('Some error occurred'))
          }
          dispatch(setAppStatusAC("failed"))
       })
       .catch((error) => {
-         dispatch(setAppErrorAC(error.message))
-         dispatch(setAppStatusAC("failed"))
+         handleServerNetworkError(error, dispatch)
+         // dispatch(setAppErrorAC(error.message))
+         // dispatch(setAppStatusAC("failed"))
       })
 }
 
@@ -210,14 +211,12 @@ export const updateTaskTC = (task: DomainTask): AppThunk =>
                if (res.data.messages.length) {
                   dispatch(setAppErrorAC(res.data.messages[0]))
                } else {
-                  dispatch(setAppErrorAC('Some error occurred'))
+                  handleServerAppError(res.data, dispatch)
                }
-               dispatch(setAppStatusAC('failed'))
             }
          })
          .catch(error => {
-            dispatch(setAppErrorAC(error.message))
-            dispatch(setAppStatusAC('failed'))
+            handleServerNetworkError(error, dispatch)
          })
    }
 
