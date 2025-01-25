@@ -148,13 +148,13 @@ export const updateTaskAC = (payload: { task: DomainTask }) => { // props task
 // export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
 export const fetchTasksTC = (todolistId: string): AppThunk =>
    (dispatch) => {
-   dispatch(setAppStatusAC("loading"))
-   tasksApi.getTasks(todolistId).then((res) => {
-      const tasks = res.data.items
-      dispatch(setAppStatusAC("succeeded"))
-      dispatch(setTasksAC({ todolistId, tasks }))
-   })
-}
+      dispatch(setAppStatusAC("loading"))
+      tasksApi.getTasks(todolistId).then((res) => {
+         const tasks = res.data.items
+         dispatch(setAppStatusAC("succeeded"))
+         dispatch(setTasksAC({ todolistId, tasks }))
+      })
+   }
 
 export const deleteTaskTC = (arg: { todolistId: string; taskId: string }): AppThunk => (dispatch) => {
    tasksApi.deleteTask(arg).then((res) => {
@@ -166,21 +166,26 @@ export const deleteTaskTC = (arg: { todolistId: string; taskId: string }): AppTh
 
 export const addTaskTC = (arg: { title: string; todolistId: string }): AppThunk => (dispatch) => {
    dispatch(setAppStatusAC("loading"))
-   tasksApi.createTask(arg).then((res) => {
-      if (res.data.resultCode === ResultCode.Success) {
-         dispatch(setAppStatusAC("succeeded"))
-         dispatch(addTaskAC({ task: res.data.data.item }))
-      } else {
-         if (res.data.messages.length) {
-            dispatch(setAppErrorAC(res.data.messages[0]))
+   tasksApi.createTask(arg)
+      .then((res) => {
+         if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC("succeeded"))
+            dispatch(addTaskAC({ task: res.data.data.item }))
          } else {
-            dispatch(setAppErrorAC('Some error occurred'))
+            if (res.data.messages.length) {
+               dispatch(setAppErrorAC(res.data.messages[0]))
+            } else {
+               dispatch(setAppErrorAC("Some error occurred"))
+            }
+            dispatch(setAppStatusAC("failed"))
+            // res.data.messages.length ? dispatch(setAppErrorAC(res.data.messages[0])) : dispatch(setAppErrorAC('Some error occurred'))
          }
-         dispatch(setAppStatusAC('failed'))
-         // res.data.messages.length ? dispatch(setAppErrorAC(res.data.messages[0])) : dispatch(setAppErrorAC('Some error occurred'))
-      }
-      dispatch(setAppStatusAC('failed'))
-   })
+         dispatch(setAppStatusAC("failed"))
+      })
+      .catch((error) => {
+         dispatch(setAppErrorAC(error.message))
+         dispatch(setAppStatusAC("failed"))
+      })
 }
 
 // updateTaskTC - вместо changeTaskStatusTC и changeTaskTitleTC напишите универсальную санку
@@ -197,9 +202,23 @@ export const updateTaskTC = (task: DomainTask): AppThunk =>
          priority: task.priority,
          startDate: task.startDate
       }
-      tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model }).then((res) => {
-         dispatch(updateTaskAC({ task }))
-      })
+      tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model })
+         .then((res) => {
+            if (res.data.resultCode === ResultCode.Success) {
+               dispatch(updateTaskAC({ task }))
+            } else {
+               if (res.data.messages.length) {
+                  dispatch(setAppErrorAC(res.data.messages[0]))
+               } else {
+                  dispatch(setAppErrorAC('Some error occurred'))
+               }
+               dispatch(setAppStatusAC('failed'))
+            }
+         })
+         .catch(error => {
+            dispatch(setAppErrorAC(error.message))
+            dispatch(setAppStatusAC('failed'))
+         })
    }
 
 // // 2. Вариант через getState()
