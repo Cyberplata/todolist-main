@@ -171,13 +171,13 @@ export const addTaskTC = (arg: { title: string; todolistId: string }): AppThunk 
          dispatch(setAppStatusAC("succeeded"))
          dispatch(addTaskAC({ task: res.data.data.item }))
       } else {
-         // if (res.data.messages.length) {
-         //    dispatch(setAppErrorAC(res.data.messages[0]))
-         // } else {
-         //    dispatch(setAppErrorAC('Some error occurred'))
-         // }
-         // dispatch(setAppStatusAC('failed'))
-         res.data.messages.length ? dispatch(setAppErrorAC(res.data.messages[0])) : dispatch(setAppErrorAC('Some error occurred'))
+         if (res.data.messages.length) {
+            dispatch(setAppErrorAC(res.data.messages[0]))
+         } else {
+            dispatch(setAppErrorAC('Some error occurred'))
+         }
+         dispatch(setAppStatusAC('failed'))
+         // res.data.messages.length ? dispatch(setAppErrorAC(res.data.messages[0])) : dispatch(setAppErrorAC('Some error occurred'))
       }
       dispatch(setAppStatusAC('failed'))
    })

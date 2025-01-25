@@ -1,4 +1,4 @@
-import { setAppStatusAC } from "app/app-reducer"
+import { type RequestStatus, setAppStatusAC } from "app/app-reducer"
 import type { AppThunk } from "app/store"
 import { todolistsApi } from "../api"
 
@@ -17,6 +17,7 @@ export type Todolist = {
 
 export type DomainTodolist = Todolist & {
    filter: FilterValuesType
+   entityStatus: RequestStatus
 }
 
 export type FilterValuesType = "all" | "active" | "completed"
@@ -29,7 +30,7 @@ export const todolistsReducer = (
 ): DomainTodolist[] => {
    switch (action.type) {
       case "SET-TODOLISTS": {
-         return action.payload.todolists.reverse().map((tl) => ({ ...tl, filter: "all" }))
+         return action.payload.todolists.reverse().map((tl) => ({ ...tl, filter: "all", entityStatus: "idle" }))
       }
       case "REMOVE-TODOLIST": {
          return state.filter((tl) => tl.id !== action.payload.todolistId)
@@ -37,7 +38,8 @@ export const todolistsReducer = (
       case "ADD-TODOLIST": {
          const newTodolist: DomainTodolist = {
             ...action.payload.todolist,
-            filter: "all"
+            filter: "all",
+            entityStatus: "idle"
          }
          return [...state, newTodolist]
       }
@@ -49,6 +51,9 @@ export const todolistsReducer = (
       }
       case "CHANGE-TODOLIST-FILTER": {
          return state.map((tl) => (tl.id === action.payload.todolistId ? { ...tl, filter: action.payload.filter } : tl))
+      }
+      case "CHANGE-TODOLIST-ENTITY-STATUS": {
+         return state.map((tl) => (tl.id === action.payload.id ? { ...tl, entityStatus: action.payload.entityStatus } : tl))
       }
       default:
          return state
@@ -80,6 +85,13 @@ export const updateTodolistAC = (payload: { todolistId: string; title: string })
    return { type: "UPDATE-TODOLIST", payload } as const
 }
 
+export const changeTodolistEntityStatusAC = (payload: {
+   id: string
+   entityStatus: RequestStatus
+}) => {
+   return { type: "CHANGE-TODOLIST-ENTITY-STATUS", payload } as const
+}
+
 // Thunks
 
 // синтаксис для then
@@ -87,20 +99,20 @@ export const updateTodolistAC = (payload: { todolistId: string; title: string })
 export const fetchTodolistsTC = (): AppThunk =>
    (dispatch) => {
       // Устанавливаем статус "loading", чтобы показать крутилку
-      dispatch(setAppStatusAC('loading'))
+      dispatch(setAppStatusAC("loading"))
       todolistsApi.getTodolists().then((res) => {
          // Скрываем крутилку после успешной загрузки
-         dispatch(setAppStatusAC('succeeded'))
+         dispatch(setAppStatusAC("succeeded"))
          dispatch(setTodolistsAC({ todolists: res.data }))
       })
    }
 
 export const addTodolistTC = (title: string): AppThunk =>
    (dispatch) => {
-   dispatch(setAppStatusAC('loading'))
+      dispatch(setAppStatusAC("loading"))
       todolistsApi.createTodolist(title).then(res => {
          const newTodo = res.data.data.item
-         dispatch(setAppStatusAC('succeeded'))
+         dispatch(setAppStatusAC("succeeded"))
          dispatch(addTodolistAC({ todolist: newTodo }))
          // dispatch(fetchTodolistsTC())
       })
@@ -108,9 +120,10 @@ export const addTodolistTC = (title: string): AppThunk =>
 
 export const removeTodolistTC = (id: string): AppThunk =>
    (dispatch) => {
-   dispatch(setAppStatusAC('loading'))
+      dispatch(setAppStatusAC("loading"))
+      dispatch(changeTodolistEntityStatusAC({id, entityStatus: 'loading'}))
       todolistsApi.deleteTodolist(id).then((res) => {
-         dispatch(setAppStatusAC('succeeded'))
+         dispatch(setAppStatusAC("succeeded"))
          dispatch(removeTodolistAC({ todolistId: id }))
       })
    }
@@ -133,6 +146,7 @@ export type ChangeTodolistTitleActionType = ReturnType<typeof changeTodolistTitl
 export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
 export type UpdateTodolistActionType = ReturnType<typeof updateTodolistAC>
+export type ChangeTodolistEntityActionType = ReturnType<typeof changeTodolistEntityStatusAC>
 
 export type TodolistsReducerActionsType =
    | RemoveTodolistActionType
@@ -141,3 +155,4 @@ export type TodolistsReducerActionsType =
    | ChangeTodolistFilterActionType
    | SetTodolistsActionType
    | UpdateTodolistActionType
+   | ChangeTodolistEntityActionType

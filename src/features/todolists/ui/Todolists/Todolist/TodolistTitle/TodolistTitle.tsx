@@ -15,24 +15,29 @@ type Props = {
 }
 
 export const TodolistTitle = memo(({ todolist }: Props) => {
+   const { title, id, entityStatus } = todolist
+
    const dispatch = useAppDispatch()
 
    const removeTodolistHandler = useCallback(() => {
-      dispatch(removeTodolistTC(todolist.id))
-   }, [dispatch, todolist.id])
+      dispatch(removeTodolistTC(id))
+   }, [dispatch, id])
 
    const updateTodolistHandler = useCallback(
       (title: string) => {
-         dispatch(updateTodolistTitleTC({ id: todolist.id, title }))
+         dispatch(updateTodolistTitleTC({ id, title }))
       },
-      [dispatch, todolist.id],
+      [dispatch, id]
    )
 
    return (
       <div className={styles.container}>
          <h3>
-            <EditableSpan value={todolist.title} onChange={updateTodolistHandler} />
-            <IconButton aria-label="delete" onClick={removeTodolistHandler}>
+            <EditableSpan value={title} onChange={updateTodolistHandler} />
+            <IconButton aria-label="delete"
+                        onClick={removeTodolistHandler}
+                        disabled={entityStatus === 'loading'}
+            >
                <DeleteIcon />
             </IconButton>
          </h3>
