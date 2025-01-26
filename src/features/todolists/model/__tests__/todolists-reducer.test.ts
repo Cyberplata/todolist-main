@@ -19,8 +19,8 @@ beforeEach(() => {
 
    // 1. Стартовый state
    startState = [
-      { id: todolistId1, title: "What to learn", addedDate: "2024-12-17T00:00:00.000Z", order: 0, filter: "all" },
-      { id: todolistId2, title: "What to buy", addedDate: "2024-12-17T00:00:00.000Z", order: 1, filter: "all" }
+      { id: todolistId1, title: "What to learn", addedDate: "2024-12-17T00:00:00.000Z", order: 0, filter: "all", entityStatus: "idle" },
+      { id: todolistId2, title: "What to buy", addedDate: "2024-12-17T00:00:00.000Z", order: 1, filter: "all", entityStatus: "idle" }
    ]
 })
 
