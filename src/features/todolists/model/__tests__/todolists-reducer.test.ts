@@ -3,7 +3,7 @@ import {
    changeTodolistFilterAC,
    removeTodolistAC,
    todolistsReducer,
-   changeTodolistTitleAC,
+   updateTodolistTitleAC,
    type DomainTodolist
 } from "../todolists-reducer"
 import { v1 } from "uuid"
@@ -55,7 +55,7 @@ test("correct todolist should be added", () => {
 test("correct todolist should change its name", () => {
    const newTitle = "New Todolist"
 
-   const endState = todolistsReducer(startState, changeTodolistTitleAC({
+   const endState = todolistsReducer(startState, updateTodolistTitleAC({
          todolistId: todolistId2,
          title: newTitle
       })
