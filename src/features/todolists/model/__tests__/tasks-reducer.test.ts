@@ -1,12 +1,5 @@
 import { TaskPriority, TaskStatus } from "../../lib/enums"
-import {
-   addTaskAC,
-   changeTaskStatusAC,
-   changeTaskTitleAC,
-   removeTaskAC,
-   tasksReducer,
-   type TasksStateType,
-} from "../tasks-reducer"
+import { addTaskAC, removeTaskAC, tasksReducer, type TasksStateType, updateTaskAC } from "../tasks-reducer"
 import { addTodolistAC, type DomainTodolist, removeTodolistAC, type Todolist } from "../todolists-reducer"
 
 let startState: TasksStateType
@@ -219,7 +212,7 @@ test("status of specified task should be changed", () => {
       priority: TaskPriority.Low,
    }
 
-   const action = changeTaskStatusAC({ task: newTask })
+   const action = updateTaskAC({ task: newTask })
 
    const endState = tasksReducer(startState, action)
 
@@ -243,7 +236,7 @@ test("title of specified task should be changed", () => {
    }
 
    // const action = changeTaskTitleAC({ todolistId: "todolistId2", taskId: "2", title: newTaskTitle })
-   const action = changeTaskTitleAC({ task: newTask })
+   const action = updateTaskAC({ task: newTask })
 
    const endState = tasksReducer(startState, action)
 

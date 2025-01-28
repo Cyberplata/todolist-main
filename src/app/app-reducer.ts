@@ -1,5 +1,6 @@
-export type ThemeModeType = "dark" | "light"
+export type ThemeModeType = "dark" | "light" | undefined
 export type RequestStatus = "idle" | "loading" | "succeeded" | "failed"
+export type NullableString = string | null
 
 type InitialState = typeof initialState
 
@@ -7,10 +8,10 @@ const initialState = {
    themeMode: "light" as ThemeModeType,
    status: "idle" as RequestStatus,
    // error: null as string | null
-   error: "TEST ERROR MESSAGE" as string | null,
+   error: null as NullableString,
 }
 
-export const appReducer = (state: InitialState = initialState, action: ActionsType): InitialState => {
+export const appReducer = (state: InitialState = initialState, action: AppReducerActionsType): InitialState => {
    switch (action.type) {
       case "CHANGE_THEME":
          return { ...state, themeMode: action.payload.theme }
@@ -49,4 +50,4 @@ export type ChangeThemeActionType = ReturnType<typeof changeThemeAC>
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 
-export type ActionsType = ChangeThemeActionType | SetAppStatusActionType | SetAppErrorActionType
+export type AppReducerActionsType = ChangeThemeActionType | SetAppStatusActionType | SetAppErrorActionType

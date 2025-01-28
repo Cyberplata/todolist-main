@@ -178,7 +178,6 @@ export const updateTodolistTitleTC =
 // запись через ReturnType Actions type
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
-// export type ChangeTodolistTitleActionType = ReturnType<typeof updateTodolistTitleAC>
 export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
 export type UpdateTodolistActionType = ReturnType<typeof updateTodolistTitleAC>
@@ -187,7 +186,6 @@ export type ChangeTodolistEntityActionType = ReturnType<typeof changeTodolistEnt
 export type TodolistsReducerActionsType =
    | RemoveTodolistActionType
    | AddTodolistActionType
-   // | ChangeTodolistTitleActionType
    | ChangeTodolistFilterActionType
    | SetTodolistsActionType
    | UpdateTodolistActionType
