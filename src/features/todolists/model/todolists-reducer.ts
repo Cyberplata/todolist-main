@@ -29,7 +29,7 @@ const initialState: DomainTodolist[] = []
 
 export const todolistsReducer = (
    state: DomainTodolist[] = initialState,
-   action: TodolistsReducerActionsType
+   action: TodolistsReducerActionsType,
 ): DomainTodolist[] => {
    switch (action.type) {
       case "SET-TODOLISTS": {
@@ -42,7 +42,7 @@ export const todolistsReducer = (
          const newTodolist: DomainTodolist = {
             ...action.payload.todolist,
             filter: "all",
-            entityStatus: "idle"
+            entityStatus: "idle",
          }
          return [...state, newTodolist]
       }
@@ -56,10 +56,14 @@ export const todolistsReducer = (
          return state.map((tl) => (tl.id === action.payload.todolistId ? { ...tl, filter: action.payload.filter } : tl))
       }
       case "CHANGE-TODOLIST-ENTITY-STATUS": {
-         return state.map((tl) => (tl.id === action.payload.id ? {
-            ...tl,
-            entityStatus: action.payload.entityStatus
-         } : tl))
+         return state.map((tl) =>
+            tl.id === action.payload.id
+               ? {
+                    ...tl,
+                    entityStatus: action.payload.entityStatus,
+                 }
+               : tl,
+         )
       }
       default:
          return state
@@ -91,10 +95,7 @@ export const updateTodolistTitleAC = (payload: { todolistId: string; title: stri
    return { type: "UPDATE-TODOLIST-TITLE", payload } as const
 }
 
-export const changeTodolistEntityStatusAC = (payload: {
-   id: string
-   entityStatus: RequestStatus
-}) => {
+export const changeTodolistEntityStatusAC = (payload: { id: string; entityStatus: RequestStatus }) => {
    return { type: "CHANGE-TODOLIST-ENTITY-STATUS", payload } as const
 }
 
@@ -102,22 +103,23 @@ export const changeTodolistEntityStatusAC = (payload: {
 
 // синтаксис для then
 // export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
-export const fetchTodolistsTC = (): AppThunk =>
-   (dispatch) => {
-      // Устанавливаем статус "loading", чтобы показать крутилку
-      dispatch(setAppStatusAC("loading"))
-      todolistsApi.getTodolists().then((res) => {
-         // Скрываем крутилку после успешной загрузки
-         dispatch(setAppStatusAC("succeeded"))
-         dispatch(setTodolistsAC({ todolists: res.data }))
-      })
-   }
+export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
+   // Устанавливаем статус "loading", чтобы показать крутилку
+   dispatch(setAppStatusAC("loading"))
+   todolistsApi.getTodolists().then((res) => {
+      // Скрываем крутилку после успешной загрузки
+      dispatch(setAppStatusAC("succeeded"))
+      dispatch(setTodolistsAC({ todolists: res.data }))
+   })
+}
 
-export const addTodolistTC = (title: string): AppThunk =>
+export const addTodolistTC =
+   (title: string): AppThunk =>
    (dispatch) => {
       dispatch(setAppStatusAC("loading"))
-      todolistsApi.createTodolist(title)
-         .then(res => {
+      todolistsApi
+         .createTodolist(title)
+         .then((res) => {
             if (res.data.resultCode === ResultCode.Success) {
                const newTodo = res.data.data.item
                dispatch(setAppStatusAC("succeeded"))
@@ -126,16 +128,18 @@ export const addTodolistTC = (title: string): AppThunk =>
                handleServerAppError(res.data, dispatch)
             }
          })
-         .catch(error => {
+         .catch((error) => {
             handleServerNetworkError(error, dispatch)
          })
    }
 
-export const removeTodolistTC = (id: string): AppThunk =>
+export const removeTodolistTC =
+   (id: string): AppThunk =>
    (dispatch) => {
       dispatch(setAppStatusAC("loading"))
       dispatch(changeTodolistEntityStatusAC({ id, entityStatus: "loading" }))
-      todolistsApi.deleteTodolist(id)
+      todolistsApi
+         .deleteTodolist(id)
          .then((res) => {
             if (res.data.resultCode === ResultCode.Success) {
                dispatch(setAppStatusAC("succeeded"))
@@ -144,7 +148,7 @@ export const removeTodolistTC = (id: string): AppThunk =>
                handleServerAppError(res.data, dispatch)
             }
          })
-         .catch(error => {
+         .catch((error) => {
             dispatch(changeTodolistEntityStatusAC({ id, entityStatus: "idle" }))
             handleServerNetworkError(error, dispatch)
          })
@@ -152,15 +156,24 @@ export const removeTodolistTC = (id: string): AppThunk =>
 
 export const updateTodolistTitleTC =
    (arg: { id: string; title: string }): AppThunk =>
-      (dispatch) => {
-         const { id, title } = arg
-         dispatch(setAppStatusAC("loading"))
-         todolistsApi.updateTodolist({ id, title })
-            .then((res) => {
+   (dispatch) => {
+      const { id, title } = arg
+      dispatch(setAppStatusAC("loading"))
+      todolistsApi
+         .updateTodolist({ id, title })
+         .then((res) => {
+            if (res.data.resultCode === ResultCode.Success) {
                dispatch(setAppStatusAC("succeeded"))
                dispatch(updateTodolistTitleAC({ todolistId: id, title }))
-            })
-      }
+            } else {
+               handleServerAppError(res.data, dispatch)
+            }
+         })
+         .catch((error) => {
+            dispatch(changeTodolistEntityStatusAC({ id, entityStatus: "idle" }))
+            handleServerNetworkError(error, dispatch)
+         })
+   }
 
 // запись через ReturnType Actions type
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>

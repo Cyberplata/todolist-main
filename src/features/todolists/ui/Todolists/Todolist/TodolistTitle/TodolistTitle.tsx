@@ -5,7 +5,7 @@ import { useAppDispatch } from "common/hooks/useAppDispatch"
 import {
    type DomainTodolist,
    removeTodolistTC,
-   updateTodolistTitleTC
+   updateTodolistTitleTC,
 } from "features/todolists/model/todolists-reducer"
 import React, { memo, useCallback } from "react"
 import styles from "./TodolistTitle.module.css"
@@ -27,17 +27,14 @@ export const TodolistTitle = memo(({ todolist }: Props) => {
       (title: string) => {
          dispatch(updateTodolistTitleTC({ id, title }))
       },
-      [dispatch, id]
+      [dispatch, id],
    )
 
    return (
       <div className={styles.container}>
          <h3>
-            <EditableSpan value={title} onChange={updateTodolistHandler} />
-            <IconButton aria-label="delete"
-                        onClick={removeTodolistHandler}
-                        disabled={entityStatus === 'loading'}
-            >
+            <EditableSpan value={title} onChange={updateTodolistHandler} disabled={entityStatus === "loading"} />
+            <IconButton aria-label="delete" onClick={removeTodolistHandler} disabled={entityStatus === "loading"}>
                <DeleteIcon />
             </IconButton>
          </h3>

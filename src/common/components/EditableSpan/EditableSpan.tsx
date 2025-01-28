@@ -1,14 +1,14 @@
+import Typography from "@mui/material/Typography"
 import { ChangeEvent, memo, useState } from "react"
 import TextField from "@mui/material/TextField"
 
 type Props = {
    value: string
    onChange: (newTitle: string) => void
+   disabled?: boolean
 }
 
-export const EditableSpan = memo(({ value, onChange }: Props) => {
-   // console.log("EditableSpan is called")
-
+export const EditableSpan = memo(({ value, onChange, disabled }: Props) => {
    const [editMode, setEditMode] = useState(false)
    const [newTitle, setNewTitle] = useState(value)
 
@@ -24,7 +24,6 @@ export const EditableSpan = memo(({ value, onChange }: Props) => {
    }
 
    return editMode ? (
-      // ? <input value={newTitle} onChange={changeTitleHandler} onBlur={activateEditModeHandler} autoFocus/>
       <TextField
          id="outlined-basic"
          label="Enter a title"
@@ -34,8 +33,11 @@ export const EditableSpan = memo(({ value, onChange }: Props) => {
          onBlur={activateEditModeHandler}
          size="small"
          autoFocus
+         disabled={disabled}
       />
    ) : (
-      <span onDoubleClick={activateEditModeHandler}>{value}</span>
+      <Typography onDoubleClick={activateEditModeHandler} component="span">
+         {value}
+      </Typography>
    )
 })

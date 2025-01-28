@@ -36,7 +36,7 @@ export const AppBarHeader = () => {
             <MenuButton color="inherit">Faq</MenuButton>
             <Switch color={"default"} onChange={changeModeHandler} />
          </Toolbar>
-         { status === "loading" && <LinearProgress />}
+         {status === "loading" && <LinearProgress />}
       </AppBar>
    )
 }

@@ -27,7 +27,6 @@
 // const result2 = filterArray(words, startsWithT)
 // console.log(result2) // ["typescript"]
 
-
 // // 2. Задача (2 дженерика)
 // // Универсальная функция преобразования элементов массива
 // // Напиши дженериковую функцию mapArray, которая принимает массив элементов любого типа и функцию-преобразователь (transform), применяет ее к каждому элементу массива и возвращает новый массив с результатами преобразований.
@@ -72,8 +71,8 @@ const filterAndMap = <T, D>(array: T[], predicate: (val: T) => boolean, transfor
    return array.filter(predicate).map(transform)
 }
 
-const numbers = [1, 2, 3, 4, 5];
-const isOdd = (num: number) => num % 2 !== 0;
-const numberToString = (num: number) => `Odd number: ${num}`;
-const result = filterAndMap(numbers, isOdd, numberToString);
-console.log(result); // ["Odd number: 1", "Odd number: 3", "Odd number: 5"]
+const numbers = [1, 2, 3, 4, 5]
+const isOdd = (num: number) => num % 2 !== 0
+const numberToString = (num: number) => `Odd number: ${num}`
+const result = filterAndMap(numbers, isOdd, numberToString)
+console.log(result) // ["Odd number: 1", "Odd number: 3", "Odd number: 5"]

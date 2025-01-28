@@ -14,6 +14,7 @@ import { getListItemSx } from "./Task.styles"
 type Props = {
    todolist: DomainTodolist
    task: DomainTask
+   // disabled?: boolean
 }
 
 export const Task = memo((props: Props) => {
@@ -25,21 +26,23 @@ export const Task = memo((props: Props) => {
       dispatch(deleteTaskTC({ todolistId: todolist.id, taskId: task.id }))
    }, [dispatch, todolist.id, task.id])
 
-   const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+   const changeTaskStatusHandler = useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
          const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
          const newTask = { ...task, status }
          dispatch(updateTaskTC(newTask)) // через props task
          // dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: newTask })) // через getState()
       },
-      [dispatch, todolist.id, task.id]
+      [dispatch, todolist.id, task.id],
    )
 
-   const changeTaskTitleHandler = useCallback((title: string) => {
+   const changeTaskTitleHandler = useCallback(
+      (title: string) => {
          const newTask = { ...task, title }
          dispatch(updateTaskTC(newTask)) // через props task
          // dispatch(updateTaskTC({ todolistId: todolist.id, taskId: task.id, domainModel: newTask })) // через getState()
       },
-      [dispatch, todolist.id, task.id]
+      [dispatch, todolist.id, task.id],
    )
 
    // TODO: Нужна ли тут эта проверка?
@@ -51,10 +54,18 @@ export const Task = memo((props: Props) => {
    return (
       <ListItem key={task.id} sx={getListItemSx(task.status === TaskStatus.Completed)}>
          <div>
-            <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
-            <EditableSpan value={task.title} onChange={changeTaskTitleHandler} />
+            <Checkbox
+               checked={task.status === TaskStatus.Completed}
+               onChange={changeTaskStatusHandler}
+               disabled={todolist.entityStatus === "loading"}
+            />
+            <EditableSpan
+               value={task.title}
+               onChange={changeTaskTitleHandler}
+               disabled={todolist.entityStatus === "loading"}
+            />
          </div>
-         <IconButton aria-label="delete" onClick={removeTaskHandler}>
+         <IconButton aria-label="delete" onClick={removeTaskHandler} disabled={todolist.entityStatus === "loading"}>
             <DeleteIcon />
          </IconButton>
       </ListItem>

@@ -10,7 +10,7 @@ test("ids should be equals", () => {
       id: "todolistId3",
       title: newTitle,
       addedDate: "2024-12-17T00:00:00.000Z",
-      order: 2
+      order: 2,
    }
 
    // const action = addTodolistAC("new todolist")

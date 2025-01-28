@@ -5,7 +5,7 @@ import {
    changeTaskTitleAC,
    removeTaskAC,
    tasksReducer,
-   type TasksStateType
+   type TasksStateType,
 } from "../tasks-reducer"
 import { addTodolistAC, type DomainTodolist, removeTodolistAC, type Todolist } from "../todolists-reducer"
 
@@ -24,7 +24,7 @@ beforeEach(() => {
             description: "let's go",
             order: 0,
             startDate: "29.01.2024",
-            priority: TaskPriority.Low
+            priority: TaskPriority.Low,
          },
          {
             id: "2",
@@ -36,7 +36,7 @@ beforeEach(() => {
             description: "let's go",
             order: 1,
             startDate: "30.01.2024",
-            priority: TaskPriority.Low
+            priority: TaskPriority.Low,
          },
          {
             id: "3",
@@ -48,8 +48,8 @@ beforeEach(() => {
             description: "let's go",
             order: 2,
             startDate: "31.01.2024",
-            priority: TaskPriority.Low
-         }
+            priority: TaskPriority.Low,
+         },
       ],
       todolistId2: [
          {
@@ -62,7 +62,7 @@ beforeEach(() => {
             description: "let's go",
             order: 0,
             startDate: "29.01.2024",
-            priority: TaskPriority.Low
+            priority: TaskPriority.Low,
          },
          {
             id: "2",
@@ -74,7 +74,7 @@ beforeEach(() => {
             description: "let's go",
             order: 1,
             startDate: "30.01.2024",
-            priority: TaskPriority.Hi
+            priority: TaskPriority.Hi,
          },
          {
             id: "3",
@@ -86,9 +86,9 @@ beforeEach(() => {
             description: "let's go",
             order: 2,
             startDate: "31.01.2024",
-            priority: TaskPriority.Low
-         }
-      ]
+            priority: TaskPriority.Low,
+         },
+      ],
    }
 })
 
@@ -124,7 +124,7 @@ test("correct task should be deleted from correct array", () => {
             description: "let's go",
             order: 0,
             startDate: "29.01.2024",
-            priority: TaskPriority.Low
+            priority: TaskPriority.Low,
          },
          {
             id: "2",
@@ -136,7 +136,7 @@ test("correct task should be deleted from correct array", () => {
             description: "let's go",
             order: 1,
             startDate: "30.01.2024",
-            priority: TaskPriority.Low
+            priority: TaskPriority.Low,
          },
          {
             id: "3",
@@ -148,8 +148,8 @@ test("correct task should be deleted from correct array", () => {
             description: "let's go",
             order: 2,
             startDate: "31.01.2024",
-            priority: TaskPriority.Low
-         }
+            priority: TaskPriority.Low,
+         },
       ],
       todolistId2: [
          {
@@ -162,7 +162,7 @@ test("correct task should be deleted from correct array", () => {
             description: "let's go",
             order: 0,
             startDate: "29.01.2024",
-            priority: TaskPriority.Low
+            priority: TaskPriority.Low,
          },
          {
             id: "3",
@@ -174,9 +174,9 @@ test("correct task should be deleted from correct array", () => {
             description: "let's go",
             order: 2,
             startDate: "31.01.2024",
-            priority: TaskPriority.Low
-         }
-      ]
+            priority: TaskPriority.Low,
+         },
+      ],
    })
 })
 
@@ -191,7 +191,7 @@ test("correct task should be added to correct array", () => {
       description: null,
       order: 0,
       startDate: null,
-      priority: TaskPriority.Low
+      priority: TaskPriority.Low,
    }
 
    const action = addTaskAC({ task: newTask }) // Теперь передаём целый объект task
@@ -216,7 +216,7 @@ test("status of specified task should be changed", () => {
       description: null,
       order: 0,
       startDate: null,
-      priority: TaskPriority.Low
+      priority: TaskPriority.Low,
    }
 
    const action = changeTaskStatusAC({ task: newTask })
@@ -239,7 +239,7 @@ test("title of specified task should be changed", () => {
       description: null,
       order: 0,
       startDate: null,
-      priority: TaskPriority.Low
+      priority: TaskPriority.Low,
    }
 
    // const action = changeTaskTitleAC({ todolistId: "todolistId2", taskId: "2", title: newTaskTitle })
@@ -256,7 +256,7 @@ test("new array should be added when new todolist is added", () => {
       id: "todolistId3", // <-- уникальный ID
       title: "New Todolist",
       addedDate: "2024-12-17T00:00:00.000Z",
-      order: 0
+      order: 0,
    }
 
    // const action = addTodolistAC("new todolist")
