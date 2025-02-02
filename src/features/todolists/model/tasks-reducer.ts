@@ -3,12 +3,14 @@ import type { AppThunk } from "app/store"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import type { AddTodolistActionType, RemoveTodolistActionType } from "features/todolists/model/todolists-reducer"
-import { type DomainTask, tasksApi, type Todolist, type UpdateTaskModel } from "../api"
+import { type DomainTask, tasksApi, type UpdateTaskModel } from "../api"
 import { ResultCode } from "../lib/enums"
 
 export type TasksStateType = {
-   [key: string]: Array<DomainTask>
+   [key: string]: DomainTask[]
 }
+// Второй способ типизации через утилитный тип Record
+// export type _TasksStateType = Record<string, Array<DomainTask>>
 
 const initialState: TasksStateType = {}
 
