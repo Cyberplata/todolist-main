@@ -34,10 +34,10 @@ export const TodolistTitle = memo(({ todolist }: Props) => {
       <div className={styles.container}>
          <h3>
             <EditableSpan value={title} onChange={updateTodolistHandler} disabled={entityStatus === "loading"} />
-            <IconButton aria-label="delete" onClick={removeTodolistHandler} disabled={entityStatus === "loading"}>
-               <DeleteIcon />
-            </IconButton>
          </h3>
+         <IconButton aria-label="delete" onClick={removeTodolistHandler} disabled={entityStatus === "loading"}>
+            <DeleteIcon />
+         </IconButton>
       </div>
    )
 })

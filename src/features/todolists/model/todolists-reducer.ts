@@ -6,11 +6,6 @@ import { todolistsApi } from "../api"
 import { ResultCode } from "../lib/enums"
 
 // Typing
-// export type DomainTodolist = {
-//    id: string
-//    title: string
-//    filter: FilterValuesType
-// }
 export type Todolist = {
    id: string
    title: string

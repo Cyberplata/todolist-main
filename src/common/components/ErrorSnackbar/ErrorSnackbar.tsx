@@ -9,7 +9,7 @@ export const ErrorSnackbar = () => {
    const error = useAppSelector(selectError)
    const dispatch = useAppDispatch()
 
-   const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
+   const handleClose = (_: SyntheticEvent | Event, reason?: string) => {
       if (reason === "clickaway") {
          return
       }

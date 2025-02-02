@@ -179,22 +179,47 @@ export const deleteTaskTC =
 export const addTaskTC =
    (arg: { title: string; todolistId: string }): AppThunk =>
    (dispatch) => {
+      // Устанавливаем статус "loading", чтобы показать крутилку
       dispatch(setAppStatusAC("loading"))
       tasksApi
          .createTask(arg)
          .then((res) => {
+            // А здесь если ResultCode или === 0 или !== 0
             if (res.data.resultCode === ResultCode.Success) {
+               // Скрываем крутилку после успешной загрузки
                dispatch(setAppStatusAC("succeeded"))
                dispatch(addTaskAC({ task: res.data.data.item }))
             } else {
                handleServerAppError(res.data, dispatch)
             }
-            dispatch(setAppStatusAC("failed"))
          })
          .catch((error) => {
+            // Здесь будут у нас все 400 и 500 ошибки
             handleServerNetworkError(error, dispatch)
          })
    }
+
+// // Решение c методом finally()
+// export const _addTaskTCWithFinally =
+//    (arg: { title: string; todolistId: string }): AppThunk =>
+//    (dispatch) => {
+//       dispatch(setAppStatusAC("loading"))
+//       tasksApi
+//          .createTask(arg)
+//          .then((res) => {
+//             if (res.data.resultCode === ResultCode.Success) {
+//                dispatch(addTaskAC({ task: res.data.data.item }))
+//             } else {
+//                handleServerAppError(res.data, dispatch)
+//             }
+//          })
+//          .catch((error) => {
+//             handleServerNetworkError(error, dispatch)
+//          })
+//          .finally(() => {
+//             dispatch(setAppStatusAC("idle"))
+//          })
+//    }
 
 // updateTaskTC - вместо changeTaskStatusTC и changeTaskTitleTC напишите универсальную санку
 // для обновления таски updateTaskTC, чтобы избавиться от дублирования кода

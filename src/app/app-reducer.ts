@@ -39,7 +39,7 @@ export const setAppStatusAC = (status: RequestStatus) => {
    } as const
 }
 
-export const setAppErrorAC = (error: string | null) => {
+export const setAppErrorAC = (error: NullableString) => {
    return {
       type: "SET_ERROR",
       payload: { error },
