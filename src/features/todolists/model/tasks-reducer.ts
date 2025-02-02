@@ -1,10 +1,9 @@
-import { setAppErrorAC, setAppStatusAC } from "app/app-reducer"
-import type { AppDispatch, AppThunk, RootState } from "app/store"
+import { setAppStatusAC } from "app/app-reducer"
+import type { AppThunk } from "app/store"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import type { AddTodolistActionType, RemoveTodolistActionType } from "features/todolists/model/todolists-reducer"
-import { type DomainTask, tasksApi, type UpdateTaskModel } from "../api"
-import type { UpdateTaskDomainModel } from "../api/tasksApi.types"
+import { type DomainTask, tasksApi, type Todolist, type UpdateTaskModel } from "../api"
 import { ResultCode } from "../lib/enums"
 
 export type TasksStateType = {
@@ -190,6 +189,7 @@ export const addTaskTC =
                dispatch(setAppStatusAC("succeeded"))
                dispatch(addTaskAC({ task: res.data.data.item }))
             } else {
+               // handleServerAppError<{ item: Todolist }>(res.data, dispatch)
                handleServerAppError(res.data, dispatch)
             }
          })

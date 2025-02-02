@@ -2,16 +2,16 @@ import { type RequestStatus, setAppStatusAC } from "app/app-reducer"
 import type { AppThunk } from "app/store"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
-import { todolistsApi } from "../api"
+import { type Todolist, todolistsApi } from "../api"
 import { ResultCode } from "../lib/enums"
 
 // Typing
-export type Todolist = {
-   id: string
-   title: string
-   addedDate: string
-   order: number
-}
+// export type Todolist = {
+//    id: string
+//    title: string
+//    addedDate: string
+//    order: number
+// }
 
 export type DomainTodolist = Todolist & {
    filter: FilterValuesType

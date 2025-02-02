@@ -18,14 +18,13 @@ export const store = createStore(rootReducer, {}, applyMiddleware(thunk))
 export type RootState = ReturnType<typeof store.getState>
 
 // // вариант 1 типизации
-type AppActionsType = TodolistsReducerActionsType | TasksReducerActionsType | AppReducerActionsType
-export type AppDispatch = ThunkDispatch<RootState, unknown, AppActionsType>
-export type AppThunk = ThunkAction<void, RootState, unknown, AppActionsType>
+// type AppActionsType = TodolistsReducerActionsType | TasksReducerActionsType | AppReducerActionsType
+// export type AppDispatch = ThunkDispatch<RootState, unknown, AppActionsType>
+// export type AppThunk = ThunkAction<void, RootState, unknown, AppActionsType>
 
-// :TODO
-// // вариант 2 с урока почему то ошибки Argument type AppThunk is not assignable to parameter type UnknownAction
-// export type AppDispatch = ThunkDispatch<RootState, unknown, UnknownAction>
-// export type AppThunk = ThunkAction<void, RootState, unknown, UnknownAction>
+// вариант 2 с урока почему то ошибки Argument type AppThunk is not assignable to parameter type UnknownAction
+export type AppDispatch = ThunkDispatch<RootState, unknown, UnknownAction>
+export type AppThunk = ThunkAction<void, RootState, unknown, UnknownAction>
 
 // @ts-ignore
 window.store = store

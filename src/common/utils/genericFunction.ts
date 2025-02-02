@@ -1,3 +1,25 @@
+// function identity1(arg: number): number {
+//    return arg
+// }
+// function identity2(arg: string): string {
+//    return arg
+// }
+// function identity3(arg: Todolist[]): Todolist[] {
+//    return arg
+// }
+// // ❌ - не правильно
+// function _identity(arg: number | string | Todolist[]): number | string | Todolist[] {
+//    return arg
+// }
+// // ✅ - правильно
+// // function identity<T extends number>(arg: T): T { // extends - удовлетворяет только number
+// function identity<T>(arg: T): T {
+//    return arg
+// }
+//
+// // identity<RequestStatus>("idle") // вариант с уточнением типа
+// identity("idle") // без уточнения чаще используется
+
 // 1. Задача
 // Реализация универсального фильтра в массиве
 // Напиши дженериковую функцию filterArray, которая принимает массив элементов любого типа и функцию-предикат(predicate) ✳️, а возвращает новый массив, состоящий только из элементов, которые удовлетворяют условию предиката.
@@ -67,12 +89,40 @@
 // //    Возвращает массив элементов типа D, преобразованных только из тех элементов, которые прошли проверку предикатом.
 // //    Пример:
 
-const filterAndMap = <T, D>(array: T[], predicate: (val: T) => boolean, transform: (val: T) => D): D[] => {
-   return array.filter(predicate).map(transform)
+// const filterAndMap = <T, D>(array: T[], predicate: (val: T) => boolean, transform: (val: T) => D): D[] => {
+//    return array.filter(predicate).map(transform)
+// }
+//
+// const numbers = [1, 2, 3, 4, 5]
+// const isOdd = (num: number) => num % 2 !== 0
+// const numberToString = (num: number) => `Odd number: ${num}`
+// const result = filterAndMap(numbers, isOdd, numberToString)
+// console.log(result) // ["Odd number: 1", "Odd number: 3", "Odd number: 5"]
+
+// Реализация универсальной функции для работы с массивами
+// Необходимо создать дженериковую функцию, которая принимает массив любого типа и значение того же типа, и возвращает новый массив с добавленным значением, если его там нет. Если значение уже есть в массиве, функция должна вернуть массив без изменений.
+//
+// Требования
+// Функция должна быть дженериковой и работать с массивами любого типа.
+// Для проверки наличия элемента в массиве использовать метод includes.
+// Тип массива и тип элемента должны быть связаны через дженерики.
+// Функция должна быть чистой (не изменять оригинальный массив).
+
+function updateArray<T>(array: T[], value: T): T[] {
+   return array.includes(value) ? array : [...array, value]
 }
 
-const numbers = [1, 2, 3, 4, 5]
-const isOdd = (num: number) => num % 2 !== 0
-const numberToString = (num: number) => `Odd number: ${num}`
-const result = filterAndMap(numbers, isOdd, numberToString)
-console.log(result) // ["Odd number: 1", "Odd number: 3", "Odd number: 5"]
+// Строки
+const stringArray = ["apple", "banana", "cherry"]
+const result1 = updateArray(stringArray, "banana") // ['apple', 'banana', 'cherry']
+const result2 = updateArray(stringArray, "date") // ['apple', 'banana', 'cherry', 'date']
+
+// Числа
+const numberArray = [1, 2, 3]
+const result3 = updateArray(numberArray, 2) // [1, 2, 3]
+const result4 = updateArray(numberArray, 4) // [1, 2, 3, 4]
+
+console.log(result1)
+console.log(result2)
+console.log(result3)
+console.log(result4)

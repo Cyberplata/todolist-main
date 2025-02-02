@@ -31,11 +31,14 @@ export type UpdateTaskModel = {
 // UpdateTaskDomainModel это такой же тип как и UpdateTaskModel,
 // только все свойства в нем являются необязательными
 // Для способа через props task Task.tsx не нужно, только для getState()
-export type UpdateTaskDomainModel = {
-   title?: string
-   description?: string | null
-   status?: TaskStatus
-   priority?: TaskPriority
-   startDate?: string | null
-   deadline?: string | null
-}
+// export type UpdateTaskDomainModel = {
+//    title?: string
+//    description?: string | null
+//    status?: TaskStatus
+//    priority?: TaskPriority
+//    startDate?: string | null
+//    deadline?: string | null
+// }
+
+// Partial используется для создания нового типа данных на основе существующего типа, делая все его свойства необязательными
+export type UpdateTaskDomainModel = Partial<UpdateTaskModel>
