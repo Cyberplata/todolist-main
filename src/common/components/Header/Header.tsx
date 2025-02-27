@@ -9,5 +9,3 @@ export const Header = () => {
       </Box>
    )
 }
-
-// TODO: Правильно ли я вынес jsx+логику в компонент AppBarHeader?
