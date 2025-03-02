@@ -79,7 +79,7 @@ export const Login = () => {
                      <FormControlLabel
                         label={"Remember me"}
                         control={
-                           // 1ый вариант
+                           // 1ый вариант - синтаксис, как будем писать в кастомных хуках в карьерном бустере
                            <Controller
                               name={"rememberMe"}
                               control={control}
