@@ -9,11 +9,13 @@ import LinearProgress from "@mui/material/LinearProgress"
 import TextField from "@mui/material/TextField"
 import { selectThemeMode } from "app/appSelectors"
 import { useAppDispatch, useAppSelector } from "common/hooks"
+import { Path } from "common/routing"
 import { getTheme } from "common/theme"
 import React from "react"
 import { Controller, type SubmitHandler, useForm } from "react-hook-form"
+import { useNavigate } from "react-router"
 import type { LoginArgs } from "../../api"
-import { selectIsLoggedIn } from "../../api/authSelectors"
+import { selectIsLoggedIn } from "../../model/authSelectors"
 import { loginTC } from "../../model/auth-reducer"
 import s from "./Login.module.css"
 
@@ -29,7 +31,8 @@ export const Login = () => {
    const theme = getTheme(themeMode)
 
    const dispatch = useAppDispatch()
-   const statusIsLoggedIn = useAppSelector(selectIsLoggedIn)
+   const isLoggedIn = useAppSelector(selectIsLoggedIn) // достаём значение, чтобы сделать редирект потом после смены значения с false на true
+   const navigate = useNavigate()
 
    const {
       register,
@@ -41,12 +44,17 @@ export const Login = () => {
 
    const onSubmit: SubmitHandler<LoginArgs> = (data) => {
       // debugger
-      console.log(data)
+      // console.log(data)
       dispatch(loginTC(data))
       reset()
    }
    console.log(errors)
    // debugger
+
+   if (isLoggedIn) {
+      navigate(Path.Main)
+   }
+
    return (
       <Grid container justifyContent={"center"}>
          <Grid item justifyContent={"center"}>
@@ -109,7 +117,7 @@ export const Login = () => {
                      <Button type={"submit"} variant={"contained"} color={"primary"}>
                         Login
                      </Button>
-                     {statusIsLoggedIn && <LinearProgress />}
+                     {/*{isLoggedIn && <LinearProgress />}*/}
                   </FormGroup>
                </form>
             </FormControl>

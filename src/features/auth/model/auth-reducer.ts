@@ -37,7 +37,7 @@ export const loginTC =
       authApi
          .login(data)
          .then((res) => {
-            debugger
+            // debugger
             if (res.data.resultCode === ResultCode.Success) {
                // debugger
                // Скрываем крутилку после успешной загрузки
