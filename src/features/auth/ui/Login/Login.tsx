@@ -79,11 +79,20 @@ export const Login = () => {
                      <FormControlLabel
                         label={"Remember me"}
                         control={
+                           // 1ый вариант
                            <Controller
                               name={"rememberMe"}
                               control={control}
                               render={({ field: { value, ...rest } }) => <Checkbox {...rest} checked={value} />}
                            />
+                           // // 2 вариант: явно прописать функцию onChange как в примере из документации
+                           // <Controller
+                           //    name={"rememberMe"}
+                           //    control={control}
+                           //    render={({ field: { onChange, value } }) => (
+                           //       <Checkbox onChange={(e) => onChange(e.target.checked)} checked={value} />
+                           //    )}
+                           // />
                         }
                      />
                      <Button type={"submit"} variant={"contained"} color={"primary"}>
