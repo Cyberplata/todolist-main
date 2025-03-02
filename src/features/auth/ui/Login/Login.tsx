@@ -5,22 +5,31 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import FormGroup from "@mui/material/FormGroup"
 import FormLabel from "@mui/material/FormLabel"
 import Grid from "@mui/material/Grid"
+import LinearProgress from "@mui/material/LinearProgress"
 import TextField from "@mui/material/TextField"
-import { useAppSelector } from "common/hooks"
-import { getTheme } from "common/theme"
 import { selectThemeMode } from "app/appSelectors"
+import { useAppDispatch, useAppSelector } from "common/hooks"
+import { getTheme } from "common/theme"
+import React from "react"
 import { Controller, type SubmitHandler, useForm } from "react-hook-form"
+import type { LoginArgs } from "../../api"
+import { selectIsLoggedIn } from "../../api/authSelectors"
+import { loginTC } from "../../model/auth-reducer"
 import s from "./Login.module.css"
 
-type Inputs = {
-   email: string
-   password: string
-   rememberMe: boolean
-}
+// type Inputs = {
+//    email: string
+//    password: string
+//    rememberMe: boolean
+// }
 
 export const Login = () => {
+   // debugger
    const themeMode = useAppSelector(selectThemeMode)
    const theme = getTheme(themeMode)
+
+   const dispatch = useAppDispatch()
+   const statusIsLoggedIn = useAppSelector(selectIsLoggedIn)
 
    const {
       register,
@@ -28,14 +37,16 @@ export const Login = () => {
       reset,
       control,
       formState: { errors },
-   } = useForm<Inputs>({ defaultValues: { email: "", password: "", rememberMe: false } })
+   } = useForm<LoginArgs>({ defaultValues: { email: "", password: "", rememberMe: false } })
 
-   const onSubmit: SubmitHandler<Inputs> = (data) => {
+   const onSubmit: SubmitHandler<LoginArgs> = (data) => {
       // debugger
       console.log(data)
+      dispatch(loginTC(data))
       reset()
    }
-
+   console.log(errors)
+   // debugger
    return (
       <Grid container justifyContent={"center"}>
          <Grid item justifyContent={"center"}>
@@ -63,7 +74,7 @@ export const Login = () => {
                <form onSubmit={handleSubmit(onSubmit)}>
                   <FormGroup>
                      <TextField
-                        type="email"
+                        // type="email"
                         label="Email"
                         margin="normal"
                         {...register("email", {
@@ -98,6 +109,7 @@ export const Login = () => {
                      <Button type={"submit"} variant={"contained"} color={"primary"}>
                         Login
                      </Button>
+                     {statusIsLoggedIn && <LinearProgress />}
                   </FormGroup>
                </form>
             </FormControl>

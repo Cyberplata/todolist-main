@@ -4,6 +4,7 @@ import type { LoginArgs } from "./authApi.types"
 
 export const authApi = {
    login(payload: LoginArgs) {
+      // debugger
       return instance.post<BaseResponse<{ userId: number; token: string }>>(`auth/login`, payload)
    },
 }
