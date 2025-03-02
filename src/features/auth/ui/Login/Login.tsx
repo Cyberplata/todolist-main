@@ -10,6 +10,7 @@ import { useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
 import { selectThemeMode } from "app/appSelectors"
 import { type SubmitHandler, useForm } from "react-hook-form"
+import s from "./Login.module.css"
 
 type Inputs = {
    email: string
@@ -24,12 +25,14 @@ export const Login = () => {
    const {
       register,
       handleSubmit,
-      watch,
+      reset,
       formState: { errors },
-   } = useForm<Inputs>({ defaultValues: { email: "aasas", password: "123", rememberMe: true } })
+   } = useForm<Inputs>({ defaultValues: { email: "", password: "", rememberMe: false } })
 
    const onSubmit: SubmitHandler<Inputs> = (data) => {
-      debugger
+      // debugger
+      console.log(data)
+      reset()
    }
 
    return (
@@ -58,7 +61,19 @@ export const Login = () => {
                </FormLabel>
                <form onSubmit={handleSubmit(onSubmit)}>
                   <FormGroup>
-                     <TextField type="email" label="Email" margin="normal" {...register("email")} />
+                     <TextField
+                        type="email"
+                        label="Email"
+                        margin="normal"
+                        {...register("email", {
+                           required: "Email is required",
+                           pattern: {
+                              value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                              message: "Incorrect email address",
+                           },
+                        })}
+                     />
+                     {errors.email && <span className={s.errorMessage}>{errors.email.message}</span>}
                      <TextField type="password" label="Password" margin="normal" {...register("password")} />
                      <FormControlLabel label={"Remember me"} control={<Checkbox />} {...register("rememberMe")} />
                      <Button type={"submit"} variant={"contained"} color={"primary"}>
