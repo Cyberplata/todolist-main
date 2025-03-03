@@ -11,12 +11,14 @@ import { useAppSelector } from "common/hooks/useAppSelector"
 import React from "react"
 import { changeThemeAC } from "app/app-reducer"
 import { selectSetAppStatus, selectThemeMode } from "app/appSelectors"
+import { selectIsLoggedIn } from "../../../../features/auth/model"
 
 export const AppBarHeader = () => {
    const themeMode = useAppSelector(selectThemeMode)
    const status = useAppSelector(selectSetAppStatus)
 
    const dispatch = useAppDispatch()
+   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
    const changeModeHandler = () => {
       dispatch(changeThemeAC(themeMode === "light" ? "dark" : "light"))
@@ -31,8 +33,8 @@ export const AppBarHeader = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                News
             </Typography>
-            <MenuButton color="inherit">Login</MenuButton>
-            <MenuButton color="inherit">Logout</MenuButton>
+            {/*<MenuButton color="inherit">Login</MenuButton>*/}
+            {isLoggedIn && <MenuButton color="inherit">Logout</MenuButton>}
             <MenuButton color="inherit">Faq</MenuButton>
             <Switch color={"default"} onChange={changeModeHandler} />
          </Toolbar>

@@ -1,9 +1,9 @@
 import { applyMiddleware, combineReducers, legacy_createStore as createStore, UnknownAction } from "redux"
 import { thunk, type ThunkAction, type ThunkDispatch } from "redux-thunk"
 import { authReducer } from "../features/auth/model/auth-reducer"
-import { tasksReducer, TasksReducerActionsType } from "../features/todolists/model/tasks-reducer"
-import { todolistsReducer, TodolistsReducerActionsType } from "../features/todolists/model/todolists-reducer"
-import { appReducer, AppReducerActionsType } from "./app-reducer"
+import { tasksReducer } from "../features/todolists/model/tasks-reducer"
+import { todolistsReducer } from "../features/todolists/model/todolists-reducer"
+import { appReducer } from "./app-reducer"
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния
