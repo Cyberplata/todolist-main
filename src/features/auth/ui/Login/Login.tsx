@@ -11,9 +11,9 @@ import { selectThemeMode } from "app/appSelectors"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import { Path } from "common/routing"
 import { getTheme } from "common/theme"
-import React from "react"
+import React, { useEffect } from "react"
 import { Controller, type SubmitHandler, useForm } from "react-hook-form"
-import { useNavigate } from "react-router"
+import { Navigate, useNavigate } from "react-router"
 import type { LoginArgs } from "../../api"
 import { selectIsLoggedIn } from "../../model/authSelectors"
 import { loginTC } from "../../model/auth-reducer"
@@ -51,9 +51,17 @@ export const Login = () => {
    console.log(errors)
    // debugger
 
-   if (isLoggedIn) {
-      navigate(Path.Main)
-   }
+   // 1 вариант через useEffect
+   useEffect(() => {
+      if (isLoggedIn) {
+         navigate(Path.Main)
+      }
+   }, [isLoggedIn, navigate])
+
+   // // 2 вариант через Navigate (так как в новой документации react-router нет этого компонента, то используем 1ый вариант)
+   // if (isLoggedIn) {
+   //    return <Navigate to={Path.Main} />
+   // }
 
    return (
       <Grid container justifyContent={"center"}>
