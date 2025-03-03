@@ -40,10 +40,9 @@ export const loginTC =
             // debugger
             if (res.data.resultCode === ResultCode.Success) {
                // debugger
-               // Скрываем крутилку после успешной загрузки
-               dispatch(setAppStatusAC("succeeded"))
-               // Логинимся
-               dispatch(setIsLoggedInAC(true))
+               dispatch(setAppStatusAC("succeeded")) // Скрываем крутилку после успешной загрузки
+               dispatch(setIsLoggedInAC(true)) // Логинимся
+               localStorage.setItem("sn-token", res.data.data.token) // Устанавливаем обновлённый токен в localStorage
             } else {
                // debugger
                handleServerAppError(res.data, dispatch)
@@ -51,7 +50,6 @@ export const loginTC =
          })
          .catch((error) => {
             // debugger
-            // Здесь будут у нас все 400 и 500 ошибки
-            handleServerNetworkError(error, dispatch)
+            handleServerNetworkError(error, dispatch) // Здесь будут у нас все 400 и 500 ошибки
          })
    }
