@@ -90,6 +90,9 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
          delete copyState[action.payload.todolistId]
          return copyState
       }
+      case "CLEAR_TASKS_DATA": {
+         return {}
+      }
       default:
          return state
    }
@@ -141,6 +144,10 @@ export const updateTaskAC = (payload: { task: DomainTask }) => {
       type: "UPDATE-TASK",
       payload,
    } as const
+}
+
+export const clearTasksDataAC = () => {
+   return { type: "CLEAR_TASKS_DATA" } as const
 }
 
 // Thunks
@@ -284,6 +291,7 @@ export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 export type AddTaskActionType = ReturnType<typeof addTaskAC>
 export type setTasksActionType = ReturnType<typeof setTasksAC>
 export type updateTaskActionType = ReturnType<typeof updateTaskAC>
+export type ClearTasksDataActionType = ReturnType<typeof clearTasksDataAC>
 
 export type TasksReducerActionsType =
    | RemoveTaskActionType
@@ -292,3 +300,4 @@ export type TasksReducerActionsType =
    | RemoveTodolistActionType
    | setTasksActionType
    | updateTaskActionType
+   | ClearTasksDataActionType

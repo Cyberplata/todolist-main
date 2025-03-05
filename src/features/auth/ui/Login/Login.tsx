@@ -5,7 +5,6 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import FormGroup from "@mui/material/FormGroup"
 import FormLabel from "@mui/material/FormLabel"
 import Grid from "@mui/material/Grid"
-import LinearProgress from "@mui/material/LinearProgress"
 import TextField from "@mui/material/TextField"
 import { selectThemeMode } from "app/appSelectors"
 import { useAppDispatch, useAppSelector } from "common/hooks"
@@ -13,10 +12,10 @@ import { Path } from "common/routing"
 import { getTheme } from "common/theme"
 import React, { useEffect } from "react"
 import { Controller, type SubmitHandler, useForm } from "react-hook-form"
-import { Navigate, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 import type { LoginArgs } from "../../api"
-import { selectIsLoggedIn } from "../../model/authSelectors"
-import { loginTC } from "../../model/auth-reducer"
+import { loginTC } from "../../model"
+import { selectIsLoggedIn } from "../../model"
 import s from "./Login.module.css"
 
 // type Inputs = {
@@ -26,7 +25,6 @@ import s from "./Login.module.css"
 // }
 
 export const Login = () => {
-   // debugger
    const themeMode = useAppSelector(selectThemeMode)
    const theme = getTheme(themeMode)
 
@@ -43,13 +41,9 @@ export const Login = () => {
    } = useForm<LoginArgs>({ defaultValues: { email: "", password: "", rememberMe: false } })
 
    const onSubmit: SubmitHandler<LoginArgs> = (data) => {
-      // debugger
-      // console.log(data)
       dispatch(loginTC(data))
       reset()
    }
-   console.log(errors)
-   // debugger
 
    // 1 вариант через useEffect
    useEffect(() => {

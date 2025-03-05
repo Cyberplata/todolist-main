@@ -20,7 +20,6 @@ export const Todolist = memo(({ todolist }: Props) => {
       },
       [dispatch, todolist.id],
    )
-
    return (
       <>
          <TodolistTitle todolist={todolist} />

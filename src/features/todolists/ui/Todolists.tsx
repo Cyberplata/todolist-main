@@ -7,13 +7,11 @@ import { fetchTodolistsTC } from "../model/todolists-reducer"
 import { Todolist } from "./Todolists/Todolist/Todolist"
 
 export const Todolists = () => {
-   // 6 BLL -> UI
    const todolists = useAppSelector(selectTodolists)
 
    const dispatch = useAppDispatch()
 
    useEffect(() => {
-      // 1 UI -> BLL
       dispatch(fetchTodolistsTC())
    }, [])
 

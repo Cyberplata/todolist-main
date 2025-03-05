@@ -12,7 +12,7 @@ import React from "react"
 import { changeThemeAC } from "app/app-reducer"
 import { selectSetAppStatus, selectThemeMode } from "app/appSelectors"
 import { selectIsLoggedIn } from "../../../../features/auth/model"
-import { logoutTC } from "../../../../features/auth/model/auth-reducer"
+import { logoutTC } from "../../../../features/auth/model"
 
 export const AppBarHeader = () => {
    const themeMode = useAppSelector(selectThemeMode)

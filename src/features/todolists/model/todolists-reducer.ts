@@ -60,6 +60,9 @@ export const todolistsReducer = (
                : tl,
          )
       }
+      case "CLEAR_TODOLISTS_DATA": {
+         return []
+      }
       default:
          return state
    }
@@ -92,6 +95,10 @@ export const updateTodolistTitleAC = (payload: { todolistId: string; title: stri
 
 export const changeTodolistEntityStatusAC = (payload: { id: string; entityStatus: RequestStatus }) => {
    return { type: "CHANGE-TODOLIST-ENTITY-STATUS", payload } as const
+}
+
+export const clearTodolistsDataAC = () => {
+   return { type: "CLEAR_TODOLISTS_DATA" } as const
 }
 
 // Thunks
@@ -177,6 +184,7 @@ export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFil
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
 export type UpdateTodolistActionType = ReturnType<typeof updateTodolistTitleAC>
 export type ChangeTodolistEntityActionType = ReturnType<typeof changeTodolistEntityStatusAC>
+export type ClearTodolistsDataActionType = ReturnType<typeof clearTodolistsDataAC>
 
 export type TodolistsReducerActionsType =
    | RemoveTodolistActionType
@@ -185,3 +193,4 @@ export type TodolistsReducerActionsType =
    | SetTodolistsActionType
    | UpdateTodolistActionType
    | ChangeTodolistEntityActionType
+   | ClearTodolistsDataActionType
