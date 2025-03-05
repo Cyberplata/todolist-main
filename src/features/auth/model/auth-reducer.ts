@@ -53,3 +53,21 @@ export const loginTC =
             handleServerNetworkError(error, dispatch) // Здесь будут у нас все 400 и 500 ошибки
          })
    }
+
+export const logoutTC = (): AppThunk => (dispatch) => {
+   dispatch(setAppStatusAC("loading"))
+   authApi
+      .logout()
+      .then((res) => {
+         if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC("succeeded")) // Скрываем крутилку после успешной logout
+            dispatch(setIsLoggedInAC(false)) // Вылогиниваемся
+            localStorage.removeItem("sn-token")
+         } else {
+            handleServerAppError(res.data, dispatch)
+         }
+      })
+      .catch((error) => {
+         handleServerNetworkError(error, dispatch)
+      })
+}

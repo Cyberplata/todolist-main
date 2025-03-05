@@ -12,6 +12,7 @@ import React from "react"
 import { changeThemeAC } from "app/app-reducer"
 import { selectSetAppStatus, selectThemeMode } from "app/appSelectors"
 import { selectIsLoggedIn } from "../../../../features/auth/model"
+import { logoutTC } from "../../../../features/auth/model/auth-reducer"
 
 export const AppBarHeader = () => {
    const themeMode = useAppSelector(selectThemeMode)
@@ -24,17 +25,30 @@ export const AppBarHeader = () => {
       dispatch(changeThemeAC(themeMode === "light" ? "dark" : "light"))
    }
 
+   const logOutHandler = () => {
+      dispatch(logoutTC())
+   }
+
    return (
       <AppBar position="fixed">
          <Toolbar>
             <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                <MenuIcon />
             </IconButton>
+            {/*<div>*/}
+            {/*   {isLoggedIn && <MenuButton>Logout</MenuButton>}*/}
+            {/*   <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>*/}
+            {/*   <Switch color={"default"} onChange={changeModeHandler} />*/}
+            {/*</div>*/}
+
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                News
             </Typography>
-            {/*<MenuButton color="inherit">Login</MenuButton>*/}
-            {isLoggedIn && <MenuButton color="inherit">Logout</MenuButton>}
+            {isLoggedIn && (
+               <MenuButton color="inherit" onClick={logOutHandler}>
+                  Logout
+               </MenuButton>
+            )}
             <MenuButton color="inherit">Faq</MenuButton>
             <Switch color={"default"} onChange={changeModeHandler} />
          </Toolbar>
