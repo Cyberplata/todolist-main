@@ -29,7 +29,7 @@ export const Tasks = memo(({ todolist }: Props) => {
          tasksForTodolist = allTodolistTasks.filter((task) => task.status === TaskStatus.New)
       }
       if (todolist.filter === "completed") {
-         tasksForTodolist = allTodolistTasks.filter((task) => task.status == TaskStatus.Completed)
+         tasksForTodolist = allTodolistTasks.filter((task) => task.status === TaskStatus.Completed)
       }
       return tasksForTodolist
    }
