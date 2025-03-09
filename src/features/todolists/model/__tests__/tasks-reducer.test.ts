@@ -1,6 +1,7 @@
+import type { Todolist } from "../../api"
 import { TaskPriority, TaskStatus } from "../../lib/enums"
 import { addTaskAC, removeTaskAC, tasksReducer, type TasksStateType, updateTaskAC } from "../tasks-reducer"
-import { addTodolistAC, type DomainTodolist, removeTodolistAC, type Todolist } from "../todolists-reducer"
+import { addTodolistAC, removeTodolistAC } from "../todolists-reducer"
 
 let startState: TasksStateType
 
