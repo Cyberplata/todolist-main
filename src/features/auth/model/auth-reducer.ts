@@ -1,5 +1,5 @@
 import { setAppStatusAC } from "app/app-reducer"
-import { type AppThunk, store } from "app/store"
+import { type AppThunk } from "app/store"
 import { handleServerAppError } from "common/utils/handleServerAppError"
 import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
 import { ResultCode } from "../../todolists/lib/enums"
@@ -9,9 +9,12 @@ import { authApi, type LoginArgs } from "../api"
 
 type InitialStateType = typeof initialState
 
+export type CaptchaUrl = string | null
+
 const initialState = {
    isLoggedIn: false,
    isInitialized: false,
+   captchaUrl: null as CaptchaUrl, // URL капчи, если она нужна
 }
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -20,6 +23,8 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
          return { ...state, isLoggedIn: action.payload.isLoggedIn }
       case "SET_IS_INITIALIZED":
          return { ...state, isInitialized: action.payload.isInitialized }
+      case "SET_CAPTCHA_URL":
+         return { ...state, captchaUrl: action.payload.captchaUrl }
       default:
          return state
    }
@@ -31,9 +36,9 @@ const setIsLoggedInAC = (isLoggedIn: boolean) => {
 const setIsInitializedAC = (isInitialized: boolean) => {
    return { type: "SET_IS_INITIALIZED", payload: { isInitialized } } as const
 }
-
-// Actions types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | ReturnType<typeof setIsInitializedAC>
+const setCaptchaUrlAC = (captchaUrl: CaptchaUrl) => {
+   return { type: "SET_CAPTCHA_URL", payload: { captchaUrl } } as const
+}
 
 // thunks
 export const loginTC =
@@ -47,13 +52,32 @@ export const loginTC =
                dispatch(setAppStatusAC("succeeded")) // Скрываем крутилку после успешной загрузки
                dispatch(setIsLoggedInAC(true)) // Логинимся
                localStorage.setItem("sn-token", res.data.data.token) // Устанавливаем обновлённый токен в localStorage
+               dispatch(setCaptchaUrlAC(null)) // Удаляем капчу, если авторизация успешна
+            } else if (res.data.resultCode === 10) {
+               // Если сервер требует капчу
+               authApi.getCaptchaUrl().then((captchaRes) => {
+                  dispatch(setCaptchaUrlAC(captchaRes.data.data.url))
+               })
             } else {
                handleServerAppError(res.data, dispatch)
             }
          })
          .catch((error) => {
+            handleServerNetworkError(error, dispatch)
          })
    }
+
+// export const getCaptchaTC = (): AppThunk => (dispatch) => {
+//    // Здесь ты можешь использовать свой способ получения URL капчи
+//    authApi.login({ email: "", password: "" }) // Имитация запроса для получения капчи
+//       .then(() => {
+//          dispatch(setCaptchaUrlAC("url_капчи")) // Пример
+//       })
+//       .catch((error) => {
+//          handleServerNetworkError(error, dispatch)
+//       })
+// }
+
 
 export const logoutTC = (): AppThunk => (dispatch) => {
    dispatch(setAppStatusAC("loading"))
@@ -95,3 +119,11 @@ export const initializeAppTC = (): AppThunk => (dispatch) => {
          dispatch(setIsInitializedAC(true))
       })
 }
+
+// Types
+export type SetIsLoggedInActionType = ReturnType<typeof setIsLoggedInAC>
+export type SetIsInitializedActionType = ReturnType<typeof setIsInitializedAC>
+export type SetCaptchaUrlActionType = ReturnType<typeof setCaptchaUrlAC>
+
+// Actions types
+type ActionsType = SetIsLoggedInActionType | SetIsInitializedActionType | SetCaptchaUrlActionType

@@ -7,42 +7,86 @@ import FormLabel from "@mui/material/FormLabel"
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import { selectThemeMode } from "app/appSelectors"
+import { RECAPTCHA_SITE_KEY } from "common/config/config"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import { Path } from "common/routing"
 import { getTheme } from "common/theme"
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
+import ReCAPTCHA from "react-google-recaptcha"
 import { Controller, type SubmitHandler, useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
 import type { LoginArgs } from "../../api"
-import { loginTC } from "../../model"
-import { selectIsLoggedIn } from "../../model"
+import { loginTC, selectIsLoggedIn } from "../../model"
+import type { CaptchaUrl } from "../../model/auth-reducer"
 import s from "./Login.module.css"
 
-// type Inputs = {
-//    email: string
-//    password: string
-//    rememberMe: boolean
-// }
-
 export const Login = () => {
+   // debugger
    const themeMode = useAppSelector(selectThemeMode)
    const theme = getTheme(themeMode)
 
    const dispatch = useAppDispatch()
    const isLoggedIn = useAppSelector(selectIsLoggedIn) // достаём значение, чтобы сделать редирект потом после смены значения с false на true
    const navigate = useNavigate()
+   // const captchaUrl = useAppSelector(selectCaptchaUrl)
+
+   const recaptchaRef = useRef<ReCAPTCHA | null>(null)
 
    const {
       register,
       handleSubmit,
       reset,
       control,
+      setError, // ✅ Используем для ручной установки ошибки
+      clearErrors, // ✅ Очищаем ошибки при изменении капчи
       formState: { errors },
    } = useForm<LoginArgs>({ defaultValues: { email: "", password: "", rememberMe: false } })
 
+   // Функция сброса капчи
+   // const resetCaptcha = () => {
+   //    recaptchaRef.current?.reset()
+   // }
+
+   // const onSubmit: SubmitHandler<LoginArgs> = async (data) => {
+   //    if (!data.captcha) {
+   //       setError("captcha", { type: "manual", message: "Please verify you are not a robot" })
+   //       return
+   //    }
+   //
+   //    try {
+   //       const action = await dispatch(loginTC(data))
+   //
+   //       // Если ошибка логина (проверяй свой action на ошибку)
+   //       // if (loginTC.rejected.match(action)) {
+   //          setError("email", { type: "manual", message: "Invalid email or password" })
+   //          setError("password", { type: "manual", message: "Invalid email or password" })
+   //          resetCaptcha() // ✅ Сброс капчи при ошибке
+   //       // } else {
+   //          reset() // Очистка формы при успешном входе
+   //       // }
+   //    } catch (error) {
+   //       console.error(error)
+   //       resetCaptcha()
+   //    }
+   // }
+
    const onSubmit: SubmitHandler<LoginArgs> = (data) => {
+      // debugger
+      console.log(data)
+      if (!data.captcha) {
+         setError("captcha", { type: "manual", message: "Please verify you are not a robot" })
+         return
+      }
       dispatch(loginTC(data))
       reset()
+      recaptchaRef.current?.reset() // Сброс капчи после отправки
+   }
+
+   // Функция обработки успешного прохождения капчи
+   const handleCaptchaChange = (token: CaptchaUrl) => {
+      if (token) {
+         clearErrors("captcha")
+      }
    }
 
    // 1 вариант через useEffect
@@ -104,7 +148,8 @@ export const Login = () => {
                            required: "Password is required",
                            // pattern: {
                            //    value: /^.{3,}$/,
-                           minLength: { // ✅ Использование minLength здесь лучше, чем регулярное выражение, потому что оно встроено в react-hook-form и сразу работает с errors
+                           minLength: {
+                              // ✅ Использование minLength здесь лучше, чем регулярное выражение, потому что оно встроено в react-hook-form и сразу работает с errors
                               value: 3,
                               message: "Password must be at least 3 characters long",
                            },
@@ -130,6 +175,23 @@ export const Login = () => {
                            // />
                         }
                      />
+
+                     {/* reCAPTCHA */}
+                     <Controller
+                        name="captcha"
+                        control={control}
+                        render={({ field: { onChange } }) => (
+                           <ReCAPTCHA
+                              sitekey={RECAPTCHA_SITE_KEY} // ✅ Вставь свой ключ
+                              onChange={(token) => {
+                                 onChange(token)
+                                 handleCaptchaChange(token)
+                              }}
+                           />
+                        )}
+                     />
+                     {errors.captcha && <span className={s.errorMessage}>{errors.captcha.message}</span>}
+
                      <Button type={"submit"} variant={"contained"} color={"primary"}>
                         Login
                      </Button>

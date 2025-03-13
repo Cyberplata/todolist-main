@@ -1,9 +1,10 @@
 import axios from "axios"
+import { API_KEY, BASE_URL } from "common/config/config"
 
 export const instance = axios.create({
-   baseURL: process.env.REACT_APP_BASE_URL,
+   baseURL: BASE_URL,
    headers: {
-      "API-KEY": process.env.REACT_APP_API_KEY,
+      "API-KEY": API_KEY,
    },
 })
 
